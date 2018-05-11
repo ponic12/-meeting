@@ -13,8 +13,6 @@ import { GlobalService } from './services/global.service';
 import { NetworkService } from './services/network.service';
 import { FirebaseService } from './services/firebase.service';
 import { InterceptorModule } from './interceptor.module';
-import { HighlightDirective } from './directives/highlight.directive';
-import { TelNumDirective } from './directives/tel-num.directive';
 
 
 export const firebaseConfig ={
@@ -36,12 +34,8 @@ export const firebaseConfig ={
     AngularFirestoreModule
   ],
   declarations: [
-    HighlightDirective, 
-    TelNumDirective
   ],
-  exports: [ 
-    HighlightDirective, 
-    TelNumDirective ]
+  exports: [ ]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
