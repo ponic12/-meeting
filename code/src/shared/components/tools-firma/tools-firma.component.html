@@ -1,0 +1,36 @@
+<ion-grid *ngIf="!showPad">
+    <ion-row>
+        <ion-col class="frameImg" >
+            <img *ngIf="imgFirma != null" [src]="imgFirma">
+            <button ion-button color="secondary" class="btnFirma" (click)="firmar()">
+                <ion-icon name="create"></ion-icon>
+            </button>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+
+<ion-grid *ngIf="showPad">
+    <signature-pad class="frameImg" [options]="signaturePadOptions">
+    </signature-pad>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-6>
+                <button ion-button round full (click)="completar()" color="secondary">
+                    <ion-icon name="checkmark" class="iconMenu"></ion-icon>Aceptar
+                </button>
+            </ion-col>
+            <ion-col col-6>
+                <button ion-button round full (click)="cancelar()" color="secondary">
+                    <ion-icon name="close" class="iconMenu"></ion-icon>Cancelar
+                </button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <button ion-button round full (click)="limpiar()" color="secondary">
+                    <ion-icon name="trash" class="iconMenu"></ion-icon>Borrar
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-grid>

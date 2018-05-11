@@ -1,0 +1,95 @@
+tools-abo {
+    .button {
+        background: transparent !important;
+    }
+    .button:active {
+        transform: translateY(4px) !important;
+        box-shadow: 0px 0px 0px transparent;
+    }
+
+    .btnAbo{
+        border-radius: 50%;
+        padding-top: 10px;
+        background: #aaa;
+        width: 25px;
+        box-shadow: 1px 1px 1px #777;
+    }
+    .btnIcon {
+        color: #fff;
+        z-index: 10000;
+        font-weight: bold;
+        margin-left: 1px;
+        text-shadow: 1px 1px 1px #444;
+    }
+    .aboContainer {
+        margin-top:60px;
+        background: #272727;
+        opacity: .7;
+        z-index: 20000;
+    }
+
+    .frameAbo {
+        /*margin: auto; */
+        padding: 2px 3px 3px 3px;
+        height: 27px;
+        z-index: 20001;
+        top: 59px;
+        left: 0;
+        right: 0;
+        position: absolute;
+        text-align: center;
+        -webkit-box-shadow: 1px 1px 8px #888;
+        box-shadow: 1px 1px 8px #888;
+        /*background-color: #ececec;*/
+        // background: palevioletred;
+        background: #bbb;
+        /* padding: 6px 1px 1px 1px; */
+    }
+    // .frameAbo:after {
+    //     content: '';
+    //     position: absolute;
+    //     border-radius: 10px;
+    //     top: 2px;
+    //     left: 2px;
+    //     width: calc(100% - 4px);
+    //     height: 50%;
+    //     background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.2));    
+    // }
+
+    .dataAbo {
+         /*text-decoration: none; */
+        color: #064975;
+        width: auto;
+        font-size: 17px;
+        /* font-family: sans-serif; */
+        font-weight: bold; 
+        display: inline-block;
+        /*padding: 5px;*/
+        /* text-align: center; */
+        /* text-shadow: 1px 1px 1px black; */
+    }
+
+    .editAbo{
+        /*background-color: #eee; */
+        padding-top: 5px;
+        background: #FFF;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        /* height: 25px; */
+        /* margin-top: -5px; */
+        /* text-align: right; */
+    }
+
+    .text-input-md {
+        margin:0px;
+        text-align: center;
+        width: 100%;
+    }
+
+
+}
