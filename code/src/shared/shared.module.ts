@@ -16,9 +16,6 @@ import { InterceptorModule } from './interceptor.module';
 import { HighlightDirective } from './directives/highlight.directive';
 import { TelNumDirective } from './directives/tel-num.directive';
 
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
-import { FileOpener } from '@ionic-native/file-opener';
 
 export const firebaseConfig ={
   apiKey: "AIzaSyAfVw8hebQtbQ94K7jILm1tbqbvjNe6FZs",
@@ -56,10 +53,7 @@ export class SharedModule {
         NetworkService,
         FirebaseService,
         AngularFireAuth,
-        AngularFireDatabase,
-        File,
-        FileTransfer,
-        FileOpener
+        AngularFireDatabase
       ]
     };
   }
