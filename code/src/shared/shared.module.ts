@@ -1,18 +1,12 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { IonicStorageModule } from '@ionic/storage';
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
+// import { AngularFireModule } from 'angularfire2';
+// import { AngularFirestoreModule } from 'angularfire2/firestore';
 
-import { HttpClientModule } from '@angular/common/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApplicationService } from './services/application.service';
 import { GlobalService } from './services/global.service';
-import { NetworkService } from './services/network.service';
 import { FirebaseService } from './services/firebase.service';
-import { InterceptorModule } from './interceptor.module';
 
 
 export const firebaseConfig ={
@@ -27,11 +21,9 @@ export const firebaseConfig ={
 
 @NgModule({
   imports: [
-    InterceptorModule,
-    HttpClientModule,
     IonicStorageModule.forRoot(),
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule
+   //  AngularFireModule.initializeApp(firebaseConfig),
+   //  AngularFirestoreModule
   ],
   declarations: [
   ],
@@ -42,12 +34,11 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        ApplicationService, 
         GlobalService,
-        NetworkService,
+        ApplicationService, 
         FirebaseService,
-        AngularFireAuth,
-        AngularFireDatabase
+      //   AngularFireAuth,
+      //   AngularFireDatabase
       ]
     };
   }
