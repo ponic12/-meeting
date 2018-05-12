@@ -4,9 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 //import { AngularFirestore } from 'angularfire2/firestore';
 
-import { ApplicationService } from '../shared/services/application.service';
 import { GlobalService } from '../shared/services/global.service';
-
+import { ApplicationService } from '../shared/services/application.service';
 
 
 @Component({
@@ -24,7 +23,7 @@ export class MeetingApp implements OnInit, OnDestroy {
       private appSrv: ApplicationService,
       private globalSrv: GlobalService
    ) {
-      console.log('DashboardApp constructor');
+      console.log('MeetingApp constructor');
       // this.afs.firestore.settings({ timestampsInSnapshots: true });
       // this.afs.firestore.enablePersistence();
 

@@ -1,19 +1,6 @@
 <!-- <tools-bar [title]="title"></tools-bar> -->
-<div *ngIf="manuf">
+<div>
   <ion-card class="backCard">
     <p class="titleChart">Marcas</p>
-    <canvas baseChart [labels]="manuf.names" [data]="manuf.counters" [options]="devicesOps" [chartType]="'doughnut'">
-    </canvas>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-md-6 col-sm-12 *ngFor="let m of manuf.names">
-          <ion-card>
-            <p class="titleChart">{{m}}</p>
-            <canvas baseChart [labels]="manuf.models[m].names" [data]="manuf.models[m].counters" [options]="devicesOps" [chartType]="'doughnut'">
-            </canvas>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+    
 </div>
