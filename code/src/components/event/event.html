@@ -1,8 +1,36 @@
-<div class="grdEvento" >
-   <div id="evento"></div>
-   <div id="fCreacion"></div>
-   <div id="identificador"></div>
-   <div id="participantes"></div>
-   <div id="dias"></div>
+<div class="grdEvento">
+  <div id="evento">
+    <div class="grdFindEvent" *ngIf="!editFlag">
+        <input type="text" class="searchBar1" placeholder="Nombre del evento" [(ngModel)]="evt.eventName" />
+        <input type="text" class="searchBar1" placeholder="Descripcion del evento" [(ngModel)]="evt.description" />
+    </div>
+    <div *ngIf="editFlag">
+      {{evt.name}}
+      <button (click)="editName()">
+          <ion-icon name="create"></ion-icon>
+        </button>
+    </div>
+  </div>
+  <div id="fCreacion">
+    {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
+  </div>
+  <div id="identificador">
+    <div *ngIf="!editFlag">
+      <input type="text" class="searchBar" placeholder="Identificador" [(ngModel)]="evt.identificador" />
+    </div>
+    <div *ngIf="editFlag">
+      <div>{{evt.identificador}}</div>
+      <button (click)="addEvent()">
+        <ion-icon name="plus"></ion-icon>
+      </button>
+    </div>
+  </div>
+  <div id="participantes">
+    <div>
 
+    </div>
+  </div>
+  <div id="dias">
+
+  </div>
 </div>

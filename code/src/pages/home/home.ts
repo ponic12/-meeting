@@ -36,13 +36,14 @@ export class HomePage implements OnInit, OnDestroy {
    }
 
    addEvent(){
-      this.navCtrl.push('EventPage', {newEvent:this.searchText})
+      const ev = {name:this.searchText}
+      this.navCtrl.push('EventPage', {evt:ev})
    }
    removeEvent(ev, i){
 
    }
    showEvent(ev, i){
-      this.navCtrl.push('EventPage', ev)
+      this.navCtrl.push('EventPage', {evt:ev})
    }
    share() {
       this.socialSharing.canShareVia('Whatsapp').then(() => {

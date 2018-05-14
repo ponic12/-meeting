@@ -10,15 +10,10 @@ page-event {
     display: grid;
     grid-template-areas: "evento" "fCreacion" "identificador" "participantes" "dias"
   }
-
-  @media (min-width: 500px){
-   .grdEvento {
-      grid-template-areas: 
-         "evento evento fCreacion" 
-         " . identificador . " 
-         "participantes participantes participantes" 
-         "dias dias dias" 
-   }
+  @media (min-width: 500px) {
+    .grdEvento {
+      grid-template-areas: "evento evento fCreacion" " . identificador . " "participantes participantes participantes" "dias dias dias"
+    }
   }
   #evento {
     grid-area: evento
