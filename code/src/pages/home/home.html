@@ -16,7 +16,8 @@
     </button>
   </div>
   <ion-list>
-    <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index">
+    <!-- <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index"> -->
+    <ion-item-sliding *ngFor="let evt of dataEventos">
       <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }">
         <div>
           Creacion: {{evt.creationDate | date:'dd/MM/yyyy'}}
@@ -28,14 +29,14 @@
           Fecha estimada: {{evt.estimatedDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
         <div>
-          Evento: {{evt.eventName'}}
+          Evento: {{evt.eventName}}
         </div>
         <div>
-          Descripcion: {{evt.description'}}
+          Descripcion: {{evt.description}}
         </div>
       </ion-item>
       <ion-item-options>
-        <button ion-button (click)="removeEvent(evt, i)" color="secondary">
+        <button ion-button (click)="removeEvent(evt, i)" color="red">
           <ion-icon name="trash"></ion-icon> Eliminar
         </button>
       </ion-item-options>

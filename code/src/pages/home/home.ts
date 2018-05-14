@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage, ItemSliding } from 'ionic-angular'
+import { NavController, IonicPage } from 'ionic-angular'
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service'
 
@@ -9,6 +9,7 @@ import { ApplicationService } from '../../shared/services/application.service'
    templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {
+   today:number = new Date().getTime()
    searchText: string
    field: string = 'creationDate'
    dataEventos: any = [
