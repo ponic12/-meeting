@@ -4,18 +4,22 @@ import { HomePage } from './home'
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { ParquePageModule } from '../../components/parque/parque.module';
+import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe';
+
 
 
 @NgModule({
    declarations: [
-      HomePage
+      HomePage,
+      SearchInfoPipe
    ],
    imports: [
       ParquePageModule,
-      SocialSharing,
       IonicPageModule.forChild(HomePage)
    ],
-   providers: [ ]
+   providers: [       
+      SocialSharing,
+   ]
 })
 export class HomePageModule {
    constructor() {

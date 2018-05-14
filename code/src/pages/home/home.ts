@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { ApplicationService } from '../../shared/services/application.service';
-
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { NavController, IonicPage } from 'ionic-angular'
+import { SocialSharing } from '@ionic-native/social-sharing'
+import { ApplicationService } from '../../shared/services/application.service'
 
 @IonicPage()
 @Component({
@@ -10,6 +9,8 @@ import { ApplicationService } from '../../shared/services/application.service';
    templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {
+   searchText:string
+   dataEventos:any=[]
 
    constructor(
       public navCtrl: NavController,
