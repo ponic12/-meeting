@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, NavParams, Events } from 'ionic-angular';
 
-import { ParqueService } from './parque.service'
+import { EventService } from './event.service'
 import { ApplicationService } from '../../shared/services/application.service';
 import { GlobalService } from '../../shared/services/global.service';
 
@@ -9,27 +9,27 @@ import * as moment from 'moment'
 
 @IonicPage()
 @Component({
-   selector: 'page-parque',
-   templateUrl: 'parque.html'
+   selector: 'page-event',
+   templateUrl: 'event.html'
 })
-export class ParquePage implements OnInit, OnDestroy {
-   title: string = "Parque"
+export class EventPage implements OnInit, OnDestroy {
+   title: string = "Evento"
 
 
    constructor(
       private navParams: NavParams,
       private appSrv: ApplicationService,
       private globalSrv: GlobalService,
-      private parqueSrv:ParqueService,
+      private evtSrv: EventService,
       private evt: Events
    ) {
-      console.log('ParquePage constructor');
+      console.log('EventPage constructor');
    }
    ngOnDestroy() {
-      console.warn('ParquePage destroy');
+      console.warn('EventPage destroy');
    }
    ngOnInit(): void {
-      console.log('ParquePage init');
+      console.log('EventPage init');
 
    }
 

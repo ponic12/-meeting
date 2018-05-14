@@ -35,6 +35,15 @@ export class HomePage implements OnInit, OnDestroy {
       console.log('HomePage destroy')
    }
 
+   addEvent(){
+      this.navCtrl.push('EventPage', {newEvent:this.searchText})
+   }
+   removeEvent(ev, i){
+
+   }
+   showEvent(ev, i){
+      this.navCtrl.push('EventPage', ev)
+   }
    share() {
       this.socialSharing.canShareVia('Whatsapp').then(() => {
          this.socialSharing.shareViaWhatsApp('Invitacion a evento!', 'http://www.clarin.com').then(() => {

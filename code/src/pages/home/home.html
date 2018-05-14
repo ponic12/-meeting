@@ -10,7 +10,7 @@
   <!-- <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range> -->
   <div class="grdFindEvent">
     <input type="text" class="searchBar" placeholder="Buscar Evento" [(ngModel)]="searchText" />
-    <button>
+    <button (click)="addEvent()">
       <ion-icon name="plus"></ion-icon>
       Agregar Evento
     </button>
@@ -35,9 +35,14 @@
           Descripcion: {{evt.description}}
         </div>
       </ion-item>
-      <ion-item-options>
-        <button ion-button (click)="removeEvent(evt, i)" color="red">
+      <ion-item-options side="right">
+        <button ion-button (click)="removeEvent(evt, i)" color="'red'">
           <ion-icon name="trash"></ion-icon> Eliminar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button (click)="showEvent(evt, i)" color="secondary" >
+          <ion-icon name="calendar"></ion-icon> Entrar
         </button>
       </ion-item-options>
     </ion-item-sliding>

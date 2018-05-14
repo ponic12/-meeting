@@ -7,12 +7,12 @@ import 'rxjs/add/operator/map';
 
 
 @Injectable()
-export class ParqueService {
+export class EventService {
 
     constructor(
       //  private afs: AngularFirestore
    ) {
-        console.log('ParqueService constructor');
+        console.log('EventService constructor');
     }
 
     getDevices(): any {

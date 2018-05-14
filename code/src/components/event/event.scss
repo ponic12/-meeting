@@ -1,0 +1,38 @@
+page-event {
+  .titleChart {
+    color: #555;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px grey
+  }
+  .grdEvento {
+    display: grid;
+    grid-template-areas: "evento" "fCreacion" "identificador" "participantes" "dias"
+  }
+
+  @media (min-width: 500px){
+   .grdEvento {
+      grid-template-areas: 
+         "evento evento fCreacion" 
+         " . identificador . " 
+         "participantes participantes participantes" 
+         "dias dias dias" 
+   }
+  }
+  #evento {
+    grid-area: evento
+  }
+  #fCreacion {
+    grid-area: fCreacion
+  }
+  #identificador {
+    grid-area: identificador
+  }
+  #participantes {
+    grid-area: participantes
+  }
+  #dias {
+    grid-area: dias
+  }
+}

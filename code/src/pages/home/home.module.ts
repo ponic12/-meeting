@@ -4,7 +4,7 @@ import { HomePage } from './home'
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { OrderModule } from 'ngx-order-pipe'
 
-import { ParquePageModule } from '../../components/parque/parque.module'
+import { EventPageModule } from '../../components/event/event.module'
 import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe'
 
 @NgModule({
@@ -13,7 +13,7 @@ import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe'
       SearchInfoPipe
    ],
    imports: [
-      ParquePageModule,
+      EventPageModule,
       OrderModule,
       IonicPageModule.forChild(HomePage)
    ],
