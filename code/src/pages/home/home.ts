@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage } from 'ionic-angular'
+import { NavController, IonicPage, ItemSliding } from 'ionic-angular'
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service'
 
@@ -9,8 +9,15 @@ import { ApplicationService } from '../../shared/services/application.service'
    templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {
-   searchText:string
-   dataEventos:any=[]
+   searchText: string
+   field: string = 'creationDate'
+   dataEventos: any = [
+      { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Consorcio Besares 3950', description: 'Reunion de consorcio para definir tareas' },
+      { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Cumple Gallo', description: 'Fiesta sorpresa' },
+      { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Vacaciones invierno 2018', description: 'Rango de fechas de vacas' },
+      { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Viaje Espana 2018', description: 'Reunion de integrantes' },
+      { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Reunion Siemens', description: 'Ex trabajadores de Siemens' }
+   ]
 
    constructor(
       public navCtrl: NavController,

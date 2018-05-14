@@ -1,21 +1,44 @@
 <ion-header>
-   <ion-navbar>
-     <ion-title>
-       <span>Meeting Master</span>
-     </ion-title>
-   </ion-navbar>
- </ion-header>
- 
- <ion-content class="backTB">
-   <!-- <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range> -->
-   <div class="grdFindEvent">
-      <input type="text" class="searchBar" placeholder="Buscar Evento" [(ngModel)]="searchText" />
-      <button>
-         <ion-icon name="plus"></ion-icon>
-         Agregar Evento
-      </button>
-   </div>
-   <div class="gridEvents" *ngFor="let evt of dataEventos | searchInfo: searchText">
-   </div>
- </ion-content>
- 
+  <ion-navbar>
+    <ion-title>
+      <span>Meeting Master</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="backTB">
+  <!-- <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range> -->
+  <div class="grdFindEvent">
+    <input type="text" class="searchBar" placeholder="Buscar Evento" [(ngModel)]="searchText" />
+    <button>
+      <ion-icon name="plus"></ion-icon>
+      Agregar Evento
+    </button>
+  </div>
+  <ion-list>
+    <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index">
+      <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }">
+        <div>
+          Creacion: {{evt.creationDate | date:'dd/MM/yyyy'}}
+        </div>
+        <div>
+          Ultima modificacion: {{evt.lastModification | date:'dd/MM/yyyy HH:mm'}}
+        </div>
+        <div>
+          Fecha estimada: {{evt.estimatedDate | date:'dd/MM/yyyy HH:mm'}}
+        </div>
+        <div>
+          Evento: {{evt.eventName'}}
+        </div>
+        <div>
+          Descripcion: {{evt.description'}}
+        </div>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button (click)="removeEvent(evt, i)" color="secondary">
+          <ion-icon name="trash"></ion-icon> Eliminar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

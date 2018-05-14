@@ -41,6 +41,19 @@
     animation-duration: 2s;
 }
 
+
+.grdFindEvent{
+   display:grid;
+   grid-template-columns: 10fr 1fr;
+}
+
+.grdEvents{
+   display:grid;
+   grid-template-columns: 2fr 2fr 2fr 2fr 4fr 4fr;
+}
+
+
+
 /* MENU *****************************/
 .menuText{
    color:white;

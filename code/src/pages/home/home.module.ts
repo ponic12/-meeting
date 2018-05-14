@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 import { HomePage } from './home'
-import { SocialSharing } from '@ionic-native/social-sharing';
+import { SocialSharing } from '@ionic-native/social-sharing'
+import { OrderModule } from 'ngx-order-pipe'
 
-import { ParquePageModule } from '../../components/parque/parque.module';
-import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe';
-
-
+import { ParquePageModule } from '../../components/parque/parque.module'
+import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe'
 
 @NgModule({
    declarations: [
@@ -15,6 +14,7 @@ import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe';
    ],
    imports: [
       ParquePageModule,
+      OrderModule,
       IonicPageModule.forChild(HomePage)
    ],
    providers: [       
