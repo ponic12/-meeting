@@ -7,7 +7,15 @@
  </ion-header>
  
  <ion-content class="backTB">
-   <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range>
-
+   <!-- <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range> -->
+   <div class="grdFindEvent">
+      <input type="text" class="searchBar" placeholder="Buscar Evento" [(ngModel)]="searchText" />
+      <button>
+         <ion-icon name="plus"></ion-icon>
+         Agregar Evento
+      </button>
+   </div>
+   <div class="gridEvents" *ngFor="let evt of dataEventos | searchInfo: searchText">
+   </div>
  </ion-content>
  
