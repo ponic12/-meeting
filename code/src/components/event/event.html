@@ -1,27 +1,28 @@
 <div class="grdEvento">
   <div id="evento">
-    <div class="grdFindEvent" *ngIf="!editFlag">
-        <input type="text" class="searchBar1" placeholder="Nombre del evento" [(ngModel)]="evt.eventName" />
-        <input type="text" class="searchBar1" placeholder="Descripcion del evento" [(ngModel)]="evt.description" />
+    <div class="grdEventInfo" *ngIf="editEventNameFlag === true">
+      <input type="text" class="searchBar1" placeholder="Nombre del evento" [(ngModel)]="evt.eventName" (keypress)="editEventNameFlag=false"/>
+      <input type="text" class="searchBar1" placeholder="Descripcion del evento" [(ngModel)]="evt.description" />
     </div>
-    <div *ngIf="editFlag">
-      {{evt.name}}
-      <button (click)="editName()">
-          <ion-icon name="create"></ion-icon>
-        </button>
+    <div *ngIf="editEventNameFlag === false">
+      <div>{{evt.eventName}}</div>
+      <div>{{evt.description}}</div>
+      <button (click)="editEventNameFlag = true">
+        <ion-icon name="create"></ion-icon>
+      </button>
     </div>
   </div>
   <div id="fCreacion">
     {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
   </div>
   <div id="identificador">
-    <div *ngIf="!editFlag">
-      <input type="text" class="searchBar" placeholder="Identificador" [(ngModel)]="evt.identificador" />
+    <div *ngIf="editUsernameFlag === true">
+      <input type="text" class="searchBarr" placeholder="Nombre de usuario" [(ngModel)]="evt.username" (keypress)="editUsernameFlag=false" />
     </div>
-    <div *ngIf="editFlag">
-      <div>{{evt.identificador}}</div>
-      <button (click)="addEvent()">
-        <ion-icon name="plus"></ion-icon>
+    <div *ngIf="editUsernameFlag === false">
+      <div>{{evt.username}}</div>
+      <button (click)="editUsernameFlag = true">
+        <ion-icon name="create"></ion-icon>
       </button>
     </div>
   </div>

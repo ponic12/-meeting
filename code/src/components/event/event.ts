@@ -14,7 +14,8 @@ import * as moment from 'moment'
 })
 export class EventPage implements OnInit, OnDestroy {
    title: string = "Evento"
-   editFlag: boolean = false
+   editEventNameFlag: boolean = false
+   editUsernameFlag: boolean = false
    evt: any
 
    constructor(
@@ -31,7 +32,7 @@ export class EventPage implements OnInit, OnDestroy {
    ngOnInit(): void {
       console.log('EventPage init');
       this.evt = this.navParams.get('evt')
-      this.editFlag = this.evt.creationDate
+      this.editEventNameFlag = (this.evt.creationDate === undefined)
+      this.editUsernameFlag = this.editEventNameFlag
    }
-
 }
