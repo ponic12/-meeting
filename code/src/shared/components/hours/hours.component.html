@@ -1,13 +1,8 @@
-<div class="frameAbo">
-  <div *ngIf="!editFlag" (click)="editAbonado()">
-    <ion-icon style="margin-top:-5px;" name="call" style=" color: #064975; z-index:10000; line-height: normal"></ion-icon>
-    <div class="dataAbo">{{line}}</div>
-  </div>
-  <div *ngIf="editFlag">
-    <ion-input class="dataAbo editAbo" type="number" [(ngModel)]="line" (keypress)="onKeyPressed($event)">
-    </ion-input>
-    <!-- <button *ngIf="editFlag" class="btnAbo" (click)="changeAbo()">
-          <ion-icon name="arrow-forward" class="btnIcon"></ion-icon>
-      </button> -->
+<div class="frameHours">
+  <div class="grdHour">
+    <div *ngFor="let hr of dictionary">
+      <div class="hour">{{hr.hour}}</div>
+      <div class="value" [ngStyle]="{'width': 20 * hr.value}"></div>
+    </div>
   </div>
 </div>

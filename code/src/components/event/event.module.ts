@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
+import { CommonModule } from '@angular/common'
 
 import { EventPage } from './event'
 import { EventService } from './event.service'
@@ -12,6 +13,7 @@ import { SharedModule } from '../../shared/shared.module'
    ],
    imports: [
       SharedModule,
+      CommonModule,
       IonicPageModule.forChild(EventPage)
    ],
    exports: [EventPage],
