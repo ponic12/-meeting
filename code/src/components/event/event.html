@@ -1,7 +1,7 @@
 <div class="grdEvento">
   <div id="evento">
     <div class="grdEventInfo" *ngIf="editEventNameFlag === true">
-      <input type="text" class="searchBar1" placeholder="Nombre del evento" [(ngModel)]="evt.eventName" (keypress)="editEventNameFlag=false"/>
+      <input type="text" class="searchBar1" placeholder="Nombre del evento" [(ngModel)]="evt.eventName" (keypress)="onKeyEvent($event)"/>
       <input type="text" class="searchBar1" placeholder="Descripcion del evento" [(ngModel)]="evt.description" />
     </div>
     <div *ngIf="editEventNameFlag === false">
@@ -17,7 +17,7 @@
   </div>
   <div id="identificador">
     <div *ngIf="editUsernameFlag === true">
-      <input type="text" class="searchBarr" placeholder="Nombre de usuario" [(ngModel)]="evt.username" (keypress)="editUsernameFlag=false" />
+      <input type="text" class="searchBarr" placeholder="Nombre de usuario" [(ngModel)]="evt.username" (keypress)="onKeyUser($event)" />
     </div>
     <div *ngIf="editUsernameFlag === false">
       <div>{{evt.username}}</div>
@@ -27,8 +27,8 @@
     </div>
   </div>
   <div id="participantes">
-    <div>
-
+    <div *ngIf="let usr on evt.members">
+     # {{usr.username}}
     </div>
   </div>
   <div id="dias">

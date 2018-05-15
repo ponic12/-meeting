@@ -35,4 +35,14 @@ export class EventPage implements OnInit, OnDestroy {
       this.editEventNameFlag = (this.evt.creationDate === undefined)
       this.editUsernameFlag = this.editEventNameFlag
    }
+   onKeyEvent(event) {
+      if (event.keyCode == 13) {
+         this.editEventNameFlag = false
+      }
+   }
+   onKeyUser(event) {
+      if (event.keyCode == 13) {
+         this.editUsernameFlag = false
+      }
+   }
 }
