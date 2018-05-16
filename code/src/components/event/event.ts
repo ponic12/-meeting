@@ -37,7 +37,7 @@ export class EventPage implements OnInit, OnDestroy {
       this.evt.members = []
       this.evt.days = [
          {
-            day: 'Lunes', dic: [
+            day: 'LU', dic: [
                { hour: 0, value: 0 },
                { hour: 1, value: 0 },
                { hour: 2, value: 0 },
@@ -65,7 +65,7 @@ export class EventPage implements OnInit, OnDestroy {
             ]
          },
          {
-            day: 'Martes', dic: [
+            day: 'MA', dic: [
                { hour: 0, value: 0 },
                { hour: 1, value: 0 },
                { hour: 2, value: 0 },
@@ -93,7 +93,7 @@ export class EventPage implements OnInit, OnDestroy {
             ]
          },
          {
-            day: 'Miercoles', dic: [
+            day: 'MI', dic: [
                { hour: 0, value: 0 },
                { hour: 1, value: 0 },
                { hour: 2, value: 0 },
@@ -121,7 +121,7 @@ export class EventPage implements OnInit, OnDestroy {
             ]
          },
          {
-            day: 'Jueves', dic: [
+            day: 'JU', dic: [
                { hour: 0, value: 0 },
                { hour: 1, value: 0 },
                { hour: 2, value: 0 },
@@ -149,7 +149,7 @@ export class EventPage implements OnInit, OnDestroy {
             ]
          },
          {
-            day: 'Viernes', dic: [
+            day: 'VI', dic: [
                { hour: 0, value: 0 },
                { hour: 1, value: 0 },
                { hour: 2, value: 0 },
@@ -177,7 +177,7 @@ export class EventPage implements OnInit, OnDestroy {
             ]
          },
          {
-            day: 'Sabado', dic: [
+            day: 'SA', dic: [
                { hour: 0, value: 0 },
                { hour: 1, value: 0 },
                { hour: 2, value: 0 },
@@ -205,7 +205,7 @@ export class EventPage implements OnInit, OnDestroy {
             ]
          },
          {
-            day: 'Domingo', dic: [
+            day: 'DO', dic: [
                { hour: 0, value: 0 },
                { hour: 1, value: 0 },
                { hour: 2, value: 0 },

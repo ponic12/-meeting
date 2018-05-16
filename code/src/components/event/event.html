@@ -36,10 +36,8 @@
   <div id="dias">
     <div class="grdDays">
       <div *ngFor="let d of evt.days">
-        <div>
-          <div>{{d.day}}</div>
-          <hours [dictionary]="d.dic"></hours>
-        </div>
+        <div class="dayName">{{d.day}}</div>
+        <hours [dictionary]="d.dic"></hours>
       </div>
     </div>
   </div>

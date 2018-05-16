@@ -1,11 +1,5 @@
 page-event {
-  .titleChart {
-    color: #555;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px grey
-  }
+
   .grdEvento {
     display: grid;
     grid-template-areas: "evento" "fCreacion" "identificador" "participantes" "dias"
@@ -27,12 +21,21 @@ page-event {
   #participantes {
     grid-area: participantes
   }
+
+
   #dias {
-    grid-area: dias
+    grid-area: dias;
+    margin: 5px;
   }
   .grdDays{
      display: grid;
      grid-template-columns: repeat(7, 1fr);
-     grid-template-rows: 50px 1fr; 
+     grid-template-rows: 40px 1fr; 
+     grid-column-gap: 5px;
+  }
+  .dayName{
+   text-align: center;
+   font-size: 15px;
+   background: #bbb;
   }
 }

@@ -1,8 +1,7 @@
-<div class="frameHours">
-  <div class="grdHour">
-    <div *ngFor="let hr of dictionary">
-      <div class="hour">{{hr.hour}}</div>
-      <div class="value" [ngStyle]="{'width': 20 * hr.value}"></div>
+<div class="grdHours">
+  <div *ngFor="let hr of dictionary">
+    <div class="hour" [ngClass]="{'value': (hr.value == 1)}" (click)="toggleHour(hr)">
+      {{hr.hour}}
     </div>
   </div>
 </div>
