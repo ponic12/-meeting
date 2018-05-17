@@ -1,7 +1,8 @@
 <div class="grdHours">
-  <div *ngFor="let hr of dictionary">
-    <div class="hour" [ngClass]="{'value': (hr.value == 1)}" (click)="toggleHour(hr)">
-      {{hr.hour}}
+  <div *ngFor="let hr of dictionary" style="position:relative" class="cell" (click)="selectCell(hr)">
+    <!-- <div class="hourText">{{hr.hour}}</div> -->
+    <div class="hourText"></div>
+    <div class="hour" [ngClass]="{'value': (hr.value > 0)}" [ngStyle]="{'opacity':calculateOpacity(hr.value)}">
     </div>
   </div>
 </div>
