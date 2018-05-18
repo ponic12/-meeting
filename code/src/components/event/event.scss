@@ -46,19 +46,27 @@ page-event {
   #dias {
     grid-area: dias;
     margin: 5px;
-    height: calc(100vh - 245px);
-    overflow: auto;
   }
   .grdDays {
     display: grid;
+    grid-template-rows: 40px 1fr;
+  }
+  .grdDaysNames {
+    display: grid;
+    grid-template-columns: 30px repeat(7, 1fr);
+  }
+  .grdScheduler {
+    display: grid;
     grid-template-columns: 30px 1fr;
+    height: calc(100vh - 245px);
+    overflow: auto;
   }
   .daysNum {
     text-align: center;
     font-size: 15px;
   }
   .daysNum>div {
-   text-shadow: 1px 1px 2px #555;
+    text-shadow: 1px 1px 2px #555;
     height: 30px;
     border: 1px solid;
     background: #bbb;
