@@ -15,6 +15,7 @@ import * as moment from 'moment'
 export class EventPage implements OnInit, OnDestroy {
    title: string = "Evento"
    selectedMembers:any
+   toggleMode:boolean= false;
    editEventNameFlag: boolean = false
    editUsernameFlag: boolean = false
    dayKeys:any
@@ -1156,7 +1157,8 @@ export class EventPage implements OnInit, OnDestroy {
       ]
    }
    toggleMember(ev,u) {
-      this.processDays()
+     this.checkEditMode()
+     this.processDays()
    }
    onKeyEvent(event) {
       if (event.keyCode == 13) {
@@ -1168,14 +1170,24 @@ export class EventPage implements OnInit, OnDestroy {
          this.editUsernameFlag = false
       }
    }
-
    availability(username){
       if (!this.selectedMembers) return
-      const res = this.selectedMembers.find(username)
+      const res = !(this.selectedMembers.indexOf(username) == -1)
       return res
    }
-   setSelectedMembers(mm){
-      this.setSelectedMembers = mm
+   selection(ev){
+      if (this.toggleMode == true)
+         ev.hr.value = 1 - ev.hr.value
+      else
+         this.selectedMembers = ev.hr.members
+   }
+   private checkEditMode(){
+      let cnt = 0
+      this.evt.members.forEach(m => {
+         if (m.onoff == true)
+            cnt = cnt +1
+      });
+      this.toggleMode = ((cnt == 1) && (this.evt.members[0].onoff == true))
    }
    private processDays() {
       this.resetDays(this.evt.days)
@@ -1186,7 +1198,8 @@ export class EventPage implements OnInit, OnDestroy {
                this.evt.days[key].forEach((hr, i) => {
                   let x = member.days[key][i].value
                   hr.value = hr.value + x
-                  hr.members.push(member.username)
+                  if (x > 0)
+                     hr.members.push(member.username)
                })
             });
          }

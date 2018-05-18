@@ -1,5 +1,13 @@
-<div class="headApp">
-
+<div class="headApp" >
+  <div class="statusIcons">
+    <ion-icon class="iconStatus" name="notifications" (click)="showAlertas()" [ngClass]="{'iconStatusON' : alertsCounter > 0}">
+      <div class="counter" [ngClass]="{'counterON':alertsCounter > 0}">
+        <div class="counterNumber">{{alertsCounter}}</div>
+      </div>
+    </ion-icon>
+    <ion-icon class="iconStatus iconStatusON" name="more" menuToggle style="padding: 0px 10px">
+    </ion-icon>
+  </div>
 </div>
 
 <ion-nav [root]="'HomePage'" #content></ion-nav>

@@ -12,8 +12,7 @@ import { ApplicationService } from '../../services/application.service'
 export class HoursComponent implements OnInit, OnDestroy {
    @Input() dictionary: any = []
    @Input('max') maxVal: number = 0
-   @Input() editUser :string
-   @Output() selectedCell: EventEmitter<string[]> = new EventEmitter<string[]>()
+   @Output() selectedCell = new EventEmitter()
 
    constructor(
       private globalSrv: GlobalService,
@@ -30,12 +29,8 @@ export class HoursComponent implements OnInit, OnDestroy {
       console.log('HoursComponent init')
    }
 
-   selectCell(hr){
-      if ((hr.members.length == 1)&& (hr.members[0].username == this.editUser))
-         hr.value = 1 - hr.value
-      else{
-         this.selectedCell.emit(hr.members)
-      }
+   selCell(hr){
+      this.selectedCell.emit({hr: hr})
    }
 
    calculateOpacity(val){

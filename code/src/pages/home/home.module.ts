@@ -5,6 +5,7 @@ import { SocialSharing } from '@ionic-native/social-sharing'
 import { OrderModule } from 'ngx-order-pipe'
 import { CommonModule } from '@angular/common'
 
+import { SharedModule } from '../../shared/shared.module'
 import { EventPageModule } from '../../components/event/event.module'
 import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe'
 
@@ -14,6 +15,7 @@ import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe'
       SearchInfoPipe
    ],
    imports: [
+      SharedModule,
       EventPageModule,
       OrderModule,
       CommonModule,

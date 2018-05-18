@@ -9,6 +9,7 @@ import { ApplicationService } from '../../shared/services/application.service'
    templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {
+   title:string = "Meeting Master"
    today:number = new Date().getTime()
    searchText: string
    field: string = 'creationDate'
