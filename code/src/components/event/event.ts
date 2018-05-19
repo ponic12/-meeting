@@ -1155,6 +1155,83 @@ export class EventPage implements OnInit, OnDestroy {
             }
          }
       ]
+      /*********************
+       *** EVENTOS ***
+       [
+          {
+             id : "343523523423",
+             owner : "23432532534",
+             eventName: "Reunion de Consorcio",
+             description: "Reunion Besares 3950",
+             creationDate: 12325524324,
+             modDate: 12324142155,
+             estimatedDate: 1231231342432,
+             members: [
+               {
+                   idUser:123231321, 
+                   data: [
+                     {day:"180522", hours:[9,10,11,18,19,20]},
+                     {day:"180525", hours:[19,20]},
+                     {day:"180522", hours:[9,10,11]}
+                     ]
+               },
+               {
+                   idUser:2424242,
+                   data: [
+                     {day:"180522", hours:[18,19,20]},
+                     {day:"180525", hours:[20]},
+                     {day:"180527", hours:[10,11]}
+                     ]
+               },
+               {
+                   idUser:987654545677,
+                   data: [
+                     {day:"180523", hours:[18,19,20]},
+                     {day:"180525", hours:[20]}
+                     ]
+               },
+               {
+                   idUser:443332,
+                   data: [
+                     {day:"180522", hours:[19,20,21,22]}
+                     ]
+               },
+               {
+                   idUser:43433222,
+                   data: []
+               }
+             ]
+          }
+       ]
+
+
+       *** USUARIOS ***
+       [
+          {
+             id : "343523523423",
+             mail:"ponic12@gmail.com",
+             username: "ponic12",
+             name: "Pablo"
+             avatar: "http://google.com/sdfs34332434",
+             events:[
+               "343534335354353",
+               "454934343434343",
+               "354543333344422"
+             ]
+         },
+        {
+             id : "343523523423",
+             mail:"patriciagonzalezvillar@gmail.com",
+             username: "patriciagonzalezvillar",
+             name: "Pato"
+             avatar: "http://google.com/sdfs34332434",
+             events:[
+               "993930309380111",
+               "454934343434343"
+             ]
+         },         
+      **********************/
+      this.evt.data = ""
    }
    toggleMember(ev,u) {
      this.checkEditMode()

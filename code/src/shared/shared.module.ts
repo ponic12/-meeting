@@ -11,13 +11,13 @@ import { FirebaseService } from './services/firebase.service'
 
 
 export const firebaseConfig = {
-   apiKey: "AIzaSyAfVw8hebQtbQ94K7jILm1tbqbvjNe6FZs",
-   authDomain: "tecotoolbox-a4149.firebaseapp.com",
-   databaseURL: "https://tecotoolbox-a4149.firebaseio.com",
-   projectId: "tecotoolbox-a4149",
-   storageBucket: "tecotoolbox-a4149.appspot.com",
-   messagingSenderId: "103637821940"
-};
+   apiKey: "AIzaSyB1RfoKAz26WPlfiG7jHNt4nUqthyBRWQM",
+   authDomain: "events-12be3.firebaseapp.com",
+   databaseURL: "https://events-12be3.firebaseio.com",
+   projectId: "events-12be3",
+   storageBucket: "events-12be3.appspot.com",
+   messagingSenderId: "342119302614"
+ };
 
 
 @NgModule({
