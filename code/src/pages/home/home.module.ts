@@ -21,12 +21,12 @@ import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe'
       CommonModule,
       IonicPageModule.forChild(HomePage)
    ],
-   providers: [       
+   providers: [
       SocialSharing,
    ]
 })
-export class HomePageModule {
+export class HomeModule {
    constructor() {
-      console.log('HomePageModule constructor');
+      console.log('HomeModule constructor');
    }
 }

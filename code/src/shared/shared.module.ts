@@ -9,6 +9,8 @@ import { ApplicationService } from './services/application.service'
 import { GlobalService } from './services/global.service'
 import { FirebaseService } from './services/firebase.service'
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 export const firebaseConfig = {
    apiKey: "AIzaSyB1RfoKAz26WPlfiG7jHNt4nUqthyBRWQM",
@@ -25,8 +27,8 @@ export const firebaseConfig = {
       CommonModule,
       IonicModule,
       IonicStorageModule.forRoot(),
-      //  AngularFireModule.initializeApp(firebaseConfig),
-      //  AngularFirestoreModule
+      AngularFireModule.initializeApp(firebaseConfig),
+      AngularFirestoreModule
    ],
    declarations: [
       HoursComponent,
