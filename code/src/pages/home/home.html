@@ -1,13 +1,15 @@
-<tools-bar [title]="title"></tools-bar>
+<ion-header class="grdToolbar">
+  <img class="logoTipo" src="assets/imgs/calendar.png">
+  <div class="title">Meeting Master</div>
+  <ion-avatar item-start (click)="openMenuSheet()">
+    <img class="avatar" [src]="photoPath">
+  </ion-avatar>
+</ion-header>
 
-<ion-content class="backTB">
-  <!-- <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range> -->
+<div class="backHome">
   <div class="grdFindEvent">
+    <ion-icon name="search" class="searchIcon"></ion-icon>
     <input type="text" class="searchBar" placeholder="Buscar Evento" [(ngModel)]="searchText" />
-    <button ion-button (click)="addEvent()">
-      <ion-icon name="add"></ion-icon>
-      Agregar Evento
-    </button>
   </div>
   <ion-list>
     <!-- <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index"> -->
@@ -41,4 +43,9 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-</ion-content>
+  <ion-fab class="btnAddEvent" bottom right>
+    <button ion-fab mini (click)="addEvent()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</div>

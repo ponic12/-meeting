@@ -1,5 +1,9 @@
-<tools-bar [title]="title"></tools-bar>
-<ion-content class="backTB">
+<ion-header class="grdToolbar">
+  <img class="logoTipo" src="assets/imgs/calendar.png">
+  <div class="title">Evento</div>
+</ion-header>
+
+<ion-content class="backEvent">
   <div class="grdEvento">
     <div id="evento">
       <div class="grdEventInfo" *ngIf="editEventNameFlag === true">

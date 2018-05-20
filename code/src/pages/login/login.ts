@@ -65,7 +65,7 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    loginGoogle() {
       this.authSrv.loginGoogle().then(x => {
-         this.navCtrl.push('UsuarioPage')
+         this.navCtrl.push('HomePage')
       })
       // .then(data =>
       //   this.initUser(data)
@@ -82,7 +82,7 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    private go(data) {
       if (data)
-         this.navCtrl.setRoot('UsuarioPage', data);
+         this.navCtrl.setRoot('HomePage', data);
    }
 }
 
