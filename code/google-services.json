@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "342119302614",
+    "firebase_url": "https://events-12be3.firebaseio.com",
+    "project_id": "events-12be3",
+    "storage_bucket": "events-12be3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342119302614:android:d2d3b365cc282fd1",
+        "android_client_info": {
+          "package_name": "com.pp.meetingmaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342119302614-0mssspk8dran8pnls7itaaog1t3cf9kt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmRQp_0ZO8zbhfGP8yf5DLRlIOdvXxT_o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

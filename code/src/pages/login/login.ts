@@ -72,6 +72,12 @@ export class LoginPage implements OnInit, OnDestroy {
       // );
    }
 
+   loginFacebook(){
+      this.authSrv.loginFacebook().then(x => {
+         this.navCtrl.push('HomePage')
+      })
+   }
+
    private initUser(data) {
       var o = {
          username: this.username.toUpperCase(),

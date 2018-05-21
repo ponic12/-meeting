@@ -23,3 +23,5 @@ export class LoginModule {
       console.log('LoginModule constructor');
    }
 }
+
+/*https://events-12be3.firebaseapp.com/__/auth/handler */

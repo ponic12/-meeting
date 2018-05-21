@@ -39,6 +39,11 @@ export class AuthService {
       return this.oAuthLogin(provider);
    }
 
+   loginFacebook() {
+      const provider = new firebase.auth.FacebookAuthProvider();  
+      return this.oAuthLogin(provider);
+   }
+
    signOutUser() {
       this.afAuth.auth.signOut();
       //this.provider.loggedin = false;
@@ -57,13 +62,20 @@ export class AuthService {
 
    
    private oAuthLogin(provider) {
-      return this.afAuth.auth.signInWithRedirect(provider) // signInwithPopup para Browser
-         .then((cred) => {
-            this.updateUserData(cred.user);
-            // this.afAuth.auth.getRedirectResult().then(res=>                
-            //     console.log('logged in Google')
-            // )
+      return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
+         .then(()=>{
+            this.afAuth.auth.getRedirectResult()
+               .then(result=>{
+                  console.log(result)
+            })
+            .catch((err)=>console.log(err))
          })
+         // .then((cred) => {
+         //    this.updateUserData(cred.user);
+         //    // this.afAuth.auth.getRedirectResult().then(res=>                
+         //    //     console.log('logged in Google')
+         //    // )
+         // })
    }
    async signInUser(email, pass) {
       try {

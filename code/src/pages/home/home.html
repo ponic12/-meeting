@@ -1,5 +1,5 @@
 <ion-header class="grdToolbar">
-  <img class="logoTipo" src="assets/imgs/calendar.png">
+  <img class="logoTipo" src="assets/imgs/events.png">
   <div class="title">Meeting Master</div>
   <ion-avatar item-start (click)="openMenuSheet()">
     <img class="avatar" [src]="photoPath">
@@ -16,19 +16,24 @@
     <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'creationDate':true">
       <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }">
         <div>
-          Creacion: {{evt.creationDate | date:'dd/MM/yyyy'}}
+          <strong>Evento:</strong> {{evt.eventName}}
         </div>
         <div>
-          Ultima modificacion: {{evt.lastModification | date:'dd/MM/yyyy HH:mm'}}
+          <strong>Descripcion:</strong> {{evt.description}}
         </div>
         <div>
-          Fecha estimada: {{evt.estimatedDate | date:'dd/MM/yyyy HH:mm'}}
+           <strong>Creacion:</strong>
+           {{evt.creationDate | date:'dd/MM/yyyy'}}
         </div>
         <div>
-          Evento: {{evt.eventName}}
+           <strong>
+               Ultima modificacion:
+           </strong>
+           {{evt.lastModification | date:'dd/MM/yyyy HH:mm'}}
         </div>
         <div>
-          Descripcion: {{evt.description}}
+           <strong>Fecha estimada: </strong>
+          {{evt.estimatedDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
       </ion-item>
       <ion-item-options side="right">
