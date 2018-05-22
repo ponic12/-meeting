@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
+import { Facebook } from '@ionic-native/facebook'
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
@@ -29,6 +29,7 @@ import { MeetingApp } from './app.component';
    providers: [
       StatusBar,
       SplashScreen,
+      Facebook,
       { provide: ErrorHandler, useClass: IonicErrorHandler }
    ]
 })

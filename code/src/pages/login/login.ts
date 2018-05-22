@@ -44,12 +44,12 @@ export class LoginPage implements OnInit, OnDestroy {
       this.authSrv.verifyLoggedIn().subscribe(data => {
          if (data) {
             var o = {
-               //username:this.fs.getUserKey(data.displayName),
+               username:data.displayName,
                email: data.email,
                photoURL: data.photoURL
             };
             this.globalSrv.save('user', o);
-            this.go(data);
+            this.go(o);
          }
       });
    }

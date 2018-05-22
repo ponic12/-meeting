@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
+import { Platform } from 'ionic-angular'
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook'
 
-import * as firebase from 'firebase/app';
+//import * as firebase from 'firebase/app';
+import firebase from 'firebase'
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
@@ -17,17 +20,20 @@ export class AuthService {
    user: Observable<User>;
 
    constructor(
+      private platform: Platform,
       private afAuth: AngularFireAuth,
-      private afs: AngularFirestore) {
+      private afs: AngularFirestore, 
+      private facebook:Facebook
+   ) {
       console.log('AuthService constructor');
 
-      this.user = this.afAuth.authState
-         .switchMap(user => {
-            if (user)
-               return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-            else
-               return Observable.of(null);
-         });
+      // this.user = this.afAuth.authState
+      //    .switchMap(user => {
+      //       if (user)
+      //          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+      //       else
+      //          return Observable.of(null);
+      //    });
    }
 
    verifyLoggedIn() { 
@@ -40,8 +46,22 @@ export class AuthService {
    }
 
    loginFacebook() {
-      const provider = new firebase.auth.FacebookAuthProvider();  
-      return this.oAuthLogin(provider);
+      if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
+         const prom = this.facebook.login(['public_profile','email']).then((loginResponse)=>{
+            let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken)
+            firebase.auth().signInWithCredential(credential).then((info)=>{
+               console.log('info: ', info)
+            })
+            .catch((err)=>{
+               console.log('Error: ', err)
+            })
+         })
+         return prom
+      }
+      else{
+         const provider = new firebase.auth.FacebookAuthProvider();  
+         return this.oAuthLogin(provider);
+      }
    }
 
    signOutUser() {
@@ -65,10 +85,13 @@ export class AuthService {
       return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
          .then(()=>{
             this.afAuth.auth.getRedirectResult()
-               .then(result=>{
-                  console.log(result)
+               .then((result)=>{
+                  this.updateUserData(result);
+                  console.log("res: ", result)
             })
-            .catch((err)=>console.log(err))
+            .catch((err)=>{
+               console.log(err)
+            })
          })
          // .then((cred) => {
          //    this.updateUserData(cred.user);
