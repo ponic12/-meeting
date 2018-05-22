@@ -14,6 +14,7 @@ import { FirebaseService } from '../../shared/services/firebase.service';
    templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit, OnDestroy {
+   loginMode: string = "login"
    username: string;
    email: string;
    password: string;
@@ -44,7 +45,7 @@ export class LoginPage implements OnInit, OnDestroy {
       this.authSrv.verifyLoggedIn().subscribe(data => {
          if (data) {
             var o = {
-               username:data.displayName,
+               username: data.displayName,
                email: data.email,
                photoURL: data.photoURL
             };
@@ -54,7 +55,7 @@ export class LoginPage implements OnInit, OnDestroy {
       });
    }
    signup(): void {
-      this.navCtrl.push('SignUpPage');
+      this.loginMode = "signUp"
    }
    signin() {
       // this.authSrv.signInUser(this.email, this.password).then(data =>{
@@ -72,7 +73,7 @@ export class LoginPage implements OnInit, OnDestroy {
       // );
    }
 
-   loginFacebook(){
+   loginFacebook() {
       this.authSrv.loginFacebook().then(x => {
          this.navCtrl.push('HomePage')
       })

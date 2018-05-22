@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core'
 import { Platform } from 'ionic-angular'
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook'
 
-//import * as firebase from 'firebase/app';
-import firebase from 'firebase'
+import * as firebase from 'firebase/app'; // ANDROID
+//import firebase from 'firebase'   // WEB
+
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
@@ -13,6 +14,7 @@ import 'rxjs/operator/switchMap';
 // import 'rxjs/add/observable/throw';
 
 import { User } from './user';
+import { FirebaseApp } from 'angularfire2';
 
 
 @Injectable()
@@ -44,26 +46,6 @@ export class AuthService {
       const provider = new firebase.auth.GoogleAuthProvider();
       return this.oAuthLogin(provider);
    }
-
-   loginFacebook() {
-      if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
-         const prom = this.facebook.login(['public_profile','email']).then((loginResponse)=>{
-            let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken)
-            firebase.auth().signInWithCredential(credential).then((info)=>{
-               console.log('info: ', info)
-            })
-            .catch((err)=>{
-               console.log('Error: ', err)
-            })
-         })
-         return prom
-      }
-      else{
-         const provider = new firebase.auth.FacebookAuthProvider();  
-         return this.oAuthLogin(provider);
-      }
-   }
-
    signOutUser() {
       this.afAuth.auth.signOut();
       //this.provider.loggedin = false;
@@ -78,6 +60,47 @@ export class AuthService {
       //         updateUI(null);
       //     }
       // });
+   }
+
+   loginFacebook() {
+      if (this.platform.is('cordova')){
+         return this.facebook.login(['public_profile','email']).then(res =>{
+            const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
+            return firebase.auth().signInWithCredential(facebookCredential)
+         })
+      }
+      else{
+         return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(res =>{
+            const fbo = {
+               displayName: res.user.displayName,
+               photoURL: res.user.photoURL,
+               email: res.user.email,
+               uid: res.user.uid,
+               username: res.user.username
+            }
+            this.updateUserData(fbo)
+            console.log(fbo)
+         })
+      }
+      // if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
+      //    const prom = this.facebook.login(['public_profile','email']).then((loginResponse)=>{
+      //       let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken)
+      //       firebase.auth().signInWithCredential(credential).then((info)=>{
+      //          console.log('info: ', info)
+      //       })
+      //       .catch((err)=>{
+      //          console.log('Error: ', err)
+      //       })
+      //    })
+      //    return prom
+      // }
+      // else{
+      //    const provider = new firebase.auth.FacebookAuthProvider();  
+      //    return this.oAuthLogin(provider);
+      // }
+   }
+   logoutFacebook(){
+      this.afAuth.auth.signOut();
    }
 
    

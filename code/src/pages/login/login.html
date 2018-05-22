@@ -8,7 +8,7 @@
   </ion-row>
 
   <!-- <user-profile></user-profile> -->
-  <div>
+  <div *ngIf="loginMode === 'login'">
     <form [formGroup]="todo">
       <ion-row class="backForm">
         <ion-col>
@@ -39,18 +39,28 @@
         </ion-col>
       </ion-row>
       <ion-row>
+        <ion-col>
+
+        </ion-col>
         <ion-col style="text-align: center">
           <button (click)="loginGoogle()" class="btnGoogle" type="submit">
             <img src="assets/imgs/google.png">
           </button>
         </ion-col>
         <ion-col style="text-align: center">
-            <button (click)="loginFacebook()" class="btnFacebook" type="submit">
-              <img src="assets/imgs/facebook.png">
-            </button>
-          </ion-col>
+          <button (click)="loginFacebook()" class="btnFacebook" type="submit">
+            <img src="assets/imgs/facebook.png">
+          </button>
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
       </ion-row>
     </form>
+  </div>
+
+  <div *ngIf="loginMode === 'signUp'">
+
   </div>
 
 </ion-content>

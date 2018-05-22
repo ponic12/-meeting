@@ -94,10 +94,10 @@
         <variable name="ANDROID_PATHPREFIX" value="/" />
     </plugin>
     <plugin name="cordova-universal-links-plugin" spec="^1.2.1" />
-    <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-facebook4" spec="^2.1.0">
         <variable name="APP_ID" value="2253076011385978" />
         <variable name="APP_NAME" value="MM" />
         <variable name="ANDROID_SDK_VERSION" value="4.+" />
     </plugin>
+    <engine name="android" spec="6.4.0" />
 </widget>
