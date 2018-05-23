@@ -4,6 +4,7 @@ import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service'
 import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
+import { FirebaseService } from '../../shared/services/firebase.service';
 
 @IonicPage()
 @Component({
@@ -12,18 +13,18 @@ import { AuthService } from '../../shared/core/auth.service';
 })
 export class HomePage implements OnInit, OnDestroy {
    title: string = "Meeting Master"
-   userInfo: any
+   user: any
    photoPath: string
    today: number = new Date().getTime()
    searchText: string
    field: string = 'creationDate'
-   dataEventos: any = [
-      { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Consorcio Besares 3950', description: 'Reunion de consorcio para definir tareas' },
-      { creationDate: 1524295836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Cumple Gallo', description: 'Fiesta sorpresa' },
-      { creationDate: 1522294836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Vacaciones invierno 2018', description: 'Rango de fechas de vacas' },
-      { creationDate: 1521293836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Viaje Espana 2018', description: 'Reunion de integrantes' },
-      { creationDate: 1520292836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Reunion Siemens', description: 'Ex trabajadores de Siemens' }
-   ]
+   dataEventos: any = []
+   //    { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Consorcio Besares 3950', description: 'Reunion de consorcio para definir tareas' },
+   //    { creationDate: 1524295836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Cumple Gallo', description: 'Fiesta sorpresa' },
+   //    { creationDate: 1522294836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Vacaciones invierno 2018', description: 'Rango de fechas de vacas' },
+   //    { creationDate: 1521293836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Viaje Espana 2018', description: 'Reunion de integrantes' },
+   //    { creationDate: 1520292836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Reunion Siemens', description: 'Ex trabajadores de Siemens' }
+   // ]
 
    constructor(
       public navCtrl: NavController,
@@ -32,10 +33,13 @@ export class HomePage implements OnInit, OnDestroy {
       private appSrv: ApplicationService,
       private globalSrv: GlobalService,
       private authSrv: AuthService,
+      private fs:FirebaseService,
       private socialSharing: SocialSharing
    ) {
       console.log('HomePage contructor')
 
+      this.user = this.globalSrv.getVar('user')
+      
       let ph = this.navParams.get('photoURL')
       if (ph)
          this.photoPath = ph
@@ -45,7 +49,9 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-
+      this.fs.getUserData(this.user.email).subscribe(data=>{
+         this.dataEventos = data.events
+      })
    }
    ngOnDestroy() {
       console.log('HomePage destroy')

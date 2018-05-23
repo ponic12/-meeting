@@ -15,7 +15,6 @@ import { FirebaseService } from '../../shared/services/firebase.service';
 })
 export class LoginPage implements OnInit, OnDestroy {
    loginMode: string = "login"
-   username: string;
    email: string;
    password: string;
    todo: FormGroup;
@@ -30,7 +29,7 @@ export class LoginPage implements OnInit, OnDestroy {
    ) {
       console.log('LoginPage constructor');
       this.todo = this.formBuilder.group({
-         fcn_username: ['', [Validators.required]],
+         fcn_email: ['', [Validators.required]],
          fcn_password: ['', [Validators.required]]
       });
    }
@@ -57,12 +56,20 @@ export class LoginPage implements OnInit, OnDestroy {
    signup(): void {
       this.loginMode = "signUp"
    }
+   register(): void {
+      this.authSrv.registerUser(this.email, this.password).then((res) => {
+         this.appSrv.message('Atencion', 'Usuario registrado OK!')
+      })
+   }
    signin() {
-      // this.authSrv.signInUser(this.email, this.password).then(data =>{
-      //   this.initUser(data)
-      // });
-      var data = { displayName: this.username };
-      this.initUser(data);
+      this.authSrv.signInUser(this.email, this.password).then(data => {
+         if (data === undefined)
+            this.appSrv.message('Error', 'Usuario o contraseña no valida!')
+         else
+            this.initUser(data)
+      }).catch(err => {
+         this.appSrv.message('Error', 'Falla en la autenticacion!')
+      });
    }
    loginGoogle() {
       this.authSrv.loginGoogle().then(x => {
@@ -72,7 +79,6 @@ export class LoginPage implements OnInit, OnDestroy {
       //   this.initUser(data)
       // );
    }
-
    loginFacebook() {
       this.authSrv.loginFacebook().then(x => {
          this.navCtrl.push('HomePage')
@@ -81,7 +87,6 @@ export class LoginPage implements OnInit, OnDestroy {
 
    private initUser(data) {
       var o = {
-         username: this.username.toUpperCase(),
          email: this.email
       };
       this.globalSrv.save('user', o);

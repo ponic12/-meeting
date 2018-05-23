@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-// import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-// import { AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestoreDocument } from 'angularfire2/firestore';
 
 
 import { Observable } from 'rxjs/Observable';
@@ -17,12 +17,17 @@ export class FirebaseService {
     leg:string;
 
     constructor(
-        //private afs: AngularFirestore
+        private afs: AngularFirestore
     ) {
         console.log('FirebaseService constructor');
         //afs.firestore.settings({timestampsInSnapshots:true})
     }
 
+    getUserData(usrId): Observable<any>{
+      const ref = this.afs.collection('users').doc(usrId)
+      const obs = ref.valueChanges()
+      return obs
+    }
     setDeviceData(payload):void{
         //this.afs.collection('devices').doc(payload.uuid).set(payload, { merge: true });
     }

@@ -104,6 +104,30 @@ export class AuthService {
    }
 
    
+   async signInUser(email, pass) {
+      const res = await this.afAuth.auth.signInWithEmailAndPassword(email, pass)
+      console.log(res)
+      return res
+      // try {
+      //    const res = await this.afAuth.auth.signInWithEmailAndPassword(email, pass)
+      //    console.log(res)
+      // }
+      // catch (err) {
+      //    console.error(err)
+      // }
+   }
+   async registerUser(email, pass) {
+      try {
+         const a = 1
+         const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, pass)
+         console.log(res)
+      }
+      catch (err) {
+         console.error(err) 
+      }
+   }
+
+
    private oAuthLogin(provider) {
       return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
          .then(()=>{
@@ -123,24 +147,7 @@ export class AuthService {
          //    // )
          // })
    }
-   async signInUser(email, pass) {
-      try {
-         const res = await this.afAuth.auth.signInWithEmailAndPassword(email, pass);
-         console.log(res);
-      }
-      catch (err) {
-         console.error(err);
-      }
-   }
-   async registerUser(email, pass) {
-      try {
-         const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, pass);
-         console.log(res);
-      }
-      catch (err) {
-         console.error(err);
-      }
-   }
+
    private updateUserData(user) {
       const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
       const data: User = {
