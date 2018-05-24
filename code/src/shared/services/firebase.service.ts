@@ -23,6 +23,13 @@ export class FirebaseService {
         //afs.firestore.settings({timestampsInSnapshots:true})
     }
 
+    addUser(usr){
+      const ref = this.afs.collection('users').add(usr)
+      return ref; 
+    }
+    updateUser(usr){
+       const ref = this.afs.collection('users').doc(usr.email).set(usr)
+    }
     getUserData(usrId): Observable<any>{
       const ref = this.afs.collection('users').doc(usrId)
       const obs = ref.valueChanges()

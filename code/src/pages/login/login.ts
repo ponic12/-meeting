@@ -15,6 +15,7 @@ import { FirebaseService } from '../../shared/services/firebase.service';
 })
 export class LoginPage implements OnInit, OnDestroy {
    loginMode: string = "login"
+   displayName: string
    email: string;
    password: string;
    todo: FormGroup;
@@ -53,12 +54,17 @@ export class LoginPage implements OnInit, OnDestroy {
          }
       });
    }
-   signup(): void {
-      this.loginMode = "signUp"
-   }
    register(): void {
       this.authSrv.registerUser(this.email, this.password).then((res) => {
-         this.appSrv.message('Atencion', 'Usuario registrado OK!')
+         const usr = {
+            id: this.email,
+            email: this.email,
+            displayName: this.displayName,
+            photoURL:'assets/imgs/person.png'
+         }
+         this.fs.addUser(usr).then(x =>{
+            this.appSrv.message('Atencion', 'Usuario registrado OK!')
+         })
       })
    }
    signin() {
@@ -73,14 +79,13 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    loginGoogle() {
       this.authSrv.loginGoogle().then(x => {
+         this.fs.updateUser(x)
          this.navCtrl.push('HomePage')
       })
-      // .then(data =>
-      //   this.initUser(data)
-      // );
    }
    loginFacebook() {
       this.authSrv.loginFacebook().then(x => {
+         this.fs.updateUser(x)
          this.navCtrl.push('HomePage')
       })
    }
