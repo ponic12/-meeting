@@ -1,12 +1,11 @@
 page-event {
-   .backEvent {
-      // margin-top: 80px;
-      min-width: 310px;
-      background: -webkit-radial-gradient(#fff 28%, #d6d5d5 75%) !important;
-      animation-name: fadeIn;
-      animation-duration: 2s;
-    }
-
+  .backEvent {
+    // margin-top: 80px;
+    min-width: 310px;
+    background: -webkit-radial-gradient(#fff 28%, #d6d5d5 75%) !important;
+    animation-name: fadeIn;
+    animation-duration: 2s;
+  }
   .abs {
     position: absolute;
     height: 100px;
@@ -34,6 +33,10 @@ page-event {
   }
   #participantes {
     grid-area: participantes
+  }
+  .grdInvitations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
   .grdMembers {
     display: grid;

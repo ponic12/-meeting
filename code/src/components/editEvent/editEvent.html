@@ -1,0 +1,52 @@
+<ion-header class="grdToolbar">
+
+  <img class="logoTipo" src="assets/imgs/calendar.png">
+  <div class="title">Evento</div>
+  <ion-buttons end>
+   <button ion-button (click)="closeModal()" >Cerrar</button> 
+  </ion-buttons>
+</ion-header>
+
+<ion-content class="backEvent">
+  <div class="grdEvento">
+    <div id="evento">
+      <ion-item class="grdEventInfo">
+        <input type="text" class="searchBar1" placeholder="Nombre del evento" [(ngModel)]="evt.eventName" (keypress)="onKeyEvent($event)"
+        />
+        <input type="text" class="searchBar1" placeholder="Descripcion del evento" [(ngModel)]="evt.description" />
+      </ion-item>
+    </div>
+    <div id="fCreacion">
+      {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
+    </div>
+    <div id="identificador">
+         <input type="text" class="searchBarr" placeholder="Nombre de usuario" [(ngModel)]="evt.username" (keypress)="onKeyUser($event)"
+         />
+    </div>
+    <div id="participantes">
+      <div class="grdInvitations">
+        <div>
+          <button ion-button (click)="addContact()">
+            <ion-icon name="person"></ion-icon>
+            Agregar contacto
+          </button>
+        </div>
+        <div>
+          <button ion-button (click)="share()">
+            <ion-icon name="share"></ion-icon>
+            Compartir
+          </button>
+        </div>
+      </div>
+      <div class="grdMembers">
+        <div *ngFor="let usr of evt.members" class="member">
+          <div>
+            <img *ngIf="availability(usr.username)" src="assets/imgs/check.png" class="selMember">
+          </div>
+          <div style="margin-top:4px">{{usr.username}}</div>
+          <ion-toggle [(ngModel)]="usr.onoff" (ionChange)="toggleMember($event)" style="padding:5px"></ion-toggle>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

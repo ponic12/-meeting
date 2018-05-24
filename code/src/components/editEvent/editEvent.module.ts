@@ -2,26 +2,25 @@ import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 import { CommonModule } from '@angular/common'
 import { SocialSharing } from '@ionic-native/social-sharing'
-import { EventPage } from './event'
-import { EventService } from './event.service'
+import { EditEventPage } from './editEvent'
 import { SharedModule } from '../../shared/shared.module'
 
 
 @NgModule({
    declarations: [
-      EventPage
+      EditEventPage
    ],
    imports: [
       SharedModule,
       CommonModule,
-      IonicPageModule.forChild(EventPage)
+      IonicPageModule.forChild(EditEventPage)
    ],
-   exports: [EventPage],
-   providers: [EventService, SocialSharing]
+   exports: [EditEventPage],
+   providers: [SocialSharing]
 })
 
-export class EventPageModule {
+export class EditEventPageModule {
    constructor() {
-      console.log('EventPageModule constructor');
+      console.log('EditEventPageModule constructor');
    }
 };

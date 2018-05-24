@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 import { HomePage } from './home'
-import { SocialSharing } from '@ionic-native/social-sharing'
 import { OrderModule } from 'ngx-order-pipe'
 import { CommonModule } from '@angular/common'
 
@@ -21,9 +20,7 @@ import { SearchInfoPipe } from '../../shared/pipes/search-info.pipe'
       CommonModule,
       IonicPageModule.forChild(HomePage)
    ],
-   providers: [
-      SocialSharing,
-   ]
+   providers: []
 })
 export class HomeModule {
    constructor() {

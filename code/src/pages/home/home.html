@@ -13,7 +13,7 @@
   </div>
   <ion-list>
     <!-- <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index"> -->
-    <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'creationDate':true">
+    <ion-item-sliding *ngFor="let evt of dataEventos | async | searchInfo: searchText | orderBy:'creationDate':true">
       <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }">
         <div>
           <strong>Evento:</strong> {{evt.eventName}}
@@ -45,6 +45,9 @@
         <button ion-button (click)="showEvent(evt, i)" color="secondary">
           <ion-icon name="calendar"></ion-icon> Entrar
         </button>
+        <button ion-button (click)="editEvent(evt, i)" color="dark">
+            <ion-icon name="create"></ion-icon> Editar
+          </button>        
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

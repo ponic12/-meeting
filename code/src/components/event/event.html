@@ -6,12 +6,12 @@
 <ion-content class="backEvent">
   <div class="grdEvento">
     <div id="evento">
-      <ion-item class="grdEventInfo" *ngIf="editEventNameFlag === true">
+      <ion-item class="grdEventInfo" *ngIf="editMode === true">
         <input type="text" class="searchBar1" placeholder="Nombre del evento" [(ngModel)]="evt.eventName" (keypress)="onKeyEvent($event)"
         />
         <input type="text" class="searchBar1" placeholder="Descripcion del evento" [(ngModel)]="evt.description" />
       </ion-item>
-      <ion-item *ngIf="editEventNameFlag === false">
+      <ion-item *ngIf="editMode === false">
         <ion-label>{{evt.eventName}}</ion-label>
         <div>{{evt.description}}</div>
         <button (click)="editEventNameFlag = true">
@@ -23,18 +23,32 @@
       {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
     </div>
     <div id="identificador">
-      <div *ngIf="editUsernameFlag === true">
+      <div *ngIf="editMode === true">
         <input type="text" class="searchBarr" placeholder="Nombre de usuario" [(ngModel)]="evt.username" (keypress)="onKeyUser($event)"
         />
       </div>
-      <div *ngIf="editUsernameFlag === false">
+      <div *ngIf="editMode === false">
         <div>{{evt.username}}</div>
-        <button (click)="editUsernameFlag = true">
+        <!-- <button (click)="editUsernameFlag = true">
           <ion-icon name="create"></ion-icon>
-        </button>
+        </button> -->
       </div>
     </div>
     <div id="participantes">
+      <div *ngIf="editMode === true" class="grdInvitations">
+        <div>
+          <button ion-button (click)="addContact()">
+            <ion-icon name="person"></ion-icon>
+            Agregar contacto
+          </button>
+        </div>
+        <div>
+          <button ion-button (click)="share()">
+            <ion-icon name="share"></ion-icon>
+            Compartir
+          </button>
+        </div>
+      </div>
       <div class="grdMembers">
         <div *ngFor="let usr of evt.members" class="member">
           <div>

@@ -6,7 +6,8 @@
     </ion-col>
     <ion-col col-3></ion-col>
   </ion-row>
-
+  
+  <ng-template #content>content here...</ng-template>
   <!-- <user-profile></user-profile> -->
   <div *ngIf="loginMode === 'login'">
     <form [formGroup]="todo">

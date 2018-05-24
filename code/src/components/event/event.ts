@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, NavParams, Events } from 'ionic-angular';
-
+import { SocialSharing } from '@ionic-native/social-sharing'
 import { EventService } from './event.service'
 import { ApplicationService } from '../../shared/services/application.service';
 import { GlobalService } from '../../shared/services/global.service';
@@ -16,8 +16,7 @@ export class EventPage implements OnInit, OnDestroy {
    title: string = "Evento"
    selectedMembers:any
    toggleMode:boolean= false;
-   editEventNameFlag: boolean = false
-   editUsernameFlag: boolean = false
+   editMode: boolean = false
    dayKeys:any
    evt: any
 
@@ -25,7 +24,8 @@ export class EventPage implements OnInit, OnDestroy {
       private navParams: NavParams,
       private appSrv: ApplicationService,
       private globalSrv: GlobalService,
-      private evtSrv: EventService
+      private evtSrv: EventService,
+      private socialSharing: SocialSharing
    ) {
       console.log('EventPage constructor');
    }
@@ -35,8 +35,7 @@ export class EventPage implements OnInit, OnDestroy {
    ngOnInit(): void {
       console.log('EventPage init');
       this.evt = this.navParams.get('evt')
-      this.editEventNameFlag = (this.evt.creationDate === undefined)
-      this.editUsernameFlag = this.editEventNameFlag
+      this.editMode = (this.evt.creationDate === undefined)
       this.evt.members = [
          {
             username: 'Pablo', onoff: true, days: {
@@ -1239,12 +1238,12 @@ export class EventPage implements OnInit, OnDestroy {
    }
    onKeyEvent(event) {
       if (event.keyCode == 13) {
-         this.editEventNameFlag = false
+         //this.editEventNameFlag = false
       }
    }
    onKeyUser(event) {
       if (event.keyCode == 13) {
-         this.editUsernameFlag = false
+         //this.editMode = false
       }
    }
    availability(username){
@@ -1258,6 +1257,33 @@ export class EventPage implements OnInit, OnDestroy {
       else
          this.selectedMembers = ev.hr.members
    }
+
+   addContact(){
+
+   }
+   share() {
+      this.socialSharing.canShareVia('Whatsapp').then(() => {
+         this.socialSharing.shareViaWhatsApp('Invitacion a evento!', 'http://www.clarin.com').then(() => {
+            this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
+         }).catch(() => {
+            this.appSrv.message('Error', 'No posee Whatsapp')
+         })
+      })
+
+      // this.socialSharing.canShareViaEmail().then(() => {
+      //    // Sharing via email is possible
+      // }).catch(() => {
+      //    // Sharing via email is not possible
+      // });
+
+      // // Share via email
+      // this.socialSharing..shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
+      //    // Success!
+      // }).catch(() => {
+      //    // Error!
+      // });
+   }
+
    private checkEditMode(){
       let cnt = 0
       this.evt.members.forEach(m => {

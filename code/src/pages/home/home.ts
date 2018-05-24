@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage, NavParams, ActionSheetController } from 'ionic-angular'
-import { SocialSharing } from '@ionic-native/social-sharing'
+import { NavController, IonicPage, NavParams, ActionSheetController, ModalController } from 'ionic-angular'
 import { ApplicationService } from '../../shared/services/application.service'
 import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
@@ -33,8 +32,8 @@ export class HomePage implements OnInit, OnDestroy {
       private appSrv: ApplicationService,
       private globalSrv: GlobalService,
       private authSrv: AuthService,
-      private fs:FirebaseService,
-      private socialSharing: SocialSharing
+      private modal: ModalController,
+      private fs:FirebaseService
    ) {
       console.log('HomePage contructor')
 
@@ -58,8 +57,9 @@ export class HomePage implements OnInit, OnDestroy {
    }
 
    addEvent() {
-      const ev = { name: this.searchText }
-      this.navCtrl.push('EventPage', { evt: ev })
+      const mod = this.modal.create('EditEventPage', {evt:{}}, {})
+      mod.present()
+      //this.navCtrl.push('EventPage', { evt: ev })
    }
    removeEvent(ev, i) {
 
@@ -67,28 +67,11 @@ export class HomePage implements OnInit, OnDestroy {
    showEvent(ev, i) {
       this.navCtrl.push('EventPage', { evt: ev })
    }
-   share() {
-      this.socialSharing.canShareVia('Whatsapp').then(() => {
-         this.socialSharing.shareViaWhatsApp('Invitacion a evento!', 'http://www.clarin.com').then(() => {
-            this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
-         }).catch(() => {
-            this.appSrv.message('Error', 'No posee Whatsapp')
-         })
-      })
-
-      // this.socialSharing.canShareViaEmail().then(() => {
-      //    // Sharing via email is possible
-      // }).catch(() => {
-      //    // Sharing via email is not possible
-      // });
-
-      // // Share via email
-      // this.socialSharing..shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
-      //    // Success!
-      // }).catch(() => {
-      //    // Error!
-      // });
+   editEvent(ev, i){
+      const mod = this.modal.create('EditEventPage', {evt:ev}, {})
+      mod.present()
    }
+
    openMenuSheet() {
       let actionSheet = this.actionCtrl.create({
          title: 'Opciones',
