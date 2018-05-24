@@ -91,10 +91,7 @@ export class LoginPage implements OnInit, OnDestroy {
    }
 
    private initUser(data) {
-      var o = {
-         email: this.email
-      };
-      this.globalSrv.save('user', o);
+      this.globalSrv.save('user', data);
       this.go(data);
    }
    private go(data) {

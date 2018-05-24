@@ -28,15 +28,12 @@ export class FirebaseService {
       return ref; 
     }
     updateUser(usr){
-       const ref = this.afs.collection('users').doc(usr.email).set(usr)
+       const ref = this.afs.collection('users').doc(usr.email).set(usr, { merge: true })
     }
     getUserData(usrId): Observable<any>{
       const ref = this.afs.collection('users').doc(usrId)
       const obs = ref.valueChanges()
       return obs
-    }
-    setDeviceData(payload):void{
-        //this.afs.collection('devices').doc(payload.uuid).set(payload, { merge: true });
     }
 
     addEvent(evt){

@@ -39,11 +39,11 @@ export class HomePage implements OnInit, OnDestroy {
 
       this.user = this.globalSrv.getVar('user')
       
-      let ph = this.navParams.get('photoURL')
-      if (ph)
-         this.photoPath = ph
-      else
-         this.photoPath = "assets/imgs/person.png"
+      // let ph = this.user.photoURL// this.navParams.get('photoURL')
+      // if (ph)
+      //    this.photoPath = ph
+      // else
+      //    this.photoPath = "assets/imgs/person.png"
    }
 
    ngOnInit() {
