@@ -32,8 +32,11 @@ export class EditEventPage implements OnInit, OnDestroy {
    }
 
    closeModal(){
-      this.view.dismiss()
-        
+      const data ={
+         evt:this.evt,
+         dirty:true
+      }
+      this.view.dismiss(data)
    }
    
 }

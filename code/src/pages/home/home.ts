@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage, NavParams, ActionSheetController, ModalController } from 'ionic-angular'
+import { NavController, IonicPage, NavParams, ActionSheetController, ModalController, Modal } from 'ionic-angular'
 import { ApplicationService } from '../../shared/services/application.service'
 import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
@@ -17,7 +17,7 @@ export class HomePage implements OnInit, OnDestroy {
    today: number = new Date().getTime()
    searchText: string
    field: string = 'creationDate'
-   dataEventos: any = []
+   userInfo: any
    //    { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Consorcio Besares 3950', description: 'Reunion de consorcio para definir tareas' },
    //    { creationDate: 1524295836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Cumple Gallo', description: 'Fiesta sorpresa' },
    //    { creationDate: 1522294836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Vacaciones invierno 2018', description: 'Rango de fechas de vacas' },
@@ -49,7 +49,7 @@ export class HomePage implements OnInit, OnDestroy {
    ngOnInit() {
       console.log('HomePage init')
       this.fs.getUserData(this.user.email).subscribe(data=>{
-         this.dataEventos = data.events
+         this.userInfo = data
       })
    }
    ngOnDestroy() {
@@ -57,9 +57,11 @@ export class HomePage implements OnInit, OnDestroy {
    }
 
    addEvent() {
-      const mod = this.modal.create('EditEventPage', {evt:{}}, {})
+      const mod: Modal = this.modal.create('EditEventPage', {evt:{}}, {})
       mod.present()
-      //this.navCtrl.push('EventPage', { evt: ev })
+      mod.onDidDismiss(evt=>{
+         this.fs.addEvent(evt)
+      })
    }
    removeEvent(ev, i) {
 
@@ -68,8 +70,11 @@ export class HomePage implements OnInit, OnDestroy {
       this.navCtrl.push('EventPage', { evt: ev })
    }
    editEvent(ev, i){
-      const mod = this.modal.create('EditEventPage', {evt:ev}, {})
+      const mod: Modal = this.modal.create('EditEventPage', {evt:ev}, {})
       mod.present()
+      mod.onDidDismiss(evt=>{
+         this.fs.saveEvent(evt)
+      })
    }
 
    openMenuSheet() {

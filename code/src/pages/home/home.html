@@ -11,9 +11,9 @@
     <ion-icon name="search" class="searchIcon"></ion-icon>
     <input type="text" class="searchBar" placeholder="Buscar Evento" [(ngModel)]="searchText" />
   </div>
-  <ion-list>
+  <ion-list *ngIf="userInfo">
     <!-- <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index"> -->
-    <ion-item-sliding *ngFor="let evt of dataEventos | async | searchInfo: searchText | orderBy:'creationDate':true">
+    <ion-item-sliding *ngFor="let evt of userInfo.events| searchInfo: searchText | orderBy:'creationDate':true">
       <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }">
         <div>
           <strong>Evento:</strong> {{evt.eventName}}

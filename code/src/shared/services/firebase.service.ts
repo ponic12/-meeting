@@ -32,8 +32,13 @@ export class FirebaseService {
         //this.afs.collection('devices').doc(payload.uuid).set(payload, { merge: true });
     }
 
-    saveToolEvent(group, tool){
-        let d = new Date().getTime();
-        //this.afs.collection('toolsEvents').doc(d.toString()).set({'group':group, 'tool':tool});
+    addEvent(evt){
+      evt.creationDate = new Date().getTime()
+      evt.modificationDate = new Date().getTime()
+      this.afs.collection('events').add(evt)
+    }
+    saveEvent(evt){
+        evt.modificationDate = new Date().getTime()
+        this.afs.collection('events').doc(evt.id).set(evt)
     }
 }
