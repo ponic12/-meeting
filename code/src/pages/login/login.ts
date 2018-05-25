@@ -15,6 +15,7 @@ import { FirebaseService } from '../../shared/services/firebase.service';
 })
 export class LoginPage implements OnInit, OnDestroy {
    loginMode: string = "login"
+   username:string
    displayName: string
    email: string;
    password: string;
@@ -42,25 +43,31 @@ export class LoginPage implements OnInit, OnDestroy {
       // this.globalSrv.get('user').subscribe(data =>
       //   this.go(data)
       // );
-      this.authSrv.verifyLoggedIn().subscribe(data => {
-         if (data) {
-            var o = {
-               username: data.displayName,
-               email: data.email,
-               photoURL: data.photoURL
-            };
-            this.globalSrv.save('user', o);
-            this.go(o);
-         }
-      });
+
+      // this.authSrv.verifyLoggedIn().subscribe(data => {
+      //    if (data) {
+      //       var o = {
+      //          username: data.displayName,
+      //          email: data.email,
+      //          photoURL: data.photoURL
+      //       };
+      //       this.globalSrv.save('user', o);
+      //       this.navCtrl.setRoot('HomePage', data);
+      //    }
+      // });
    }
    register(): void {
       this.authSrv.registerUser(this.email, this.password).then((res) => {
+         if (!res) {
+            this.appSrv.message('Error', 'Usuario ya registrado!')
+            return
+         }            
          const usr = {
-            id: this.email,
             email: this.email,
-            displayName: this.displayName,
-            photoURL:'assets/imgs/person.png'
+            displayName: this.username,
+            photoURL:'assets/imgs/person.png',
+            events:[],
+            contacts:[]
          }
          this.fs.addUser(usr).then(x =>{
             this.appSrv.message('Atencion', 'Usuario registrado OK!')
@@ -71,8 +78,10 @@ export class LoginPage implements OnInit, OnDestroy {
       this.authSrv.signInUser(this.email, this.password).then(data => {
          if (data === undefined)
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
-         else
-            this.initUser(data)
+         else{
+            this.globalSrv.save('user', data)
+            this.navCtrl.setRoot('HomePage')
+         }
       }).catch(err => {
          this.appSrv.message('Error', 'Falla en la autenticacion!')
       });
@@ -89,6 +98,9 @@ export class LoginPage implements OnInit, OnDestroy {
          this.navCtrl.push('HomePage')
       })
    }
+
+
+
 
    private initUser(data) {
       this.globalSrv.save('user', data);

@@ -6,7 +6,7 @@
     </ion-col>
     <ion-col col-3></ion-col>
   </ion-row>
-  
+
   <ng-template #content>content here...</ng-template>
   <!-- <user-profile></user-profile> -->
   <div *ngIf="loginMode === 'login'">
@@ -57,16 +57,20 @@
   </div>
 
   <div *ngIf="loginMode === 'signUp'">
-    <form [formGroup]="todo">
+
       <ion-row class="backForm">
         <ion-col>
           <ion-item floating style="background:transparent">
+            <ion-label floating>Nombre de usuario</ion-label>
+            <ion-input type="text" [(ngModel)]="username"></ion-input>
+          </ion-item>
+          <ion-item floating style="background:transparent">
             <ion-label floating>Email</ion-label>
-            <ion-input type="email" formControlName="fcn_email" [(ngModel)]="email" telnum></ion-input>
+            <ion-input type="email"  [(ngModel)]="email"></ion-input>
           </ion-item>
           <ion-item floating style="background:transparent">
             <ion-label floating>Contraseña</ion-label>
-            <ion-input type="password" formControlName="fcn_password" [(ngModel)]="password"></ion-input>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -77,7 +81,7 @@
           </button>
         </ion-col>
       </ion-row>
-    </form>
+
   </div>
 
 </ion-content>

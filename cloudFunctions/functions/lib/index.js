@@ -17,7 +17,7 @@ exports.onEvents = functions.firestore.document('events/{evtId}').onWrite((event
             const usr = dss.get('events');
             const idx = usr.events.indexOf(evt.id);
             if (idx === -1)
-                usr.events.push(evt.id);
+                usr.events.push(evt);
             return admin.firestore().collection("users").doc(member.id).set(usr);
         });
     });

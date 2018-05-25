@@ -11,8 +11,6 @@ export const onEvents = functions.firestore.document('events/{evtId}').onWrite((
    // Si => no hago nada
    // NO => lo agrego a la coleccion de events de cada usuario miembro
    const evt = event.after.data()
-   if (evt.members.length === 0)
-      evt.members.push()
    evt.members.forEach(member => {
       return admin.firestore().collection("users").doc(member.id).get()
       .then(dss => {
