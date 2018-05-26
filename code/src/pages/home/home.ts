@@ -57,7 +57,7 @@ export class HomePage implements OnInit, OnDestroy {
    }
 
    addEvent() {
-      const mod: Modal = this.modal.create('EditEventPage', {evt:{}}, {})
+      const mod: Modal = this.modal.create('EditEventPage', {evt:{title:'Nuevo Evento'}}, {})
       mod.present()
       mod.onDidDismiss(evt=>{
          this.fs.addEvent(evt)
@@ -70,6 +70,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.navCtrl.push('EventPage', { evt: ev })
    }
    editEvent(ev, i){
+      ev.title = "Evento"
       const mod: Modal = this.modal.create('EditEventPage', {evt:ev}, {})
       mod.present()
       mod.onDidDismiss(evt=>{

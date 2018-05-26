@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, Events,ModalController, Modal } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
 import { GlobalService } from '../../shared/services/global.service';
@@ -19,6 +19,7 @@ export class EditEventPage implements OnInit, OnDestroy {
       private view: ViewController,
       private appSrv: ApplicationService,
       private globalSrv: GlobalService,
+      private modal: ModalController,
       private socialSharing: SocialSharing
    ) {
       console.log('EditEventPage constructor');
@@ -31,12 +32,23 @@ export class EditEventPage implements OnInit, OnDestroy {
       this.evt = this.navParams.get('evt');
    }
 
-   closeModal(){
+   addContact(){
+      const mod: Modal = this.modal.create('ContactsPage', {contacts:this.evt.contacts}, {})
+      mod.present()
+      mod.onDidDismiss(selContacts=>{
+         //recorre lista de contactos seleccionados
+         //agrega a lista de miembros del evento
+      })
+   }
+   save(){
       const data ={
          evt:this.evt,
          dirty:true
       }
       this.view.dismiss(data)
+   }
+   closeModal(){
+      this.view.dismiss(null)
    }
    
 }

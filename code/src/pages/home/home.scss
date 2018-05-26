@@ -29,21 +29,16 @@
 }
 
 .backHome {
-  margin-top: 80px;
   min-width: 310px;
   background: -webkit-radial-gradient(#fff 28%, #d6d5d5 75%) !important;
   animation-name: fadeIn;
   animation-duration: 2s;
 }
-.grdFindEvent {
-  display: grid;
-  grid-template-columns: 50px 1fr;
-  background: white;
-  padding: 5px;
-}
+
 .searchIcon{
    font-size: 20px;
    padding-left: 20px;
+   padding-top:13px;
 }
 
 .grdEvent {

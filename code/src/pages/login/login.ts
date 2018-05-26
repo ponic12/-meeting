@@ -14,7 +14,7 @@ import { FirebaseService } from '../../shared/services/firebase.service';
    templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit, OnDestroy {
-   loginMode: string = "login"
+   loginMode: string = "signIn"
    username:string
    displayName: string
    email: string;
@@ -65,11 +65,10 @@ export class LoginPage implements OnInit, OnDestroy {
          const usr = {
             email: this.email,
             displayName: this.username,
-            photoURL:'assets/imgs/person.png',
-            events:[],
-            contacts:[]
+            photoURL:'assets/imgs/person.png'
          }
          this.fs.addUser(usr).then(x =>{
+            this.loginMode = 'signIn'
             this.appSrv.message('Atencion', 'Usuario registrado OK!')
          })
       })
@@ -79,7 +78,12 @@ export class LoginPage implements OnInit, OnDestroy {
          if (data === undefined)
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
          else{
-            this.globalSrv.save('user', data)
+            const usr = {
+               email: data.email,
+               displayName: data.displayName,
+               photoURL:'assets/imgs/person.png'
+            }
+            this.globalSrv.save('user', usr)
             this.navCtrl.setRoot('HomePage')
          }
       }).catch(err => {

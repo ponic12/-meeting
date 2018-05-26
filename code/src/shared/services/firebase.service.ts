@@ -24,7 +24,7 @@ export class FirebaseService {
     }
 
     addUser(usr){
-      const ref = this.afs.collection('users').add(usr)
+      const ref = this.afs.collection('users').doc(usr.email).set(usr)
       return ref; 
     }
     updateUser(usr){

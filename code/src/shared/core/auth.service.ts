@@ -117,14 +117,9 @@ export class AuthService {
       // }
    }
    async registerUser(email, pass) {
-      try {
-         const a = 1
-         const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, pass)
-         console.log(res)
-      }
-      catch (err) {
-         console.error(err) 
-      }
+      const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, pass)
+      console.log(res)
+      return res
    }
 
 

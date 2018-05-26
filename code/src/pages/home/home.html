@@ -6,11 +6,15 @@
   </ion-avatar>
 </ion-header>
 
-<div class="backHome">
-  <div class="grdFindEvent">
-    <ion-icon name="search" class="searchIcon"></ion-icon>
-    <input type="text" class="searchBar" placeholder="Buscar Evento" [(ngModel)]="searchText" />
-  </div>
+<ion-content class="backHome">
+
+  <ion-grid>
+    <ion-row>
+      <ion-icon name="search" class="searchIcon"></ion-icon>
+      <ion-input type="text" class="searchBar" placeholder="Buscar Evento" [(ngModel)]="searchText"></ion-input>
+    </ion-row>
+  </ion-grid>
+
   <ion-list *ngIf="userInfo">
     <!-- <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index"> -->
     <ion-item-sliding *ngFor="let evt of userInfo.events| searchInfo: searchText | orderBy:'creationDate':true">
@@ -22,17 +26,17 @@
           <strong>Descripcion:</strong> {{evt.description}}
         </div>
         <div>
-           <strong>Creacion:</strong>
-           {{evt.creationDate | date:'dd/MM/yyyy'}}
+          <strong>Creacion:</strong>
+          {{evt.creationDate | date:'dd/MM/yyyy'}}
         </div>
         <div>
-           <strong>
-               Ultima modificacion:
-           </strong>
-           {{evt.lastModification | date:'dd/MM/yyyy HH:mm'}}
+          <strong>
+            Ultima modificacion:
+          </strong>
+          {{evt.lastModification | date:'dd/MM/yyyy HH:mm'}}
         </div>
         <div>
-           <strong>Fecha estimada: </strong>
+          <strong>Fecha estimada: </strong>
           {{evt.estimatedDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
       </ion-item>
@@ -46,8 +50,8 @@
           <ion-icon name="calendar"></ion-icon> Entrar
         </button>
         <button ion-button (click)="editEvent(evt, i)" color="dark">
-            <ion-icon name="create"></ion-icon> Editar
-          </button>        
+          <ion-icon name="create"></ion-icon> Editar
+        </button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
@@ -56,4 +60,4 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-</div>
+</ion-content>
