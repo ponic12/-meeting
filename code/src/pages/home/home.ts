@@ -17,7 +17,7 @@ export class HomePage implements OnInit, OnDestroy {
    today: number = new Date().getTime()
    searchText: string
    field: string = 'creationDate'
-   userInfo: any
+   events: any
    //    { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Consorcio Besares 3950', description: 'Reunion de consorcio para definir tareas' },
    //    { creationDate: 1524295836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Cumple Gallo', description: 'Fiesta sorpresa' },
    //    { creationDate: 1522294836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Vacaciones invierno 2018', description: 'Rango de fechas de vacas' },
@@ -48,8 +48,8 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      this.fs.getUserData(this.user.email).subscribe(data=>{
-         this.userInfo = data
+      this.fs.getUserData(this.user.uid).subscribe(data=>{
+         this.events = data
       })
    }
    ngOnDestroy() {

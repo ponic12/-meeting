@@ -65,7 +65,8 @@ export class LoginPage implements OnInit, OnDestroy {
          const usr = {
             email: this.email,
             displayName: this.username,
-            photoURL:'assets/imgs/person.png'
+            photoURL:'assets/imgs/person.png',
+            uid: this.getUid(this.email)
          }
          this.fs.addUser(usr).then(x =>{
             this.loginMode = 'signIn'
@@ -81,7 +82,8 @@ export class LoginPage implements OnInit, OnDestroy {
             const usr = {
                email: data.email,
                displayName: data.displayName,
-               photoURL:'assets/imgs/person.png'
+               photoURL:'assets/imgs/person.png',
+               uid: this.getUid(data.email)
             }
             this.globalSrv.save('user', usr)
             this.navCtrl.setRoot('HomePage')
@@ -105,7 +107,10 @@ export class LoginPage implements OnInit, OnDestroy {
 
 
 
-
+   private getUid(str){
+      const res = str.replace(/\./gi, '')
+      return res
+   }
    private initUser(data) {
       this.globalSrv.save('user', data);
       this.go(data);

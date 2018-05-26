@@ -15,12 +15,12 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list *ngIf="userInfo">
+  <ion-list *ngIf="events">
     <!-- <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index"> -->
-    <ion-item-sliding *ngFor="let evt of userInfo.events| searchInfo: searchText | orderBy:'creationDate':true">
+    <ion-item-sliding *ngFor="let evt of events| searchInfo: searchText | orderBy:'creationDate':true">
       <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }">
         <div>
-          <strong>Evento:</strong> {{evt.eventName}}
+          <strong>Evento:</strong> {{evt.name}}
         </div>
         <div>
           <strong>Descripcion:</strong> {{evt.description}}
@@ -39,17 +39,18 @@
           <strong>Fecha estimada: </strong>
           {{evt.estimatedDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
+        <div class="adminFlag" *ngIf="evt.owner === user.uid"><img src="assets/imgs/crown.png"></div>        
       </ion-item>
       <ion-item-options side="right">
-        <button ion-button (click)="removeEvent(evt, i)" color="'red'">
+        <button ion-button (click)="removeEvent(evt, i)" *ngIf="evt.owner === user.uid" color="secondary">
           <ion-icon name="trash"></ion-icon> Eliminar
         </button>
       </ion-item-options>
       <ion-item-options side="left">
-        <button ion-button (click)="showEvent(evt, i)" color="secondary">
+        <button ion-button (click)="showEvent(evt, i)" *ngIf="evt.owner != user.uid" color="primary">
           <ion-icon name="calendar"></ion-icon> Entrar
         </button>
-        <button ion-button (click)="editEvent(evt, i)" color="dark">
+        <button ion-button (click)="editEvent(evt, i)" *ngIf="evt.owner === user.uid" color="secondary">
           <ion-icon name="create"></ion-icon> Editar
         </button>
       </ion-item-options>
