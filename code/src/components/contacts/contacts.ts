@@ -8,12 +8,11 @@ import * as moment from 'moment'
 
 @IonicPage()
 @Component({
-   selector: 'page-editEvent',
-   templateUrl: 'editEvent.html'
+   selector: 'page-contacts',
+   templateUrl: 'contacts.html'
 })
-export class EditEventPage implements OnInit, OnDestroy {
+export class ContactsPage implements OnInit, OnDestroy {
    title:string
-   evt:any
    contacts:any
 
    constructor(
@@ -24,32 +23,20 @@ export class EditEventPage implements OnInit, OnDestroy {
       private modal: ModalController,
       private socialSharing: SocialSharing
    ) {
-      console.log('EditEventPage constructor')
+      console.log('ContactsPage constructor');
    }
    ngOnDestroy() {
-      console.warn('EditEventPage destroy')
+      console.warn('ContactsPage destroy');
    }
    ngOnInit(): void {
-      console.log('EditEventPage init')
+      console.log('ContactsPage init');
       this.title = this.navParams.get('title')
-      this.evt = this.navParams.get('evt')
-      this.contacts = this.navParams.get('contacts')
+      this.contacts = this.navParams.get('contacts');
    }
 
-   addContact(){
-      const mod: Modal = this.modal.create('ContactsPage', {
-         title:"Contactos",
-         contacts:this.contacts}, {})
-      mod.present()
-      mod.onDidDismiss(selContacts=>{
-         //recorre lista de contactos seleccionados
-         //agrega a lista de miembros del evento
-      })
-   }
    save(){
       const data ={
-         evt:this.evt,
-         dirty:true
+         contacts:this.contacts
       }
       this.view.dismiss(data)
    }

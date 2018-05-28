@@ -1,6 +1,6 @@
 <ion-header class="grdToolbar">
   <img class="logoTipo" src="assets/imgs/calendar.png">
-  <div class="title">{{evt.title}}</div>
+  <div class="title">{{title}}</div>
   <ion-buttons end>
     <ion-icon name="close-circle" (click)="closeModal()"></ion-icon>
   </ion-buttons>
@@ -43,16 +43,20 @@
   </ion-list>
 
   <div class="grdMembers">
-    <div *ngFor="let usr of evt.members" class="member">
-      <div>
-        <img *ngIf="availability(usr.username)" src="assets/imgs/check.png" class="selMember">
-      </div>
-      <div style="margin-top:4px">{{usr.username}}</div>
-      <ion-toggle [(ngModel)]="usr.onoff" (ionChange)="toggleMember($event)" style="padding:5px"></ion-toggle>
+    <div *ngFor="let usr of memberList" class="member">
+      <ion-chip>
+        <ion-avatar item-start>
+          <img class="avatar" [src]="usr.photoURL">
+        </ion-avatar>
+        <ion-label>{{usr.username}}</ion-label>
+        <button ion-button clear color="dark" (click)="delete(usr)">
+          <ion-icon name="close-circle"></ion-icon>
+        </button>
+      </ion-chip>
     </div>
   </div>
-  <button ion-button  (click)="save()" style="width:100%">
-      <ion-icon name="cloud-upload"></ion-icon>
-      <p style="margin-left:5px">Guardar</p>
-    </button>
+  <button ion-button (click)="save()" style="width:100%">
+    <ion-icon name="cloud-upload"></ion-icon>
+    <p style="margin-left:5px">Guardar</p>
+  </button>
 </ion-content>

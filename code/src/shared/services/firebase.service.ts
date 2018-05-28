@@ -26,7 +26,13 @@ export class FirebaseService {
    updateUser(usr) {
       const ref = this.afs.collection('users').doc(usr.uid).set(usr, { merge: true })
    }
-   getUserData(uid): Observable<any> {
+
+   getContactsByUid(uid){
+      const ref = this.afs.collection('users').doc(uid).collection('contacts')
+      const obs = ref.valueChanges()
+      return obs
+   }
+   getEventsByUid(uid): Observable<any> {
       const field: string = 'members.' + uid
       const ref = this.afs.collection('events', ref => ref.where(field, '==', true))
       const obs = ref.valueChanges()

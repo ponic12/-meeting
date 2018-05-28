@@ -48,7 +48,10 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      this.fs.getUserData(this.user.uid).subscribe(data=>{
+      this.fs.getContactsByUid(this.user.uid).subscribe(data=>{
+         this.user.contacts = data
+      })
+      this.fs.getEventsByUid(this.user.uid).subscribe(data=>{
          this.events = data
       })
    }
@@ -57,7 +60,11 @@ export class HomePage implements OnInit, OnDestroy {
    }
 
    addEvent() {
-      const mod: Modal = this.modal.create('EditEventPage', {evt:{title:'Nuevo Evento'}}, {})
+      const mod: Modal = this.modal.create('EditEventPage', {
+         title:'Nuevo Evento',
+         evt:{}, 
+         contacts:this.user.contacts
+      }, {})
       mod.present()
       mod.onDidDismiss(evt=>{
          this.fs.addEvent(evt)

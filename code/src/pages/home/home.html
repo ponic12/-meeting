@@ -42,7 +42,7 @@
         <div class="adminFlag" *ngIf="evt.owner === user.uid"><img src="assets/imgs/crown.png"></div>        
       </ion-item>
       <ion-item-options side="right">
-        <button ion-button (click)="removeEvent(evt, i)" *ngIf="evt.owner === user.uid" color="secondary">
+        <button ion-button (click)="removeEvent(evt, i)" *ngIf="evt.owner === user.uid" color="danger">
           <ion-icon name="trash"></ion-icon> Eliminar
         </button>
       </ion-item-options>
