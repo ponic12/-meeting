@@ -17,7 +17,7 @@
 
   <ion-list *ngIf="events">
     <!-- <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index"> -->
-    <ion-item-sliding *ngFor="let evt of events| searchInfo: searchText | orderBy:'creationDate':true">
+    <ion-item-sliding class="eventCard" *ngFor="let evt of events | searchInfo: searchText | orderBy:'creationDate':true">
       <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }">
         <div>
           <strong>Evento:</strong> {{evt.name}}

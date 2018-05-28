@@ -42,6 +42,7 @@ export class EditEventPage implements OnInit, OnDestroy {
          contacts:this.contacts}, {})
       mod.present()
       mod.onDidDismiss(selContacts=>{
+         this.evt.members = []
          //recorre lista de contactos seleccionados
          //agrega a lista de miembros del evento
       })
@@ -56,5 +57,4 @@ export class EditEventPage implements OnInit, OnDestroy {
    closeModal(){
       this.view.dismiss(null)
    }
-   
 }

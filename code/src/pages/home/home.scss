@@ -41,6 +41,11 @@
    padding-top:13px;
 }
 
+.eventCard{
+   margin:10px;
+   box-shadow: 1px 1px 3px #555;
+   width:auto;
+}
 .grdEvent {
   background: -webkit-radial-gradient(#fff 28%, #d6d5d5 75%) !important;
   //   display: grid;
@@ -55,19 +60,40 @@
 }
 
 /*** TOOLBAR ***/
-
+.btnClose{
+   font-size: 30px;
+    color: gray;
+    text-shadow: 1px 1px 1px #aaa;
+}
 .grdToolbar {
   display: grid;
-  grid-template-columns: 50px 1fr 50px; // background: linear-gradient(#ffffff59 88%, #000000);
+  grid-template-columns: 50px 1fr 30px; // background: linear-gradient(#ffffff59 88%, #000000);
   background: radial-gradient(circle at 50%, #fff, #eee 70%, #ddd 85%, #bdbcbc 100%);
   padding: 10px;
   box-shadow: 0px 4px 5px #666;
 }
 
-.avatar {
-  border-radius: 50%;
-  box-shadow: 1px 1px 5px;
-}
+.grdContacts {
+   margin: 5px;
+   height: 55px;
+   background: #eee;
+   box-shadow: 1px 1px 1px #555;
+   display: grid;
+   grid-row-gap: 5px;
+   grid-template-columns: 60px 60px 1fr;
+ }
+ .avatar {
+   width: 40px;
+   border-radius: 50%;
+   box-shadow: 1px 1px 5px;
+ }
+ .mid {
+   align-self: center;
+ }
+ .midCenter {
+   justify-self: center;
+ }
+
 
 .title {
   padding-left: 20px;

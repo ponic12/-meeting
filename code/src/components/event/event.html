@@ -1,18 +1,14 @@
 <ion-header class="grdToolbar">
   <img class="logoTipo" src="assets/imgs/calendar.png">
-  <div class="title">Evento</div>
+  <div class="title">{{title}}</div>
+  <ion-icon class="btnClose" (click)="closeModal()" name="close-circle"></ion-icon>
 </ion-header>
 
 <ion-content class="backEvent">
   <div class="grdEvento">
     <div id="evento">
-      <ion-item class="grdEventInfo" *ngIf="editMode === true">
-        <input type="text" class="searchBar1" placeholder="Nombre del evento" [(ngModel)]="evt.eventName" (keypress)="onKeyEvent($event)"
-        />
-        <input type="text" class="searchBar1" placeholder="Descripcion del evento" [(ngModel)]="evt.description" />
-      </ion-item>
-      <ion-item *ngIf="editMode === false">
-        <ion-label>{{evt.eventName}}</ion-label>
+      <ion-item>
+        <ion-label>{{evt.event}}</ion-label>
         <div>{{evt.description}}</div>
         <button (click)="editEventNameFlag = true">
           <ion-icon name="create"></ion-icon>
@@ -22,33 +18,7 @@
     <div id="fCreacion">
       {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
     </div>
-    <div id="identificador">
-      <div *ngIf="editMode === true">
-        <input type="text" class="searchBarr" placeholder="Nombre de usuario" [(ngModel)]="evt.username" (keypress)="onKeyUser($event)"
-        />
-      </div>
-      <div *ngIf="editMode === false">
-        <div>{{evt.username}}</div>
-        <!-- <button (click)="editUsernameFlag = true">
-          <ion-icon name="create"></ion-icon>
-        </button> -->
-      </div>
-    </div>
     <div id="participantes">
-      <div *ngIf="editMode === true" class="grdInvitations">
-        <div>
-          <button ion-button (click)="addContact()">
-            <ion-icon name="person"></ion-icon>
-            Agregar contacto
-          </button>
-        </div>
-        <div>
-          <button ion-button (click)="share()">
-            <ion-icon name="share"></ion-icon>
-            Compartir
-          </button>
-        </div>
-      </div>
       <div class="grdMembers">
         <div *ngFor="let usr of evt.members" class="member">
           <div>

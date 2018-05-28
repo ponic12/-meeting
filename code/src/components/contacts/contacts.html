@@ -1,9 +1,7 @@
 <ion-header class="grdToolbar">
   <img class="logoTipo" src="assets/imgs/contacts.png">
   <div class="title">{{title}}</div>
-  <ion-buttons (click)="closeModal()" end>
-    <ion-icon name="close-circle" ></ion-icon>
-  </ion-buttons>
+  <ion-icon class="btnClose" (click)="closeModal()" name="close-circle"></ion-icon>
 </ion-header>
 
 <ion-content class="backEvent">
@@ -14,14 +12,11 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list padding>
-    <ion-item *ngFor="let ct of contacts">
-        <!-- <ion-toggle [(ngModel)]="usr.onoff" (ionChange)="selectMember($event)" style="padding:5px"></ion-toggle> -->
-        <ion-toggle [(ngModel)]="ct.selected"></ion-toggle>
-        <ion-avatar item-start>
-          <img class="avatar" [src]="ct.photoURL">
-        </ion-avatar>
-        <ion-label>{{ct.username}}</ion-label>
-    </ion-item>
-  </ion-list>
+  <div *ngFor="let ct of contacts" class="grdContacts">
+    <ion-toggle class="mid midCenter" [(ngModel)]="ct.selected"></ion-toggle>
+    <ion-avatar class="mid midCenter">
+      <img class="avatar" [src]="ct.photoURL">
+    </ion-avatar>
+    <div class="mid">{{ct.displayName}}</div>
+  </div>
 </ion-content>

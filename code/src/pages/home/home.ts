@@ -74,11 +74,21 @@ export class HomePage implements OnInit, OnDestroy {
 
    }
    showEvent(ev, i) {
-      this.navCtrl.push('EventPage', { evt: ev })
+      const mod: Modal = this.modal.create('EventPage', {
+         title:'Evento',
+         evt:{ev}, 
+         contacts: this.mapMembersToContacts(ev)
+      }, {})
+      mod.present()
+      mod.onDidDismiss(evt=>{
+      })
    }
    editEvent(ev, i){
-      ev.title = "Evento"
-      const mod: Modal = this.modal.create('EditEventPage', {evt:ev}, {})
+      const mod: Modal = this.modal.create('EditEventPage', {
+         title:'Editar Evento',
+         evt:ev,
+         contacts: this.mapMembersToContacts(ev)
+      }, {})
       mod.present()
       mod.onDidDismiss(evt=>{
          this.fs.saveEvent(evt)
@@ -106,6 +116,16 @@ export class HomePage implements OnInit, OnDestroy {
          ]
       });
       actionSheet.present();
+   }
+
+   private mapMembersToContacts(ev){
+      const lst:any = []
+      this.user.contacts.forEach(item => {
+         const sel = ev.members[item.id]
+         item.selected = (sel != undefined)
+         lst.push(item)
+      });
+      return lst
    }
    private logout() {
       this.appSrv.message('Aviso', 'Saliendo...');

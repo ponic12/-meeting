@@ -1,9 +1,7 @@
 <ion-header class="grdToolbar">
   <img class="logoTipo" src="assets/imgs/calendar.png">
   <div class="title">{{title}}</div>
-  <ion-buttons end>
-    <ion-icon name="close-circle" (click)="closeModal()"></ion-icon>
-  </ion-buttons>
+  <ion-icon class="btnClose" (click)="closeModal()" name="close-circle"></ion-icon>
 </ion-header>
 
 <ion-content class="backEvent">
@@ -16,7 +14,7 @@
 
     <ion-item>
       <ion-label floating>Nombre del evento</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="evt.eventName"></ion-input>
+      <ion-input type="text" value="" [(ngModel)]="evt.name"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -24,35 +22,33 @@
       <ion-input type="text" [(ngModel)]="evt.description"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label floating>Alias</ion-label>
       <ion-input type="text" value="" [(ngModel)]="evt.username"></ion-input>
-    </ion-item>
+    </ion-item> -->
 
     <div class="grdBtnsMembers">
       <button ion-button (click)="addContact()" style="width:100%">
         <ion-icon name="person"> </ion-icon>
-        <p style="margin-left:5px">Agregar contacto</p>
+        <p style="margin-left:5px">Contactos</p>
       </button>
       <button ion-button (click)="share()" style="width:100%">
         <ion-icon name="share"> </ion-icon>
-        <p style="margin-left:5px">Compartir</p>
+        <p style="margin-left:5px">Invitar</p>
       </button>
     </div>
 
   </ion-list>
 
   <div class="grdMembers">
-    <div *ngFor="let usr of memberList" class="member">
-      <ion-chip>
-        <ion-avatar item-start>
-          <img class="avatar" [src]="usr.photoURL">
+    <div *ngFor="let ct of contacts">
+      <div class="grdContacts" *ngIf="ct.selected === true">
+        <ion-toggle class="mid midCenter" [(ngModel)]="ct.selected"></ion-toggle>
+        <ion-avatar class="mid midCenter">
+          <img class="avatar" [src]="ct.photoURL">
         </ion-avatar>
-        <ion-label>{{usr.username}}</ion-label>
-        <button ion-button clear color="dark" (click)="delete(usr)">
-          <ion-icon name="close-circle"></ion-icon>
-        </button>
-      </ion-chip>
+        <div class="mid">{{ct.displayName}}</div>
+      </div>
     </div>
   </div>
   <button ion-button (click)="save()" style="width:100%">
