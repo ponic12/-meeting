@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events,ModalController, Modal } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, Events,ModalController, Modal, Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
 import { GlobalService } from '../../shared/services/global.service';
@@ -17,6 +17,7 @@ export class EditEventPage implements OnInit, OnDestroy {
    contacts:any
 
    constructor(
+      private platform: Platform,
       private navParams: NavParams,
       private view: ViewController,
       private appSrv: ApplicationService,
@@ -53,5 +54,35 @@ export class EditEventPage implements OnInit, OnDestroy {
    }
    closeModal(){
       this.view.dismiss(null)
+   }
+
+   share() {
+      if (this.platform.is('cordova')) {
+         this.socialSharing.shareViaWhatsApp('Invitacion a evento!', '', 'https://events-12be3.firebaseapp.com').then(() => {
+            this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
+         }).catch(() => {
+            this.appSrv.message('Error', 'No posee Whatsapp')
+         })         
+         // this.socialSharing.canShareVia('Whatsapp').then(() => {
+         //    this.socialSharing.shareViaWhatsApp('Invitacion a evento!', 'http://www.clarin.com').then(() => {
+         //       this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
+         //    }).catch(() => {
+         //       this.appSrv.message('Error', 'No posee Whatsapp')
+         //    })
+         // })
+      }
+
+      // this.socialSharing.canShareViaEmail().then(() => {
+      //    // Sharing via email is possible
+      // }).catch(() => {
+      //    // Sharing via email is not possible
+      // });
+
+      // // Share via email
+      // this.socialSharing..shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
+      //    // Success!
+      // }).catch(() => {
+      //    // Error!
+      // });
    }
 }

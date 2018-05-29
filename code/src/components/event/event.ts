@@ -15,11 +15,11 @@ import * as moment from 'moment'
 export class EventPage implements OnInit, OnDestroy {
    title: string = "Evento"
    evt: any
-   contacts:any
+   contacts: any
 
-   selectedMembers:any
-   toggleMode:boolean= false
-   dayKeys:any
+   selectedMembers: any
+   toggleMode: boolean = false
+   dayKeys: any
 
    constructor(
       private navParams: NavParams,
@@ -40,9 +40,9 @@ export class EventPage implements OnInit, OnDestroy {
       this.evt = this.navParams.get('evt')
       this.contacts = this.navParams.get('contacts')
    }
-   toggleMember(ev,u) {
-     this.checkEditMode()
-     this.processDays()
+   toggleMember(ev, u) {
+      this.checkEditMode()
+      this.processDays()
    }
    onKeyEvent(event) {
       if (event.keyCode == 13) {
@@ -54,52 +54,31 @@ export class EventPage implements OnInit, OnDestroy {
          //this.editMode = false
       }
    }
-   availability(username){
+   availability(username) {
       if (!this.selectedMembers) return
       const res = !(this.selectedMembers.indexOf(username) == -1)
       return res
    }
-   selection(ev){
+   selection(ev) {
       if (this.toggleMode == true)
          ev.hr.value = 1 - ev.hr.value
       else
          this.selectedMembers = ev.hr.members
    }
 
-   addContact(){
+   addContact() {
 
    }
-   share() {
-      this.socialSharing.canShareVia('Whatsapp').then(() => {
-         this.socialSharing.shareViaWhatsApp('Invitacion a evento!', 'http://www.clarin.com').then(() => {
-            this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
-         }).catch(() => {
-            this.appSrv.message('Error', 'No posee Whatsapp')
-         })
-      })
 
-      // this.socialSharing.canShareViaEmail().then(() => {
-      //    // Sharing via email is possible
-      // }).catch(() => {
-      //    // Sharing via email is not possible
-      // });
-
-      // // Share via email
-      // this.socialSharing..shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
-      //    // Success!
-      // }).catch(() => {
-      //    // Error!
-      // });
-   }
-   closeModal(){
+   closeModal() {
       this.view.dismiss(null)
    }
 
-   private checkEditMode(){
+   private checkEditMode() {
       let cnt = 0
       this.evt.members.forEach(m => {
          if (m.onoff == true)
-            cnt = cnt +1
+            cnt = cnt + 1
       });
       this.toggleMode = ((cnt == 1) && (this.evt.members[0].onoff == true))
    }
@@ -119,7 +98,7 @@ export class EventPage implements OnInit, OnDestroy {
          }
       });
    }
-   private resetDays(days){
+   private resetDays(days) {
       const emptyDays = {
          'LU': [
             { hour: 0, value: 0, members: [] },
@@ -1431,7 +1410,7 @@ export class EventPage implements OnInit, OnDestroy {
       //    }
       // ]
       */
-     
+
       /*********************
        *** EVENTOS ***
        [

@@ -16,7 +16,8 @@ export class HomePage implements OnInit, OnDestroy {
    photoPath: string
    today: number = new Date().getTime()
    searchText: string
-   field: string = 'creationDate'
+   sortField: string = 'creationDate'
+   direction:boolean = false
    events: any
    //    { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Consorcio Besares 3950', description: 'Reunion de consorcio para definir tareas' },
    //    { creationDate: 1524295836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Cumple Gallo', description: 'Fiesta sorpresa' },
@@ -51,7 +52,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.fs.getContactsByUid(this.user.uid).subscribe(data => {
          this.user.contacts = data
       })
-      this.fs.getEventsByUid(this.user.uid).subscribe(data => {
+      this.fs.getEventsByUid(this.user.uid).subscribe(data=>{
          this.events = data
       })
    }
@@ -126,6 +127,23 @@ export class HomePage implements OnInit, OnDestroy {
       actionSheet.present();
    }
 
+   getSortedEvents(sort, fab){
+      this.sortField = sort
+      this.direction = !this.direction
+      fab.close()
+   }
+   getSortName(){
+      if (this.sortField === "creationDate")
+         return "Fecha"
+      else
+         return "Evento"
+   }
+   getIcon(){
+      if (this.direction === true)
+         return "arrow-dropdown"
+      else 
+         return "arrow-dropup"
+   }
    private mapMembersToContacts(contacts, members) {
       const lst: any = []
       contacts.forEach(item => {

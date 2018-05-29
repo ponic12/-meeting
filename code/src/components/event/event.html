@@ -8,11 +8,8 @@
   <div class="grdEvento">
     <div id="evento">
       <ion-item>
-        <ion-label>{{evt.event}}</ion-label>
+        <ion-label>{{evt.name}}</ion-label>
         <div>{{evt.description}}</div>
-        <button (click)="editEventNameFlag = true">
-          <ion-icon name="create"></ion-icon>
-        </button>
       </ion-item>
     </div>
     <!-- <div id="fCreacion">
@@ -20,12 +17,12 @@
     </div> -->
     <div id="participantes">
       <div class="grdMembers">
-        <div *ngFor="let usr of evt.members" class="member">
+        <div *ngFor="let ct of contacts" class="member">
           <div>
-            <img *ngIf="availability(usr.username)" src="assets/imgs/check.png" class="selMember">
+            <img *ngIf="availability(ct.id)" src="assets/imgs/check.png" class="selMember">
           </div>
-          <div style="margin-top:4px">{{usr.username}}</div>
-          <ion-toggle [(ngModel)]="usr.onoff" (ionChange)="toggleMember($event)" style="padding:5px"></ion-toggle>
+          <div style="margin-top:4px">{{usr.displayName}}</div>
+          <ion-toggle [(ngModel)]="ct.onoff" (ionChange)="toggleMember($event)" style="padding:5px"></ion-toggle>
         </div>
       </div>
     </div>

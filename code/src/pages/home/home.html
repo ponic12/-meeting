@@ -12,12 +12,13 @@
     <ion-row>
       <ion-icon name="search" class="searchIcon"></ion-icon>
       <ion-input type="text" class="searchBar" placeholder="Buscar Evento" [(ngModel)]="searchText"></ion-input>
+      <p>Orden: {{getSortName()}}</p>
+      <ion-icon name="{{getIcon()}}" class="sortName searchIcon"></ion-icon>
     </ion-row>
   </ion-grid>
 
   <ion-list *ngIf="events">
-    <!-- <ion-item-sliding *ngFor="let evt of dataEventos | searchInfo: searchText | orderBy:'{{field}}':true ; let i = index"> -->
-    <ion-item-sliding class="eventCard" *ngFor="let evt of events | searchInfo: searchText | orderBy:'creationDate':true">
+    <ion-item-sliding class="eventCard" *ngFor="let evt of events | searchInfo: searchText | orderBy:sortField:direction ">
       <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }">
         <div>
           <strong>Evento:</strong> {{evt.name}}
@@ -27,7 +28,7 @@
         </div>
         <div>
           <strong>Creacion:</strong>
-          {{evt.creationDate | date:'dd/MM/yyyy'}}
+          {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
         <!-- <div>
           <strong>
@@ -63,15 +64,15 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-  <ion-fab class="btnSort" top right>
+  <ion-fab class="btnSort" top right #fab>
     <button ion-fab mini>
       <ion-icon name="funnel"></ion-icon>
     </button>
     <ion-fab-list>
-      <button ion-fab mini (click)="sortByDate()">
+      <button ion-fab mini (click)="getSortedEvents('creationDate', fab)">
         <ion-icon name="calendar"></ion-icon>
       </button>
-      <button ion-fab mini (click)="sortByEvent()">
+      <button ion-fab mini (click)="getSortedEvents('name', fab)">
         <ion-icon name="create"></ion-icon>
       </button>
     </ion-fab-list>
