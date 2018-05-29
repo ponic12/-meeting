@@ -110,6 +110,13 @@ export class HomePage implements OnInit, OnDestroy {
          cssClass: 'action-sheets-basic-page',
          buttons: [
             {
+               text: 'Bajar App',
+               handler: () => {
+                  console.log('Download App!!!');
+                  window.open('https://firebasestorage.googleapis.com/v0/b/events-12be3.appspot.com/o/MeetingMaster.apk?alt=media&token=66af8eb0-463c-44ed-a596-5a7b21ff5d8a')
+               }
+            },
+            {
                text: 'Salir',
                handler: () => {
                   console.log('Logout!!!');
