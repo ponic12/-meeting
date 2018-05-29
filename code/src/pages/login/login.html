@@ -2,7 +2,7 @@
   <ion-row class="logoKM">
     <ion-col col-3></ion-col>
     <ion-col style="text-align:center">
-      <img src="assets/imgs/calendarIcon.png" style="width:100%; max-width:250px;">
+      <img src="assets/imgs/calendarIcon.png" style="width:80%; max-width:250px;">
     </ion-col>
     <ion-col col-3></ion-col>
   </ion-row>
@@ -54,33 +54,47 @@
         </ion-col>
       </ion-row>
     </form>
+    <div class="frameDownload" >
+      <button (click)="download()" class="btnDownload" type="submit">
+        <img src="assets/imgs/playstore.png">
+      </button>
+      <p class="txtDownload">Descargar aplicación</p>
+    </div>
+    <!-- <div class="grdDownload">
+      <div style="text-align: center"> 
+        <button (click)="download()" class="btnDownload" type="submit">
+          <img src="assets/imgs/playstore.png">
+        </button>
+        <p class="txtDownload">Descargar aplicación</p>
+      </div>
+    </div> -->
   </div>
 
   <div *ngIf="loginMode === 'signUp'">
 
-      <ion-row class="backForm">
-        <ion-col>
-          <ion-item floating style="background:transparent">
-            <ion-label floating>Nombre de usuario</ion-label>
-            <ion-input type="text" [(ngModel)]="username"></ion-input>
-          </ion-item>
-          <ion-item floating style="background:transparent">
-            <ion-label floating>Email</ion-label>
-            <ion-input type="email"  [(ngModel)]="email"></ion-input>
-          </ion-item>
-          <ion-item floating style="background:transparent">
-            <ion-label floating>Contraseña</ion-label>
-            <ion-input type="password" [(ngModel)]="password"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row style="margin-top: 10px">
-        <ion-col>
-          <button ion-button (click)="register()" class="loginBtn" full type="submit" round color="primary">
-            Registrarse
-          </button>
-        </ion-col>
-      </ion-row>
+    <ion-row class="backForm">
+      <ion-col>
+        <ion-item floating style="background:transparent">
+          <ion-label floating>Nombre de usuario</ion-label>
+          <ion-input type="text" [(ngModel)]="username"></ion-input>
+        </ion-item>
+        <ion-item floating style="background:transparent">
+          <ion-label floating>Email</ion-label>
+          <ion-input type="email" [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <ion-item floating style="background:transparent">
+          <ion-label floating>Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-top: 10px">
+      <ion-col>
+        <button ion-button (click)="register()" class="loginBtn" full type="submit" round color="primary">
+          Registrarse
+        </button>
+      </ion-col>
+    </ion-row>
 
   </div>
 

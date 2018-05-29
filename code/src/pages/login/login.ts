@@ -104,6 +104,9 @@ export class LoginPage implements OnInit, OnDestroy {
          this.navCtrl.push('HomePage')
       })
    }
+   download(){
+      window.open('https://firebasestorage.googleapis.com/v0/b/events-12be3.appspot.com/o/android-debug.apk?alt=media&token=7071e195-7527-4484-83cf-75546e2cbfd6', '_system')
+   }
 
 
 
