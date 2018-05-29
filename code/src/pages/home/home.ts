@@ -33,12 +33,12 @@ export class HomePage implements OnInit, OnDestroy {
       private globalSrv: GlobalService,
       private authSrv: AuthService,
       private modal: ModalController,
-      private fs:FirebaseService
+      private fs: FirebaseService
    ) {
       console.log('HomePage contructor')
 
       this.user = this.globalSrv.getVar('user')
-      
+
       // let ph = this.user.photoURL// this.navParams.get('photoURL')
       // if (ph)
       //    this.photoPath = ph
@@ -48,10 +48,10 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      this.fs.getContactsByUid(this.user.uid).subscribe(data=>{
+      this.fs.getContactsByUid(this.user.uid).subscribe(data => {
          this.user.contacts = data
       })
-      this.fs.getEventsByUid(this.user.uid).subscribe(data=>{
+      this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
       })
    }
@@ -61,40 +61,48 @@ export class HomePage implements OnInit, OnDestroy {
 
    addEvent() {
       const mod: Modal = this.modal.create('EditEventPage', {
-         title:'Nuevo Evento',
-         evt:{}, 
-         contacts:this.user.contacts
+         title: 'Nuevo Evento',
+         evt: {members:[]},
+         contacts: this.mapMembersToContacts(this.user.contacts, [])
       }, {})
       mod.present()
-      mod.onDidDismiss(evt=>{
-         this.fs.addEvent(evt)
+      mod.onDidDismiss(data => {
+         if (data === null) return
+         data.evt.members = this.mapContactsToMembers(data.contacts)
+         data.evt.creationDate = new Date().getTime()
+         data.evt.modificationDate = new Date().getTime()
+         data.evt.owner = this.user.uid
+         this.fs.addEvent(data.evt)
       })
    }
-   removeEvent(ev, i) {
-
+   editEvent(ev, i) {
+      const mod: Modal = this.modal.create('EditEventPage', {
+         title: 'Editar Evento',
+         evt: ev,
+         contacts: this.mapMembersToContacts(this.user.contacts, ev.members)
+      }, {})
+      mod.present()
+      mod.onDidDismiss(data => {
+         if (data === null) return
+         data.evt.members = this.mapContactsToMembers(data.contacts)
+         data.evt.modificationDate = new Date().getTime()
+         this.fs.saveEvent(data.evt)
+      })
    }
    showEvent(ev, i) {
       const mod: Modal = this.modal.create('EventPage', {
-         title:'Evento',
-         evt:{ev}, 
-         contacts: this.mapMembersToContacts(ev)
+         title: 'Evento',
+         evt: { ev },
+         contacts: this.mapMembersToContacts(this.user.contacts, ev.members)
       }, {})
       mod.present()
-      mod.onDidDismiss(evt=>{
+      mod.onDidDismiss(evt => {
       })
-   }
-   editEvent(ev, i){
-      const mod: Modal = this.modal.create('EditEventPage', {
-         title:'Editar Evento',
-         evt:ev,
-         contacts: this.mapMembersToContacts(ev)
-      }, {})
-      mod.present()
-      mod.onDidDismiss(evt=>{
-         this.fs.saveEvent(evt)
-      })
-   }
+   } 
 
+   removeEvent(ev, i) {
+
+   }
    openMenuSheet() {
       let actionSheet = this.actionCtrl.create({
          title: 'Opciones',
@@ -118,14 +126,22 @@ export class HomePage implements OnInit, OnDestroy {
       actionSheet.present();
    }
 
-   private mapMembersToContacts(ev){
-      const lst:any = []
-      this.user.contacts.forEach(item => {
-         const sel = ev.members[item.id]
+   private mapMembersToContacts(contacts, members) {
+      const lst: any = []
+      contacts.forEach(item => {
+         const sel = members[item.id]
          item.selected = (sel != undefined)
          lst.push(item)
       });
       return lst
+   }
+   private mapContactsToMembers(contacts){
+      const members:any = {}
+      contacts.forEach(item => {
+         if (item.selected)
+            members[item.id] = true
+      });
+      return members
    }
    private logout() {
       this.appSrv.message('Aviso', 'Saliendo...');

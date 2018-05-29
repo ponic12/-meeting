@@ -11,4 +11,11 @@ page-editEvent {
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 5px;
   }
+  .titleMembers {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 2px 2px 3px #888;
+  }
 }

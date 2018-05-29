@@ -35,69 +35,84 @@
   animation-duration: 2s;
 }
 
-.searchIcon{
-   font-size: 20px;
-   padding-left: 20px;
-   padding-top:13px;
+.searchIcon {
+  font-size: 20px;
+  padding-left: 20px;
+  padding-top: 13px;
 }
 
-.eventCard{
-   margin:10px;
-   box-shadow: 1px 1px 3px #555;
-   width:auto;
+.eventCard {
+  margin: 10px;
+  box-shadow: 1px 1px 3px #555;
+  width: auto;
 }
+
 .grdEvent {
-  background: -webkit-radial-gradient(#fff 28%, #d6d5d5 75%) !important;
-  //   display: grid;
+  background: -webkit-radial-gradient(#fff 28%, #d6d5d5 75%) !important; //   display: grid;
   //   grid-template-columns: 2fr 2fr 2fr 2fr 4fr 4fr;
 }
 
-.adminFlag{
-   position: absolute;
-   right: 5px;
-   top:5px;
-   width: 50px;
+.adminFlag {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 50px;
 }
 
 /*** TOOLBAR ***/
-.btnClose{
-   font-size: 30px;
-    color: gray;
-    text-shadow: 1px 1px 1px #aaa;
+
+.btnClose {
+  text-align: center;
+  font-size: 30px;
+  color: gray;
+  text-shadow: 1px 1px 1px #aaa;
 }
+
 .grdToolbar {
   display: grid;
-  grid-template-columns: 50px 1fr 30px; // background: linear-gradient(#ffffff59 88%, #000000);
+  grid-template-columns: 50px 1fr 40px; // background: linear-gradient(#ffffff59 88%, #000000);
   background: radial-gradient(circle at 50%, #fff, #eee 70%, #ddd 85%, #bdbcbc 100%);
   padding: 10px;
   box-shadow: 0px 4px 5px #666;
 }
 
 .grdContacts {
+  margin: 5px;
+  height: 55px;
+  background: #eee;
+  box-shadow: 1px 1px 1px #555;
+  display: grid;
+  grid-row-gap: 5px;
+  grid-template-columns: 60px 60px 1fr;
+}
+
+.grdMember {
    margin: 5px;
    height: 55px;
    background: #eee;
    box-shadow: 1px 1px 1px #555;
    display: grid;
    grid-row-gap: 5px;
-   grid-template-columns: 60px 60px 1fr;
- }
- .avatar {
-   width: 40px;
-   border-radius: 50%;
-   box-shadow: 1px 1px 5px;
- }
- .mid {
-   align-self: center;
- }
- .midCenter {
-   justify-self: center;
+   grid-template-columns: 60px 1fr 40px;
  }
 
+.avatar {
+  width: 40px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px;
+}
+
+.mid {
+  align-self: center;
+}
+
+.midCenter {
+  justify-self: center;
+}
 
 .title {
   padding-left: 20px;
-  font-size: 33px;
+  font-size: 30px;
   font-weight: bold;
   color: #333;
   text-shadow: 2px 2px 3px #888;
@@ -141,9 +156,10 @@
 }
 
 /*************************************/
-.btnSort{
-   margin-top:-10px;
-   margin-right: -10px;
+
+.btnSort {
+  margin-top: -10px;
+  margin-right: -10px;
 }
 
 .backCard {
