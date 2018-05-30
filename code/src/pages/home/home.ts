@@ -37,14 +37,7 @@ export class HomePage implements OnInit, OnDestroy {
       private fs: FirebaseService
    ) {
       console.log('HomePage contructor')
-
-      this.user = this.globalSrv.getVar('user')
-
-      // let ph = this.user.photoURL// this.navParams.get('photoURL')
-      // if (ph)
-      //    this.photoPath = ph
-      // else
-      //    this.photoPath = "assets/imgs/person.png"
+      this.user = this.navParams.get('usr')
    }
 
    ngOnInit() {
@@ -170,7 +163,7 @@ export class HomePage implements OnInit, OnDestroy {
    }
    private logout() {
       this.appSrv.message('Aviso', 'Saliendo...');
-      this.globalSrv.save('user', null);
+      //this.globalSrv.save('user', null);
       this.authSrv.signOutUser();
       this.navCtrl.setRoot('LoginPage');
    }

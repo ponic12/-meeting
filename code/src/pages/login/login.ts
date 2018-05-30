@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
-import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
 import { ApplicationService } from '../../shared/services/application.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
@@ -22,7 +21,6 @@ export class LoginPage implements OnInit, OnDestroy {
    todo: FormGroup;
 
    constructor(
-      private globalSrv: GlobalService,
       private appSrv: ApplicationService,
       private navCtrl: NavController,
       private authSrv: AuthService,
@@ -44,17 +42,18 @@ export class LoginPage implements OnInit, OnDestroy {
       //   this.go(data)
       // );
 
-      // this.authSrv.verifyLoggedIn().subscribe(data => {
-      //    if (data) {
-      //       var o = {
-      //          username: data.displayName,
-      //          email: data.email,
-      //          photoURL: data.photoURL
-      //       };
-      //       this.globalSrv.save('user', o);
-      //       this.navCtrl.setRoot('HomePage', data);
-      //    }
-      // });
+      this.authSrv.verifyLoggedIn().subscribe(data => {
+         if (data) {
+            var o = {
+               username: data.displayName,
+               email: data.email,
+               photoURL: data.photoURL,
+               uid: this.getUid(data.email)
+            };
+            //this.globalSrv.save('user', o);
+            this.navCtrl.setRoot('HomePage', {usr:o});
+         }
+      });
    }
    register(): void {
       this.authSrv.registerUser(this.email, this.password).then((res) => {
@@ -79,14 +78,14 @@ export class LoginPage implements OnInit, OnDestroy {
          if (data === undefined)
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
          else{
-            const usr = {
+            const o = {
                email: data.email,
                displayName: data.displayName,
                photoURL:'assets/imgs/person.png',
                uid: this.getUid(data.email)
             }
-            this.globalSrv.save('user', usr)
-            this.navCtrl.setRoot('HomePage')
+            //this.globalSrv.save('user', o)
+            this.navCtrl.setRoot('HomePage', {usr:o})
          }
       }).catch(err => {
          this.appSrv.message('Error', 'Falla en la autenticacion!')
@@ -105,7 +104,7 @@ export class LoginPage implements OnInit, OnDestroy {
       })
    }
    download(){
-      window.open('https://firebasestorage.googleapis.com/v0/b/events-12be3.appspot.com/o/android-debug.apk?alt=media&token=7071e195-7527-4484-83cf-75546e2cbfd6', '_system')
+      window.open('https://firebasestorage.googleapis.com/v0/b/events-12be3.appspot.com/o/android-debug.apk?alt=media&token=18efaae1-b99d-4e21-90f3-d587c8887672', '_system')
    }
 
 
@@ -113,14 +112,6 @@ export class LoginPage implements OnInit, OnDestroy {
    private getUid(str){
       const res = str.replace(/\./gi, '')
       return res
-   }
-   private initUser(data) {
-      this.globalSrv.save('user', data);
-      this.go(data);
-   }
-   private go(data) {
-      if (data)
-         this.navCtrl.setRoot('HomePage', data);
    }
 }
 

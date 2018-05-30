@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Events,ModalController, Modal, Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
-import { GlobalService } from '../../shared/services/global.service';
 
 import * as moment from 'moment'
 
@@ -21,7 +20,6 @@ export class EditEventPage implements OnInit, OnDestroy {
       private navParams: NavParams,
       private view: ViewController,
       private appSrv: ApplicationService,
-      private globalSrv: GlobalService,
       private modal: ModalController,
       private socialSharing: SocialSharing
    ) {

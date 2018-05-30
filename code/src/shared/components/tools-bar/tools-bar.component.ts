@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { GlobalService } from '../../services/global.service';
 import { NavController, Events } from 'ionic-angular';
 
 @Component({
@@ -11,7 +10,6 @@ export class ToolsBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private navCtrl: NavController,
-    private globalSrv: GlobalService,
     private evt: Events) {
     console.log('ToolsBarComponent constructor');
   }

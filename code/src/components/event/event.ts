@@ -3,7 +3,6 @@ import { IonicPage, ViewController, NavParams, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { EventService } from './event.service'
 import { ApplicationService } from '../../shared/services/application.service';
-import { GlobalService } from '../../shared/services/global.service';
 
 import * as moment from 'moment'
 
@@ -25,7 +24,6 @@ export class EventPage implements OnInit, OnDestroy {
       private navParams: NavParams,
       private view: ViewController,
       private appSrv: ApplicationService,
-      private globalSrv: GlobalService,
       private evtSrv: EventService,
       private socialSharing: SocialSharing
    ) {
