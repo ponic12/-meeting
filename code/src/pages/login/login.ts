@@ -14,7 +14,7 @@ import { FirebaseService } from '../../shared/services/firebase.service';
 })
 export class LoginPage implements OnInit, OnDestroy {
    loginMode: string = "signIn"
-   username:string
+   username: string
    displayName: string
    email: string;
    password: string;
@@ -51,7 +51,7 @@ export class LoginPage implements OnInit, OnDestroy {
                uid: this.getUid(data.email)
             };
             //this.globalSrv.save('user', o);
-            this.navCtrl.setRoot('HomePage', {usr:o});
+            this.navCtrl.setRoot('HomePage', { usr: o });
          }
       });
    }
@@ -60,14 +60,14 @@ export class LoginPage implements OnInit, OnDestroy {
          if (!res) {
             this.appSrv.message('Error', 'Usuario ya registrado!')
             return
-         }            
+         }
          const usr = {
             email: this.email,
             displayName: this.username,
-            photoURL:'assets/imgs/person.png',
+            photoURL: 'assets/imgs/person.png',
             uid: this.getUid(this.email)
          }
-         this.fs.addUser(usr).then(x =>{
+         this.fs.addUser(usr).then(x => {
             this.loginMode = 'signIn'
             this.appSrv.message('Atencion', 'Usuario registrado OK!')
          })
@@ -77,15 +77,15 @@ export class LoginPage implements OnInit, OnDestroy {
       this.authSrv.signInUser(this.email, this.password).then(data => {
          if (data === undefined)
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
-         else{
+         else {
             const o = {
                email: data.email,
                displayName: data.displayName,
-               photoURL:'assets/imgs/person.png',
+               photoURL: 'assets/imgs/person.png',
                uid: this.getUid(data.email)
             }
             //this.globalSrv.save('user', o)
-            this.navCtrl.setRoot('HomePage', {usr:o})
+            this.navCtrl.setRoot('HomePage', { usr: o })
          }
       }).catch(err => {
          this.appSrv.message('Error', 'Falla en la autenticacion!')
@@ -103,13 +103,11 @@ export class LoginPage implements OnInit, OnDestroy {
          this.navCtrl.push('HomePage')
       })
    }
-   download(){
-      window.open('https://firebasestorage.googleapis.com/v0/b/events-12be3.appspot.com/o/android-debug.apk?alt=media&token=18efaae1-b99d-4e21-90f3-d587c8887672', '_system')
+   download() {
+      this.fs.download('MeetingMaster.apk')
    }
 
-
-
-   private getUid(str){
+   private getUid(str) {
       const res = str.replace(/\./gi, '')
       return res
    }

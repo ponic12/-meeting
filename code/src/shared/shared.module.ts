@@ -11,15 +11,7 @@ import { FirebaseService } from './services/firebase.service'
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-
-export const firebaseConfig = {
-   apiKey: "AIzaSyB1RfoKAz26WPlfiG7jHNt4nUqthyBRWQM",
-   authDomain: "events-12be3.firebaseapp.com",
-   databaseURL: "https://events-12be3.firebaseio.com",
-   projectId: "events-12be3",
-   storageBucket: "events-12be3.appspot.com",
-   messagingSenderId: "342119302614"
- };
+import { FIREBASE_CONFIG } from '../app/firebase.config';
 
 
 @NgModule({
@@ -27,7 +19,7 @@ export const firebaseConfig = {
       CommonModule,
       IonicModule,
       IonicStorageModule.forRoot(),
-      AngularFireModule.initializeApp(firebaseConfig),
+      AngularFireModule.initializeApp(FIREBASE_CONFIG),
       AngularFirestoreModule
    ],
    declarations: [
