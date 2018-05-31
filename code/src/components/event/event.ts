@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events } from 'ionic-angular';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Slides, IonicPage, ViewController, NavParams, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { EventService } from './event.service'
 import { ApplicationService } from '../../shared/services/application.service';
@@ -12,6 +12,8 @@ import * as moment from 'moment'
    templateUrl: 'event.html'
 })
 export class EventPage implements OnInit, OnDestroy {
+   @ViewChild(Slides) slides: Slides
+
    title: string = "Evento"
    evt: any
    contacts: any
@@ -42,16 +44,6 @@ export class EventPage implements OnInit, OnDestroy {
       this.checkEditMode()
       this.processDays()
    }
-   onKeyEvent(event) {
-      if (event.keyCode == 13) {
-         //this.editEventNameFlag = false
-      }
-   }
-   onKeyUser(event) {
-      if (event.keyCode == 13) {
-         //this.editMode = false
-      }
-   }
    availability(username) {
       if (!this.selectedMembers) return
       const res = !(this.selectedMembers.indexOf(username) == -1)
@@ -64,27 +56,23 @@ export class EventPage implements OnInit, OnDestroy {
          this.selectedMembers = ev.hr.members
    }
 
-   addContact() {
-
-   }
-
    closeModal() {
       this.view.dismiss(null)
    }
 
    private checkEditMode() {
       let cnt = 0
-      this.evt.members.forEach(m => {
-         if (m.onoff == true)
+      this.contacts.forEach(m => {
+         if (m.selected == true)
             cnt = cnt + 1
       });
-      this.toggleMode = ((cnt == 1) && (this.evt.members[0].onoff == true))
+      this.toggleMode = ((cnt == 1) && (this.contacts[0].selected == true))
    }
    private processDays() {
       this.resetDays(this.evt.days)
       this.dayKeys = Object.keys(this.evt.days)
-      this.evt.members.forEach(member => {
-         if (member.onoff === true) {
+      this.contacts.forEach(member => {
+         if (member.selected === true) {
             this.dayKeys.forEach((key) => {
                this.evt.days[key].forEach((hr, i) => {
                   let x = member.days[key][i].value

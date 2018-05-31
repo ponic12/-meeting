@@ -14,6 +14,8 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
 .headApp{
    position: fixed;
    right: 10px;
@@ -31,8 +33,17 @@
 }
 
 
+.sortName{
+   margin-right: 60px;
+}
 
+.searchIcon {
+   font-size: 20px;
+   padding-left: 20px;
+   padding-top: 13px;
+ }
 
+ 
 .statusIcons {
    float: right;
    margin-top: 4px;

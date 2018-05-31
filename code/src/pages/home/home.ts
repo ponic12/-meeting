@@ -84,13 +84,10 @@ export class HomePage implements OnInit, OnDestroy {
       })
    }
    showEvent(ev, i) {
-      const mod: Modal = this.modal.create('EventPage', {
+      this.navCtrl.push('EventPage', {
          title: 'Evento',
-         evt: { ev },
+         evt: ev,
          contacts: this.mapMembersToContacts(this.user.contacts, ev.members)
-      }, {})
-      mod.present()
-      mod.onDidDismiss(evt => {
       })
    } 
 

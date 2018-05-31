@@ -12,6 +12,21 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.modal-wrapper {
+   position: absolute;
+   top: 50px;
+   left: 3%;
+   right: 3%;
+   height: 90%;
+   }
+   
+   ion-modal {
+   padding: 30px;
+   background: rgba(0,0,0,0.7)
+   }
+
+
 .headApp {
   position: fixed;
   right: 10px;
@@ -35,11 +50,6 @@
   animation-duration: 2s;
 }
 
-.searchIcon {
-  font-size: 20px;
-  padding-left: 20px;
-  padding-top: 13px;
-}
 
 .eventCard {
   margin: 10px;
@@ -76,9 +86,7 @@
   box-shadow: 0px 4px 5px #666;
 }
 
-.sortName{
-   margin-right: 60px;
-}
+
 
 .grdContacts {
   margin: 5px;

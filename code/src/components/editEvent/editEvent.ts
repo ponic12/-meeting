@@ -38,7 +38,8 @@ export class EditEventPage implements OnInit, OnDestroy {
    addContact(){
       const mod: Modal = this.modal.create('ContactsPage', {
          title:"Contactos",
-         contacts:this.contacts}, {})
+         contacts:this.contacts
+      }, {})
       mod.present()
       mod.onDidDismiss(x=>{
       })

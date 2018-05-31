@@ -22,3 +22,8 @@ export const onEvents = functions.firestore.document('events/{evtId}').onWrite((
       })      
    });
 })
+
+// export const onUsers = functions.firestore.document('users/{usrId}').onWrite((event) => {
+//    const usr = event.after.data()
+
+// })

@@ -7,66 +7,89 @@
 <ion-content class="backEvent">
   <div class="grdEvento">
     <div id="evento">
-      <ion-item>
-        <ion-label>{{evt.name}}</ion-label>
-        <div>{{evt.description}}</div>
-      </ion-item>
-    </div>
-    <!-- <div id="fCreacion">
-      {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
-    </div> -->
-    <div id="participantes">
-      <div class="grdMembers">
-        <div *ngFor="let ct of contacts" class="member">
-          <div>
-            <img *ngIf="availability(ct.id)" src="assets/imgs/check.png" class="selMember">
-          </div>
-          <div style="margin-top:4px">{{usr.displayName}}</div>
-          <ion-toggle [(ngModel)]="ct.onoff" (ionChange)="toggleMember($event)" style="padding:5px"></ion-toggle>
+      <div>{{evt.name}}</div>
+      <div>{{evt.description}}</div>
+      <div>
+        <div>
+          Admin:
+        </div>
+        <div>
+          {{evt.owner}}
+        </div>
+        <div>Ult.mod: {{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
       </div>
+    </div>
+    <div id="participantes">
+      <ion-slides #membersSlides>
+        <ion-slide>
+          <div class="grdMembers">
+            <div *ngFor="let ct of contacts" class="member">
+              <div>
+                <img *ngIf="availability(ct.id)" src="assets/imgs/check.png" class="selMember">
+              </div>
+              <ion-avatar class="mid midCenter">
+                <img class="avatar" [src]="ct.photoURL">
+              </ion-avatar>
+              <div class="mid">{{ct.displayName}}</div>
+              <ion-toggle [(ngModel)]="ct.selected" (ionChange)="toggleMember($event)" style="padding:5px"></ion-toggle>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
     </div>
     <div id="dias">
       <div class="grdDays">
         <div class="grdDaysNames">
-          <div></div>
           <div *ngFor="let d of dayKeys">
             <div class="dayName">{{d}}</div>
           </div>
         </div>
-        <div class="grdScheduler">
-          <div class="daysNum">
-            <div>0</div>
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div>5</div>
-            <div>6</div>
-            <div>7</div>
-            <div>8</div>
-            <div>9</div>
-            <div>10</div>
-            <div>11</div>
-            <div>12</div>
-            <div>13</div>
-            <div>14</div>
-            <div>15</div>
-            <div>16</div>
-            <div>17</div>
-            <div>18</div>
-            <div>19</div>
-            <div>20</div>
-            <div>21</div>
-            <div>22</div>
-            <div>23</div>
-          </div>
-          <div class="grdCalendar">
-            <div *ngFor="let d of dayKeys">
-              <hours [dictionary]="evt.days[d]" [max]="evt.members.length" (selectedCell)="selection($event)"></hours>
-            </div>
-          </div>
+        <div>
+          <ion-slides #daySlides>
+            <ion-slide>
+              <div class="grdScheduler">
+                <div class="daysNum">
+                  <div>0</div>
+                  <div>1</div>
+                  <div>2</div>
+                  <div>3</div>
+                  <div>4</div>
+                  <div>5</div>
+                  <div>6</div>
+                  <div>7</div>
+                  <div>8</div>
+                  <div>9</div>
+                  <div>10</div>
+                  <div>11</div>
+                  <div>12</div>
+                  <div>13</div>
+                  <div>14</div>
+                  <div>15</div>
+                  <div>16</div>
+                  <div>17</div>
+                  <div>18</div>
+                  <div>19</div>
+                  <div>20</div>
+                  <div>21</div>
+                  <div>22</div>
+                  <div>23</div>
+                </div>
+                <div class="grdCalendar">
+                  <div *ngFor="let d of dayKeys">
+                    <hours [dictionary]="evt.days[d]" [max]="evt.members.length" (selectedCell)="selection($event)"></hours>
+                  </div>
+                </div>
+              </div>
+            </ion-slide>
+          </ion-slides>
+
+
+          <button type="submit" float-left ion-button color="primary" class="btnPrev" (click)="prev()">Prev</button>
+          <button type="submit" float-right ion-button color="primary" class="btnNext" (click)="next()">Next</button>
+
         </div>
+
       </div>
     </div>
   </div>
