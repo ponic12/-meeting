@@ -89,14 +89,44 @@
 
 
 .grdContacts {
-  margin: 5px;
+  margin: 10px;
   height: 55px;
   background: #eee;
-  box-shadow: 1px 1px 1px #555;
+  box-shadow: 3px 3px 8px #555;
   display: grid;
-  grid-row-gap: 5px;
   grid-template-columns: 60px 60px 1fr;
 }
+
+.top-to-bottom {
+   border-width: 3px;
+   border-style: solid;
+   border-image:
+     linear-gradient(to bottom, black, rgba(0, 0, 0, 0)) 1 100%;
+}
+
+.bottom-to-top {
+   border-width: 3px;
+   border-style: solid;
+   border-image:
+     linear-gradient(to top, white, rgba(0, 0, 0, 0)) 1 100%;
+}
+
+.left-to-right {
+   border-width: 3px 0 3px 3px;
+   border-style: solid;
+   border-image:
+     linear-gradient(to right, black, rgba(0, 0, 0, 0)) 1 100%; 
+}
+
+.right-to-left {
+   border-width: 3px 3px 3px 0;
+   border-style: solid;
+   border-image:
+     linear-gradient(to left, white, rgba(0, 0, 0, 0)) 1 100%;     
+}
+
+
+
 
 .grdMember {
    margin: 5px;

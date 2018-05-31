@@ -21,22 +21,9 @@
       </div>
     </div>
     <div id="participantes">
-      <ion-slides #membersSlides>
-        <ion-slide>
-          <div class="grdMembers">
-            <div *ngFor="let ct of contacts" class="member">
-              <div>
-                <img *ngIf="availability(ct.id)" src="assets/imgs/check.png" class="selMember">
-              </div>
-              <ion-avatar class="mid midCenter">
-                <img class="avatar" [src]="ct.photoURL">
-              </ion-avatar>
-              <div class="mid">{{ct.displayName}}</div>
-              <ion-toggle [(ngModel)]="ct.selected" (ionChange)="toggleMember($event)" style="padding:5px"></ion-toggle>
-            </div>
-          </div>
-        </ion-slide>
-      </ion-slides>
+      <button ion-button (click)="showMembers()" class="btnMembers">
+         <ion-icon name="person"></ion-icon>
+      </button>
     </div>
     <div id="dias">
       <div class="grdDays">

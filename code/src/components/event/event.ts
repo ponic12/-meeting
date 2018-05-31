@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Slides, IonicPage, ViewController, NavParams, Events } from 'ionic-angular';
+import { Slides, IonicPage, ViewController, NavParams, Events, Modal, ModalController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { EventService } from './event.service'
 import { ApplicationService } from '../../shared/services/application.service';
@@ -16,7 +16,7 @@ export class EventPage implements OnInit, OnDestroy {
 
    title: string = "Evento"
    evt: any
-   contacts: any
+   members: any
 
    selectedMembers: any
    toggleMode: boolean = false
@@ -27,6 +27,7 @@ export class EventPage implements OnInit, OnDestroy {
       private view: ViewController,
       private appSrv: ApplicationService,
       private evtSrv: EventService,
+      private modal: ModalController,
       private socialSharing: SocialSharing
    ) {
       console.log('EventPage constructor');
@@ -38,7 +39,7 @@ export class EventPage implements OnInit, OnDestroy {
       console.log('EventPage init');
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
-      this.contacts = this.navParams.get('contacts')
+      this.members = this.navParams.get('members')
    }
    toggleMember(ev, u) {
       this.checkEditMode()
@@ -56,22 +57,31 @@ export class EventPage implements OnInit, OnDestroy {
          this.selectedMembers = ev.hr.members
    }
 
+   showMembers(){
+      const mod: Modal = this.modal.create('MembersPage', {
+         title:"Miembros",
+         members:this.members
+      }, {})
+      mod.present()
+      mod.onDidDismiss(x=>{
+      })
+   }
    closeModal() {
       this.view.dismiss(null)
    }
 
    private checkEditMode() {
       let cnt = 0
-      this.contacts.forEach(m => {
-         if (m.selected == true)
+      this.members.forEach(m => {
+         if (m.onoff == true)
             cnt = cnt + 1
       });
-      this.toggleMode = ((cnt == 1) && (this.contacts[0].selected == true))
+      this.toggleMode = ((cnt == 1) && (this.members[0].onoff == true))
    }
    private processDays() {
       this.resetDays(this.evt.days)
       this.dayKeys = Object.keys(this.evt.days)
-      this.contacts.forEach(member => {
+      this.members.forEach(member => {
          if (member.selected === true) {
             this.dayKeys.forEach((key) => {
                this.evt.days[key].forEach((hr, i) => {

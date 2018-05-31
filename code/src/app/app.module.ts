@@ -10,13 +10,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { CoreModule } from '../shared/core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { MeetingApp } from './app.component';
-import { SearchInfoPipe } from '../shared/pipes/search-info.pipe';
-
 
 @NgModule({
    declarations: [
-      MeetingApp,
-      SearchInfoPipe
+      MeetingApp
    ],
    imports: [
       BrowserModule,
