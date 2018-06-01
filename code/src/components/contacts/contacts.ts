@@ -12,7 +12,7 @@ import * as moment from 'moment'
 })
 export class ContactsPage implements OnInit, OnDestroy {
    title:string
-   contacts:any
+   contacts:any[] = []
    searchText: string
    sortField: string = 'creationDate'
    direction:boolean = false
@@ -26,26 +26,22 @@ export class ContactsPage implements OnInit, OnDestroy {
       private socialSharing: SocialSharing
    ) {
       console.log('ContactsPage constructor');
+      this.title = this.navParams.get('title')
+      const origContacts = this.navParams.get('contacts')
+      Object.assign(this.contacts, origContacts)
    }
    ngOnDestroy() {
       console.warn('ContactsPage destroy');
    }
    ngOnInit(): void {
       console.log('ContactsPage init');
-      this.title = this.navParams.get('title')
-      this.contacts = this.navParams.get('contacts');
    }
-
-   addMember(){
-      // copiar los seleccionaods a los miembros
-   }
-   statusChanged(ct){
-      ct.selected = true
+   selChanged(ct){
       this.confirmFlag = true
    }
-   save(){
+   saveMembers(){
       const data ={
-         contacts:this.contacts
+         members:this.contacts
       }
       this.view.dismiss(data)
    }
@@ -69,5 +65,4 @@ export class ContactsPage implements OnInit, OnDestroy {
    closeModal(){
       this.view.dismiss(null)
    }
-   
 }

@@ -15,14 +15,14 @@
   </ion-grid>
 
   <div *ngFor="let ct of contacts | searchInfo: searchText | orderBy:sortField:direction" class="grdContacts">
-    <ion-toggle class="mid midCenter" (ionChange)="statusChanged(ct)"></ion-toggle>
+    <ion-toggle class="mid midCenter" [(ngModel)]="ct.selected" (ionChange)="selChanged(ct)"></ion-toggle>
     <ion-avatar class="mid midCenter">
       <img class="avatar" [src]="ct.photoURL">
     </ion-avatar>
     <div class="mid">{{ct.displayName}}</div>
   </div>
 
-  <button ion-button (click)="addMembers()" *ngIf="confirmFlag === true">Aceptar</button>
+  <button ion-button  (click)="saveMembers()" *ngIf="confirmFlag === true">Aceptar</button>
   
   <ion-fab class="btnSort" top right #fab>
     <button ion-fab mini>

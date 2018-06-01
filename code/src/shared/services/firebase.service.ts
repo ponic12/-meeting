@@ -43,10 +43,16 @@ export class FirebaseService {
       })
       return obs
    }
-   getEventsByUid(uid): Observable<any> {
+   getEventsByUid(uid) {
       const field: string = 'members.' + uid
       const ref = this.afs.collection('events', ref => ref.where(field, '==', true))
-      const obs = ref.valueChanges()
+      const obs = ref.snapshotChanges().map(actions => {
+         return actions.map(a => {
+            const data = a.payload.doc.data()
+            const id = a.payload.doc.id
+            return { id, ...data }
+         })
+      })
       return obs
    }
 

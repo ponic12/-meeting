@@ -63,8 +63,6 @@ export class HomePage implements OnInit, OnDestroy {
       mod.onDidDismiss(data => {
          if (data === null) return
          data.evt.members = this.mapContactsToMembers(data.contacts)
-         data.evt.creationDate = new Date().getTime()
-         data.evt.modificationDate = new Date().getTime()
          data.evt.owner = this.user.uid
          this.fs.addEvent(data.evt)
       })
@@ -79,7 +77,6 @@ export class HomePage implements OnInit, OnDestroy {
       mod.onDidDismiss(data => {
          if (data === null) return
          data.evt.members = this.mapContactsToMembers(data.contacts)
-         data.evt.modificationDate = new Date().getTime()
          this.fs.saveEvent(data.evt)
       })
    }
