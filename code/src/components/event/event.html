@@ -6,17 +6,22 @@
 
 <ion-content class="backEvent">
   <div class="grdEvento">
-    <div id="evento">
-      <div>{{evt.name}}</div>
-      <div>{{evt.description}}</div>
-      <div>
-        <div>
-          Admin:
+    <div id="evento" class="grdInfo">
+      <div class="fechaProbable">
+        <div class="dia">31</div>
+        <div class="mes">MAY</div>
+      </div>
+      <div class="info">
+        <div class="evtName">{{evt.name}}</div>
+        <h6 class="evtDesc">Partido amistoso contra velez sarfield
+          <!--{{evt.description}}-->
+        </h6>
+        <div class="evtAdmin">
+          Admin: Pablo A. Massad
+          <!--{{evt.owner}}-->
         </div>
-        <div>
-          {{evt.owner}}
-        </div>
-        <div>Ult.mod: {{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}
+        <div class="evtUltMod">Ult.mod: 31/05/2018
+          <!--{{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}-->
         </div>
       </div>
     </div>

@@ -49,7 +49,7 @@ export class MembersPage implements OnInit, OnDestroy {
       }
       this.view.dismiss(data)
    }
-   getSortedContacts(sort, fab){
+   getSorted(sort, fab){
       this.sortField = sort
       this.direction = !this.direction
       fab.close()
