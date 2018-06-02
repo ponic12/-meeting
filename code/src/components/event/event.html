@@ -1,27 +1,29 @@
 <ion-header class="grdToolbar">
-  <img class="logoTipo" src="assets/imgs/calendar.png">
+  <div>
+    <img class="logoTipo" src="assets/imgs/calendar.png">
+    <div class="fechaProgramada">
+      <div class="dia">31</div>
+      <div class="mes">MAY</div>
+    </div>
+  </div>
   <div class="title">{{title}}</div>
   <ion-icon class="btnClose" (click)="closeModal()" name="close-circle"></ion-icon>
 </ion-header>
 
-<ion-content class="backEvent">
+<ion-content class="backPage">
   <div class="grdEvento">
     <div id="evento" class="grdInfo">
-      <div class="fechaProbable">
-        <div class="dia">31</div>
-        <div class="mes">MAY</div>
-      </div>
       <div class="info">
-        <div class="evtName">{{evt.name}}</div>
-        <h6 class="evtDesc">Partido amistoso contra velez sarfield
-          <!--{{evt.description}}-->
-        </h6>
-        <div class="evtAdmin">
-          Admin: Pablo A. Massad
-          <!--{{evt.owner}}-->
+        <div class="item evtName">{{evt.name}}</div>
+        <div class="item evtDesc">
+          {{evt.description}}
         </div>
-        <div class="evtUltMod">Ult.mod: 31/05/2018
-          <!--{{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}-->
+        <div class="item evtAdmin">
+          <strong>Admin: </strong>
+          {{evt.owner}}
+        </div>
+        <div class="item evtUltMod"><strong>Ult.mod: </strong>
+          {{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
       </div>
     </div>

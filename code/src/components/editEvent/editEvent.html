@@ -4,14 +4,12 @@
   <ion-icon class="btnClose" (click)="closeModal()" name="close-circle"></ion-icon>
 </ion-header>
 
-<ion-content class="backEvent">
+<ion-content class="backPage">
   <ion-list padding>
-
     <ion-item>
       <ion-label floating>Nombre del evento</ion-label>
       <ion-input type="text" value="" [(ngModel)]="evt.name"></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label floating>Descripcion del evento</ion-label>
       <ion-input type="text" [(ngModel)]="evt.description"></ion-input>
@@ -45,12 +43,10 @@
       </div>
     </div>
   </ion-card>
-
   <div style="text-align: center">
     <button ion-button (click)="save()" [disabled]="(evt.name === '')" style="width:50%">
       <ion-icon name="cloud-upload"></ion-icon>
       <p style="margin-left:5px">Guardar</p>
     </button>
   </div>
-
 </ion-content>
