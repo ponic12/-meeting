@@ -71,7 +71,8 @@ page-event {
     text-align: right;
   }
   #participantes {
-    grid-area: participantes
+    grid-area: participantes;
+    justify-self: center;
   }
   .grdInvitations {
     display: grid;
@@ -91,8 +92,7 @@ page-event {
     box-shadow: 1px 1px 3px #888;
   }
   .btnMembers {
-     width: 80%;
-     text-align:center;
+
   }
   .selMember {
     width: 21px;

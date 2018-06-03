@@ -19,7 +19,6 @@ export class HoursComponent implements OnInit, OnDestroy {
       private appSrv: ApplicationService
    ) {
       console.log('HoursComponent constructor')
-      console.log('dic: ', this.dictionary)
    }
 
    ngOnDestroy() {

@@ -14,6 +14,7 @@
   <div class="grdEvento">
     <div id="evento" class="grdInfo">
       <div class="info">
+        <!-- <div class="item evtName">Tipo: {{evt.type}}</div>  -->
         <div class="item evtName">{{evt.name}}</div>
         <div class="item evtDesc">
           {{evt.description}}
@@ -29,8 +30,14 @@
       </div>
     </div>
     <div id="participantes">
+      <button class="btnPrev" (click)="prevWeek()">
+        <ion-icon name="arrow-dropleft-circle"></ion-icon>
+      </button>
       <button ion-button (click)="showMembers()" class="btnMembers">
         <ion-icon name="person">Miembros</ion-icon>
+      </button>
+      <button class="btnNext" (click)="nextWeek()">
+        <ion-icon name="arrow-dropright-circle"></ion-icon>
       </button>
     </div>
     <div id="dias">
@@ -74,19 +81,13 @@
                 </div>
                 <div class="grdCalendar">
                   <div *ngFor="let d of weekDataKeys">
-                    <hours [dictionary]="weekData[d].info" [max]="evt.members.length" (selectedCell)="showAssistants($event)"></hours>
+                    <hours [dictionary]="weekData[d].info" [max]="totalMembers" (selectedCell)="showAssistants($event)"></hours>
                   </div>
                 </div>
               </div>
             </ion-slide>
           </ion-slides>
-
-
-          <button type="submit" float-left ion-button color="primary" class="btnPrev" (click)="prev()">Prev</button>
-          <button type="submit" float-right ion-button color="primary" class="btnNext" (click)="next()">Next</button>
-
         </div>
-
       </div>
     </div>
   </div>

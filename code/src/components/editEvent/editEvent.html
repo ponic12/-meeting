@@ -6,6 +6,15 @@
 
 <ion-content class="backPage">
   <ion-list padding>
+     <ion-item>
+         <ion-label>Tipo de evento:</ion-label>
+         <ion-select [(ngModel)]="evt.type">
+           <ion-option value="calendario">Calendario</ion-option>
+           <ion-option value="asistencia">Asistencia</ion-option>
+           <ion-option value="seleccion">Seleccion</ion-option>          
+           <ion-option value="votacion">Votacion</ion-option>
+         </ion-select>
+     </ion-item>
     <ion-item>
       <ion-label floating>Nombre del evento</ion-label>
       <ion-input type="text" value="" [(ngModel)]="evt.name"></ion-input>

@@ -18,6 +18,8 @@ export class EventPage implements OnInit, OnDestroy {
    title: string = "Evento"
    evt: any
    members: any
+   totalMembers:number = 0
+   startWeek: any
    weekData: any
    weekDataKeys: any = []
    assistants: any
@@ -41,7 +43,8 @@ export class EventPage implements OnInit, OnDestroy {
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
       this.members = this.navParams.get('contacts')
-      this.processDays()
+      this.totalMembers = Object.keys(this.evt.members).length
+      this.processDays(this.evt.creationDate)
    }
 
    showMembers() {
@@ -60,6 +63,12 @@ export class EventPage implements OnInit, OnDestroy {
       this.view.dismiss(null)
    }
 
+   prevWeek(){
+      this.startWeek = moment(this.startWeek).add(-7, 'days') 
+   }
+   nextWeek(){
+      this.startWeek = moment(this.startWeek).add(7, 'days') 
+   }
    showAssistants(ev) {
       if (this.editMode === true)
          ev.hr.value = 1 - ev.hr.value
@@ -67,8 +76,10 @@ export class EventPage implements OnInit, OnDestroy {
          this.assistants = ev.hr.members
    }
 
-   private processDays() {
-      this.weekData = this.resetDays(this.evt.creationDate)
+   private processDays(d?) {
+      if (d)
+         this.startWeek = moment(d).day(0)
+      this.weekData = this.resetDays(this.startWeek)
       this.weekDataKeys = Object.keys(this.weekData)
       this.members.forEach(member => {
          let memberData = this.evt.availability[member.id]
@@ -76,16 +87,18 @@ export class EventPage implements OnInit, OnDestroy {
             const days = Object.keys(memberData)
             days.forEach(day => {
                memberData[day].forEach(hour => {
-                  this.weekData[day].info[hour].value = this.weekData[day].info[hour].value + 1
-                  this.weekData[day].info[hour].members.push(member.displayName)
+                  let wd = this.weekData[day]
+                  if (wd){
+                     wd.info[hour].value = wd.info[hour].value + 1
+                     wd.info[hour].members.push(member.displayName)
+                  }
                });
             });
          }
       })
    }
 
-   private resetDays(startDate) {
-      const startDay = moment(startDate).day(0)
+   private resetDays(startDay) {
       let emptyWeek = {}
 
       for (let i = 0; i < 7; i++) {
