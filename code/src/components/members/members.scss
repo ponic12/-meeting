@@ -1,7 +1,15 @@
 page-members {
-   .memberON {
-      background: gray;
-      box-shadow: 0px 0px 3px;
-      margin:12px;
-   }
+  .grdMembers {
+    margin: 10px;
+    height: 55px;
+    background: #eee;
+    box-shadow: 3px 3px 8px #555;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+  }
+  .memberON {
+    background: gray;
+    box-shadow: 0px 0px 3px;
+    margin: 12px;
+  }
 }

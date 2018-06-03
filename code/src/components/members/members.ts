@@ -55,8 +55,9 @@ export class MembersPage implements OnInit, OnDestroy {
          return "arrow-dropup"
    }   
    closeModal(){
-      const editMode = this.checkEditMode()
-      this.view.dismiss(null)
+      const ed = this.checkEditMode()
+      const data = { editMode : ed }
+      this.view.dismiss(data)
    }
 
    private checkEditMode(){

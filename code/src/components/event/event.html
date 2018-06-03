@@ -22,38 +22,41 @@
           <strong>Admin: </strong>
           {{evt.owner}}
         </div>
-        <div class="item evtUltMod"><strong>Ult.mod: </strong>
+        <div class="item evtUltMod">
+          <strong>Ult.mod: </strong>
           {{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
       </div>
     </div>
     <div id="participantes">
-      <button ion-button (click)="showMembers()" full class="btnMembers">
-         <ion-icon name="person">Miembros</ion-icon>
+      <button ion-button (click)="showMembers()" class="btnMembers">
+        <ion-icon name="person">Miembros</ion-icon>
       </button>
     </div>
     <div id="dias">
       <div class="grdDays">
         <div class="grdDaysNames">
-          <div *ngFor="let d of dayKeys">
-            <div class="dayName">{{d}}</div>
+          <div></div>
+          <div *ngFor="let d of weekDataKeys">
+            <div class="dayName">{{weekData[d].dayName}}</div>
+            <div class="dayName">{{weekData[d].dayNum}}</div>
           </div>
         </div>
         <div>
           <ion-slides #daySlides>
             <ion-slide>
               <div class="grdScheduler">
-                <div class="daysNum">
-                  <div>0</div>
-                  <div>1</div>
-                  <div>2</div>
-                  <div>3</div>
-                  <div>4</div>
-                  <div>5</div>
-                  <div>6</div>
-                  <div>7</div>
-                  <div>8</div>
-                  <div>9</div>
+                <div class="hoursNum">
+                  <div>00</div>
+                  <div>01</div>
+                  <div>02</div>
+                  <div>03</div>
+                  <div>04</div>
+                  <div>05</div>
+                  <div>06</div>
+                  <div>07</div>
+                  <div>08</div>
+                  <div>09</div>
                   <div>10</div>
                   <div>11</div>
                   <div>12</div>
@@ -70,8 +73,8 @@
                   <div>23</div>
                 </div>
                 <div class="grdCalendar">
-                  <div *ngFor="let d of dayKeys">
-                    <hours [dictionary]="evt.days[d]" [max]="evt.members.length" (selectedCell)="showAssistants($event)"></hours>
+                  <div *ngFor="let d of weekDataKeys">
+                    <hours [dictionary]="weekData[d].info" [max]="evt.members.length" (selectedCell)="showAssistants($event)"></hours>
                   </div>
                 </div>
               </div>

@@ -5,6 +5,7 @@ import { EventService } from './event.service'
 import { ApplicationService } from '../../shared/services/application.service';
 
 import * as moment from 'moment'
+//import { Moment } from 'moment'
 
 @IonicPage()
 @Component({
@@ -17,10 +18,10 @@ export class EventPage implements OnInit, OnDestroy {
    title: string = "Evento"
    evt: any
    members: any
-
+   weekData: any
+   weekDataKeys: any = []
    assistants: any
    editMode: boolean = true
-   dayKeys: any
 
    constructor(
       private navParams: NavParams,
@@ -40,18 +41,19 @@ export class EventPage implements OnInit, OnDestroy {
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
       this.members = this.navParams.get('contacts')
+      this.processDays()
    }
 
-   showMembers(){
+   showMembers() {
       const mod: Modal = this.modal.create('MembersPage', {
-         title:"Miembros",
-         evt:this.evt,
-         members:this.members
+         title: "Miembros",
+         evt: this.evt,
+         members: this.members
       }, {})
       mod.present()
-      mod.onDidDismiss(data=>{
+      mod.onDidDismiss(data => {
          this.editMode = data.editMode
-         //this.processDays()
+         this.processDays()
       })
    }
    closeModal() {
@@ -66,207 +68,37 @@ export class EventPage implements OnInit, OnDestroy {
    }
 
    private processDays() {
-      this.resetDays(this.evt.days)
-      this.dayKeys = Object.keys(this.evt.days)
+      this.weekData = this.resetDays(this.evt.creationDate)
+      this.weekDataKeys = Object.keys(this.weekData)
       this.members.forEach(member => {
-         if (member.onoff === true) {
-            this.dayKeys.forEach((key) => {
-               this.evt.days[key].forEach((hr, i) => {
-                  let x = member.days[key][i].value
-                  hr.value = hr.value + x
-                  if (x > 0)
-                     hr.members.push(member.username)
-               })
+         let memberData = this.evt.availability[member.id]
+         if ((member.onoff === true)&&(memberData)) {
+            const days = Object.keys(memberData)
+            days.forEach(day => {
+               memberData[day].forEach(hour => {
+                  this.weekData[day].info[hour].value = this.weekData[day].info[hour].value + 1
+                  this.weekData[day].info[hour].members.push(member.displayName)
+               });
             });
          }
-      });
+      })
    }
-   private resetDays(days) {
-      const emptyDays = {
-         'LU': [
-            { hour: 0, value: 0, members: [] },
-            { hour: 1, value: 0, members: [] },
-            { hour: 2, value: 0, members: [] },
-            { hour: 3, value: 0, members: [] },
-            { hour: 4, value: 0, members: [] },
-            { hour: 5, value: 0, members: [] },
-            { hour: 6, value: 0, members: [] },
-            { hour: 7, value: 0, members: [] },
-            { hour: 8, value: 0, members: [] },
-            { hour: 9, value: 0, members: [] },
-            { hour: 10, value: 0, members: [] },
-            { hour: 11, value: 0, members: [] },
-            { hour: 12, value: 0, members: [] },
-            { hour: 13, value: 0, members: [] },
-            { hour: 14, value: 0, members: [] },
-            { hour: 15, value: 0, members: [] },
-            { hour: 16, value: 0, members: [] },
-            { hour: 17, value: 0, members: [] },
-            { hour: 18, value: 0, members: [] },
-            { hour: 19, value: 0, members: [] },
-            { hour: 20, value: 0, members: [] },
-            { hour: 21, value: 0, members: [] },
-            { hour: 22, value: 0, members: [] },
-            { hour: 23, value: 0, members: [] }
-         ],
-         'MA': [
-            { hour: 0, value: 0, members: [] },
-            { hour: 1, value: 0, members: [] },
-            { hour: 2, value: 0, members: [] },
-            { hour: 3, value: 0, members: [] },
-            { hour: 4, value: 0, members: [] },
-            { hour: 5, value: 0, members: [] },
-            { hour: 6, value: 0, members: [] },
-            { hour: 7, value: 0, members: [] },
-            { hour: 8, value: 0, members: [] },
-            { hour: 9, value: 0, members: [] },
-            { hour: 10, value: 0, members: [] },
-            { hour: 11, value: 0, members: [] },
-            { hour: 12, value: 0, members: [] },
-            { hour: 13, value: 0, members: [] },
-            { hour: 14, value: 0, members: [] },
-            { hour: 15, value: 0, members: [] },
-            { hour: 16, value: 0, members: [] },
-            { hour: 17, value: 0, members: [] },
-            { hour: 18, value: 0, members: [] },
-            { hour: 19, value: 0, members: [] },
-            { hour: 20, value: 0, members: [] },
-            { hour: 21, value: 0, members: [] },
-            { hour: 22, value: 0, members: [] },
-            { hour: 23, value: 0, members: [] }
-         ],
-         'MI': [
-            { hour: 0, value: 0, members: [] },
-            { hour: 1, value: 0, members: [] },
-            { hour: 2, value: 0, members: [] },
-            { hour: 3, value: 0, members: [] },
-            { hour: 4, value: 0, members: [] },
-            { hour: 5, value: 0, members: [] },
-            { hour: 6, value: 0, members: [] },
-            { hour: 7, value: 0, members: [] },
-            { hour: 8, value: 0, members: [] },
-            { hour: 9, value: 0, members: [] },
-            { hour: 10, value: 0, members: [] },
-            { hour: 11, value: 0, members: [] },
-            { hour: 12, value: 0, members: [] },
-            { hour: 13, value: 0, members: [] },
-            { hour: 14, value: 0, members: [] },
-            { hour: 15, value: 0, members: [] },
-            { hour: 16, value: 0, members: [] },
-            { hour: 17, value: 0, members: [] },
-            { hour: 18, value: 0, members: [] },
-            { hour: 19, value: 0, members: [] },
-            { hour: 20, value: 0, members: [] },
-            { hour: 21, value: 0, members: [] },
-            { hour: 22, value: 0, members: [] },
-            { hour: 23, value: 0, members: [] }
-         ],
-         'JU': [
-            { hour: 0, value: 0, members: [] },
-            { hour: 1, value: 0, members: [] },
-            { hour: 2, value: 0, members: [] },
-            { hour: 3, value: 0, members: [] },
-            { hour: 4, value: 0, members: [] },
-            { hour: 5, value: 0, members: [] },
-            { hour: 6, value: 0, members: [] },
-            { hour: 7, value: 0, members: [] },
-            { hour: 8, value: 0, members: [] },
-            { hour: 9, value: 0, members: [] },
-            { hour: 10, value: 0, members: [] },
-            { hour: 11, value: 0, members: [] },
-            { hour: 12, value: 0, members: [] },
-            { hour: 13, value: 0, members: [] },
-            { hour: 14, value: 0, members: [] },
-            { hour: 15, value: 0, members: [] },
-            { hour: 16, value: 0, members: [] },
-            { hour: 17, value: 0, members: [] },
-            { hour: 18, value: 0, members: [] },
-            { hour: 19, value: 0, members: [] },
-            { hour: 20, value: 0, members: [] },
-            { hour: 21, value: 0, members: [] },
-            { hour: 22, value: 0, members: [] },
-            { hour: 23, value: 0, members: [] }
-         ],
-         'VI': [
-            { hour: 0, value: 0, members: [] },
-            { hour: 1, value: 0, members: [] },
-            { hour: 2, value: 0, members: [] },
-            { hour: 3, value: 0, members: [] },
-            { hour: 4, value: 0, members: [] },
-            { hour: 5, value: 0, members: [] },
-            { hour: 6, value: 0, members: [] },
-            { hour: 7, value: 0, members: [] },
-            { hour: 8, value: 0, members: [] },
-            { hour: 9, value: 0, members: [] },
-            { hour: 10, value: 0, members: [] },
-            { hour: 11, value: 0, members: [] },
-            { hour: 12, value: 0, members: [] },
-            { hour: 13, value: 0, members: [] },
-            { hour: 14, value: 0, members: [] },
-            { hour: 15, value: 0, members: [] },
-            { hour: 16, value: 0, members: [] },
-            { hour: 17, value: 0, members: [] },
-            { hour: 18, value: 0, members: [] },
-            { hour: 19, value: 0, members: [] },
-            { hour: 20, value: 0, members: [] },
-            { hour: 21, value: 0, members: [] },
-            { hour: 22, value: 0, members: [] },
-            { hour: 23, value: 0, members: [] }
-         ],
-         'SA': [
-            { hour: 0, value: 0, members: [] },
-            { hour: 1, value: 0, members: [] },
-            { hour: 2, value: 0, members: [] },
-            { hour: 3, value: 0, members: [] },
-            { hour: 4, value: 0, members: [] },
-            { hour: 5, value: 0, members: [] },
-            { hour: 6, value: 0, members: [] },
-            { hour: 7, value: 0, members: [] },
-            { hour: 8, value: 0, members: [] },
-            { hour: 9, value: 0, members: [] },
-            { hour: 10, value: 0, members: [] },
-            { hour: 11, value: 0, members: [] },
-            { hour: 12, value: 0, members: [] },
-            { hour: 13, value: 0, members: [] },
-            { hour: 14, value: 0, members: [] },
-            { hour: 15, value: 0, members: [] },
-            { hour: 16, value: 0, members: [] },
-            { hour: 17, value: 0, members: [] },
-            { hour: 18, value: 0, members: [] },
-            { hour: 19, value: 0, members: [] },
-            { hour: 20, value: 0, members: [] },
-            { hour: 21, value: 0, members: [] },
-            { hour: 22, value: 0, members: [] },
-            { hour: 23, value: 0, members: [] }
-         ],
-         'DO': [
-            { hour: 0, value: 0, members: [] },
-            { hour: 1, value: 0, members: [] },
-            { hour: 2, value: 0, members: [] },
-            { hour: 3, value: 0, members: [] },
-            { hour: 4, value: 0, members: [] },
-            { hour: 5, value: 0, members: [] },
-            { hour: 6, value: 0, members: [] },
-            { hour: 7, value: 0, members: [] },
-            { hour: 8, value: 0, members: [] },
-            { hour: 9, value: 0, members: [] },
-            { hour: 10, value: 0, members: [] },
-            { hour: 11, value: 0, members: [] },
-            { hour: 12, value: 0, members: [] },
-            { hour: 13, value: 0, members: [] },
-            { hour: 14, value: 0, members: [] },
-            { hour: 15, value: 0, members: [] },
-            { hour: 16, value: 0, members: [] },
-            { hour: 17, value: 0, members: [] },
-            { hour: 18, value: 0, members: [] },
-            { hour: 19, value: 0, members: [] },
-            { hour: 20, value: 0, members: [] },
-            { hour: 21, value: 0, members: [] },
-            { hour: 22, value: 0, members: [] },
-            { hour: 23, value: 0, members: [] }
-         ]
+
+   private resetDays(startDate) {
+      const startDay = moment(startDate).day(0)
+      let emptyWeek = {}
+
+      for (let i = 0; i < 7; i++) {
+         let d = moment(startDay).add(i, 'days').format('YYMMDD')
+         emptyWeek[d] = { 
+            dayName: moment(startDay).add(i, 'days').format('ddd'), 
+            dayNum: moment(startDay).add(i, 'days').format('DD'), 
+            info: [] }
+         for (let h = 0; h < 24; h++) {
+            emptyWeek[d].info.push({ value: 0, members: [] })
+         }
       }
-      this.evt.days = emptyDays
+      return emptyWeek
    }
 }
 

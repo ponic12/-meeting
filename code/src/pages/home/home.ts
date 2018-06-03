@@ -143,6 +143,7 @@ export class HomePage implements OnInit, OnDestroy {
       contacts.forEach(item => {
          const sel = members[item.id]
          item.selected = (sel != undefined)
+         item.onoff = item.selected
          lst.push(item)
       });
       return lst

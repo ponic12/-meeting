@@ -90,6 +90,10 @@ page-event {
     border-radius: 5px;
     box-shadow: 1px 1px 3px #888;
   }
+  .btnMembers {
+     width: 80%;
+     text-align:center;
+  }
   .selMember {
     width: 21px;
   }
@@ -99,7 +103,7 @@ page-event {
   }
   .grdDays {
     display: grid;
-    grid-template-rows: 40px 1fr;
+    grid-template-rows:65px 1fr;
   }
   .grdDaysNames {
     display: grid;
@@ -111,11 +115,11 @@ page-event {
     height: calc(100vh - 245px);
     overflow: auto;
   }
-  .daysNum {
+  .hoursNum {
     text-align: center;
     font-size: 15px;
   }
-  .daysNum>div {
+  .hoursNum>div {
     text-shadow: 1px 1px 2px #555;
     height: 30px;
     border: 1px solid;

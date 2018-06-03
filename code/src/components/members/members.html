@@ -15,7 +15,7 @@
   </ion-grid>
 
   <div *ngFor="let ct of members | searchInfo: searchText | orderBy:sortField:direction" 
-  class="grdContacts" 
+  class="grdMembers" 
   [ngClass]="{'memberON':ct.onoff === true}"
   (click)="statusChanged(ct)">
     <ion-avatar class="mid midCenter">
