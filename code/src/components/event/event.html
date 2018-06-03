@@ -28,8 +28,8 @@
       </div>
     </div>
     <div id="participantes">
-      <button ion-button (click)="showMembers()" class="btnMembers">
-         <ion-icon name="person"></ion-icon>
+      <button ion-button (click)="showMembers()" full class="btnMembers">
+         <ion-icon name="person">Miembros</ion-icon>
       </button>
     </div>
     <div id="dias">
@@ -71,7 +71,7 @@
                 </div>
                 <div class="grdCalendar">
                   <div *ngFor="let d of dayKeys">
-                    <hours [dictionary]="evt.days[d]" [max]="evt.members.length" (selectedCell)="selection($event)"></hours>
+                    <hours [dictionary]="evt.days[d]" [max]="evt.members.length" (selectedCell)="showAssistants($event)"></hours>
                   </div>
                 </div>
               </div>

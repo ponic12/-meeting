@@ -14,15 +14,15 @@
     </ion-row>
   </ion-grid>
 
-  <div *ngFor="let ct of members | searchInfo: searchText | orderBy:sortField:direction" class="grdContacts">
-    <ion-toggle class="mid midCenter" (ionChange)="statusChanged(ct)"></ion-toggle>
+  <div *ngFor="let ct of members | searchInfo: searchText | orderBy:sortField:direction" 
+  class="grdContacts" 
+  [ngClass]="{'memberON':ct.onoff === true}"
+  (click)="statusChanged(ct)">
     <ion-avatar class="mid midCenter">
       <img class="avatar" [src]="ct.photoURL">
     </ion-avatar>
     <div class="mid">{{ct.displayName}}</div>
   </div>
-
-  <button ion-button (click)="addMembers()" *ngIf="confirmFlag === true">Aceptar</button>
   
   <ion-fab class="btnSort" top right #fab>
     <button ion-fab mini>
@@ -32,7 +32,7 @@
       <button ion-fab mini (click)="getSorted('displayName', fab)">
         <ion-icon name="person"></ion-icon>
       </button>
-      <button ion-fab mini (click)="getSorted('selected', fab)">
+      <button ion-fab mini (click)="getSorted('onoff', fab)">
         <ion-icon name="checkmark-circle"></ion-icon>
       </button>
     </ion-fab-list>

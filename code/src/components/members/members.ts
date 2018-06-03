@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events,ModalController, Modal } from 'ionic-angular';
-import { SocialSharing } from '@ionic-native/social-sharing'
+import { IonicPage, ViewController, NavParams, Events } from 'ionic-angular';
 import { ApplicationService } from '../../shared/services/application.service';
 
 import * as moment from 'moment'
@@ -12,18 +11,17 @@ import * as moment from 'moment'
 })
 export class MembersPage implements OnInit, OnDestroy {
    title:string
+   evt:any
    members:any
+
    searchText: string
    sortField: string = 'creationDate'
    direction:boolean = false
-   confirmFlag:boolean=false
 
    constructor(
       private navParams: NavParams,
       private view: ViewController,
-      private appSrv: ApplicationService,
-      private modal: ModalController,
-      private socialSharing: SocialSharing
+      private appSrv: ApplicationService
    ) {
       console.log('MembersPage constructor');
    }
@@ -33,21 +31,11 @@ export class MembersPage implements OnInit, OnDestroy {
    ngOnInit(): void {
       console.log('MembersPage init');
       this.title = this.navParams.get('title')
+      this.evt = this.navParams.get('evt')
       this.members = this.navParams.get('members');
    }
-
-   addMember(){
-      // copiar los seleccionaods a los miembros
-   }
    statusChanged(ct){
-      ct.selected = true
-      this.confirmFlag = true
-   }
-   save(){
-      const data ={
-         members:this.members
-      }
-      this.view.dismiss(data)
+      ct.onoff = !ct.onoff
    }
    getSorted(sort, fab){
       this.sortField = sort
@@ -67,7 +55,24 @@ export class MembersPage implements OnInit, OnDestroy {
          return "arrow-dropup"
    }   
    closeModal(){
+      const editMode = this.checkEditMode()
       this.view.dismiss(null)
    }
-   
+
+   private checkEditMode(){
+      let res = false
+      const membersON = []
+      this.members.forEach(item => {
+         if (item.onoff === true)
+            membersON.push(item)
+      });
+      res = ((membersON.length == 1)&&(membersON[0].uid == this.evt.owner))
+      return res
+   }
+
+   // availability(username) {
+   //    if (!this.assistants) return
+   //    const res = !(this.assistants.indexOf(username) == -1)
+   //    return res
+   // }
 }
