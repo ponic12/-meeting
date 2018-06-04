@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Events,ModalController, Modal } from 'ionic-angular';
-import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
 
 import * as moment from 'moment'
 
 @IonicPage()
 @Component({
-   selector: 'page-comentarios',
-   templateUrl: 'comentarios.html'
+   selector: 'page-suggestions',
+   templateUrl: 'suggestions.html'
 })
-export class ComentariosPage implements OnInit, OnDestroy {
+export class SuggestionsPage implements OnInit, OnDestroy {
    title:string
    contacts:any[] = []
    searchText: string
@@ -22,19 +21,18 @@ export class ComentariosPage implements OnInit, OnDestroy {
       private navParams: NavParams,
       private view: ViewController,
       private appSrv: ApplicationService,
-      private modal: ModalController,
-      private socialSharing: SocialSharing
+      private modal: ModalController
    ) {
-      console.log('ComentariosPage constructor');
+      console.log('SuggestionPage constructor');
       this.title = this.navParams.get('title')
       const origContacts = this.navParams.get('contacts')
       Object.assign(this.contacts, origContacts)
    }
    ngOnDestroy() {
-      console.warn('ComentariosPage destroy');
+      console.warn('SuggestionPage destroy');
    }
    ngOnInit(): void {
-      console.log('ComentariosPage init');
+      console.log('SuggestionPage init');
    }
    selChanged(ct){
       this.confirmFlag = true

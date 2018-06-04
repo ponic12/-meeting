@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common'
 import { OrderModule } from 'ngx-order-pipe'
 
 import { SocialSharing } from '@ionic-native/social-sharing'
-import { BitacoraPage } from './bitacora'
+import { SuggestionsPage } from './suggestions'
 import { SharedModule } from '../../shared/shared.module'
 import { PipesModule } from '../../shared/pipes/pipes.module';
 
@@ -12,21 +12,21 @@ import { PipesModule } from '../../shared/pipes/pipes.module';
 
 @NgModule({
    declarations: [
-      BitacoraPage
+      SuggestionsPage
    ],
    imports: [
       SharedModule,
       PipesModule,
       CommonModule,
       OrderModule,
-      IonicPageModule.forChild(BitacoraPage)
+      IonicPageModule.forChild(SuggestionsPage)
    ],
-   exports: [BitacoraPage],
+   exports: [SuggestionsPage],
    providers: [SocialSharing]
 })
 
 export class BitacoraPageModule {
    constructor() {
-      console.log('BitacoraPageModule constructor');
+      console.log('SuggestionsPageModule constructor');
    }
 };

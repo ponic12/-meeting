@@ -45,7 +45,7 @@ export class LoginPage implements OnInit, OnDestroy {
       this.authSrv.verifyLoggedIn().subscribe(data => {
          if (data) {
             var o = {
-               username: data.displayName,
+               displayName: data.displayName,
                email: data.email,
                photoURL: data.photoURL,
                uid: this.getUid(data.email)

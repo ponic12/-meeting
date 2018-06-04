@@ -1,15 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Events,ModalController, Modal } from 'ionic-angular';
+import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
 
 import * as moment from 'moment'
 
 @IonicPage()
 @Component({
-   selector: 'page-bitacora',
-   templateUrl: 'bitacora.html'
+   selector: 'page-comments',
+   templateUrl: 'comments.html'
 })
-export class BitacoraPage implements OnInit, OnDestroy {
+export class CommentsPage implements OnInit, OnDestroy {
    title:string
    contacts:any[] = []
    searchText: string
@@ -21,18 +22,19 @@ export class BitacoraPage implements OnInit, OnDestroy {
       private navParams: NavParams,
       private view: ViewController,
       private appSrv: ApplicationService,
-      private modal: ModalController
+      private modal: ModalController,
+      private socialSharing: SocialSharing
    ) {
-      console.log('BitacoraPage constructor');
+      console.log('CommentsPage constructor');
       this.title = this.navParams.get('title')
       const origContacts = this.navParams.get('contacts')
       Object.assign(this.contacts, origContacts)
    }
    ngOnDestroy() {
-      console.warn('BitacoraPage destroy');
+      console.warn('CommentsPage destroy');
    }
    ngOnInit(): void {
-      console.log('BitacoraPage init');
+      console.log('CommentsPage init');
    }
    selChanged(ct){
       this.confirmFlag = true

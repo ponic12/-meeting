@@ -24,6 +24,10 @@ export class FirebaseService {
       //afs.firestore.settings({timestampsInSnapshots:true})
    }
 
+   
+   ///////////////////////////////////////////////
+   // USUARIOS
+   ///////////////////////////////////////////////
    addUser(usr) {
       const ref = this.afs.collection('users').doc(usr.uid).set(usr)
       return ref;
@@ -31,7 +35,6 @@ export class FirebaseService {
    updateUser(usr) {
       const ref = this.afs.collection('users').doc(usr.uid).set(usr, { merge: true })
    }
-
    getContactsByUid(uid) {
       const ref = this.afs.collection('users').doc(uid).collection('contacts')
       const obs = ref.snapshotChanges().map(actions => {
@@ -43,6 +46,11 @@ export class FirebaseService {
       })
       return obs
    }
+
+
+   ///////////////////////////////////////////////
+   // EVENTOS
+   ///////////////////////////////////////////////   
    getEventsByUid(uid) {
       const field: string = 'members.' + uid
       const ref = this.afs.collection('events', ref => ref.where(field, '==', true))
@@ -55,17 +63,66 @@ export class FirebaseService {
       })
       return obs
    }
-
-   addEvent(evt) {
-      evt.creationDate = new Date().getTime()
-      evt.modificationDate = new Date().getTime()
-      this.afs.collection('events').add(evt)
-   }
    saveEvent(evt) {
       evt.modificationDate = new Date().getTime()
-      this.afs.collection('events').doc(evt.id).set(evt)
+      if (!evt.id){
+         evt.creationDate = new Date().getTime()
+         this.afs.collection('events').add(evt)
+      }
+      else
+         this.afs.collection('events').doc(evt.id).set(evt)
    }
 
+
+   ///////////////////////////////////////////////
+   // COMENTARIOS
+   ///////////////////////////////////////////////
+   getCommentsByEvtId(eid){
+      const ref = this.afs.collection('events').doc(eid).collection('comments')
+      const obs = ref.snapshotChanges().map(actions => {
+         return actions.map(a => {
+            const data = a.payload.doc.data()
+            const id = a.payload.doc.id
+            return { id, ...data }
+         })
+      })
+      return obs
+   }
+   saveComment(evt, comment) {
+      if (!comment.id){
+         this.afs.collection('events').doc(evt.id).collection('comments').add(evt)
+      }
+      else
+         this.afs.collection('events').doc(evt.id).collection('comments').doc(comment.id).set(comment)
+   }
+
+
+   ///////////////////////////////////////////////
+   // SUGERENCIAS
+   ///////////////////////////////////////////////
+   getSuggestions(){
+      const ref = this.afs.collection('suggestions')
+      const obs = ref.snapshotChanges().map(actions => {
+         return actions.map(a => {
+            const data = a.payload.doc.data()
+            const id = a.payload.doc.id
+            return { id, ...data }
+         })
+      })
+      return obs
+   }
+   saveSuggestions(sug) {
+      if (!sug.id){
+         this.afs.collection('suggestions').add(sug)
+      }
+      else
+         this.afs.collection('suggestions').doc(sug.id).set(sug)
+   }
+
+
+   ///////////////////////////////////////////////
+   // Descarga de APP
+   ///////////////////////////////////////////////
    download(filename) {
       // Create a reference with an initial file path and name
       const st = firebase.storage();

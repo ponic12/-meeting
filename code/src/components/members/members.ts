@@ -55,21 +55,9 @@ export class MembersPage implements OnInit, OnDestroy {
          return "arrow-dropup"
    }   
    closeModal(){
-      const ed = this.checkEditMode()
-      const data = { editMode : ed }
-      this.view.dismiss(data)
+      this.view.dismiss(null)
    }
 
-   private checkEditMode(){
-      let res = false
-      const membersON = []
-      this.members.forEach(item => {
-         if (item.onoff === true)
-            membersON.push(item)
-      });
-      res = ((membersON.length == 1)&&(membersON[0].uid == this.evt.owner))
-      return res
-   }
 
    // availability(username) {
    //    if (!this.assistants) return

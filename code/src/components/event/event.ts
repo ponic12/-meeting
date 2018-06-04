@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Slides, IonicPage, ViewController, NavParams, Events, Modal, ModalController } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, Events, Modal, ModalController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { EventService } from './event.service'
 import { ApplicationService } from '../../shared/services/application.service';
@@ -13,7 +13,6 @@ import * as moment from 'moment'
    templateUrl: 'event.html'
 })
 export class EventPage implements OnInit, OnDestroy {
-   @ViewChild(Slides) slides: Slides
 
    title: string = "Evento"
    evt: any
@@ -25,6 +24,7 @@ export class EventPage implements OnInit, OnDestroy {
    assistants: any
    editMode: boolean = true
    allDayFlag: boolean = false
+   private maxValue:number = 0
 
    constructor(
       private navParams: NavParams,
@@ -48,6 +48,9 @@ export class EventPage implements OnInit, OnDestroy {
       this.startWeek = moment(this.evt.creationDate).day(0)
       this.processDays()
    }
+   closeModal() {
+      this.view.dismiss(null)
+   }
 
    showMembers() {
       const mod: Modal = this.modal.create('MembersPage', {
@@ -57,12 +60,18 @@ export class EventPage implements OnInit, OnDestroy {
       }, {})
       mod.present()
       mod.onDidDismiss(data => {
-         this.editMode = data.editMode
          this.processDays()
       })
    }
-   closeModal() {
-      this.view.dismiss(null)
+   showComments(){
+      const mod: Modal = this.modal.create('CommentsPage', {
+         title: "Comentarios",
+         members: this.members,
+         comments: this.evt.comments
+      }, {})
+      mod.present()
+      mod.onDidDismiss(data => {
+      })
    }
 
    toggleAllDay(d){
@@ -81,11 +90,23 @@ export class EventPage implements OnInit, OnDestroy {
       this.processDays()
    }
    showAssistants(ev) {
+      this.editMode = this.checkEditMode()
       if (this.editMode === true){
-         this.evt.availability[this.evt.owner]
+         //this.evt.availability[this.evt.owner]
       }
       else
          this.showMembers()
+   }
+
+   private checkEditMode(){
+      let res = false
+      const membersON = []
+      this.members.forEach(item => {
+         if (item.onoff === true)
+            membersON.push(item)
+      });
+      res = ((membersON.length == 1)&&(membersON[0].uid == this.evt.owner))
+      return res
    }
 
    private processDays() {
@@ -101,6 +122,14 @@ export class EventPage implements OnInit, OnDestroy {
                   if (wd){
                      wd.info[hour].value = wd.info[hour].value + 1
                      wd.info[hour].members.push(member.displayName)
+                     if (wd.info[hour].value > this.maxValue){
+                        this.maxValue = wd.info[hour].value
+                        this.evt.estimationDate = {
+                           day: wd.dayNum,
+                           month: wd.month,
+                           maxValue: this.maxValue
+                        }
+                     }
                   }
                });
             });
@@ -116,6 +145,7 @@ export class EventPage implements OnInit, OnDestroy {
          emptyWeek[d] = { 
             dayName: moment(startDay).add(i, 'days').format('ddd'), 
             dayNum: moment(startDay).add(i, 'days').format('DD'), 
+            month: moment(startDay).add(i, 'days').format('MMM'), 
             info: [] }
          for (let h = 0; h < 24; h++) {
             emptyWeek[d].info.push({ value: 0, members: [] })

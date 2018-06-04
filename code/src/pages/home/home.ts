@@ -61,10 +61,7 @@ export class HomePage implements OnInit, OnDestroy {
       }, {})
       mod.present()
       mod.onDidDismiss(data => {
-         if (data === null) return
-         data.evt.members = this.mapContactsToMembers(data.contacts)
-         data.evt.owner = this.user.uid
-         this.fs.addEvent(data.evt)
+         this.save(data)
       })
    }
    editEvent(ev, i) {
@@ -75,9 +72,7 @@ export class HomePage implements OnInit, OnDestroy {
       }, {})
       mod.present()
       mod.onDidDismiss(data => {
-         if (data === null) return
-         data.evt.members = this.mapContactsToMembers(data.contacts)
-         this.fs.saveEvent(data.evt)
+         this.save(data)
       })
    }
    showEvent(ev, i) {
@@ -96,6 +91,15 @@ export class HomePage implements OnInit, OnDestroy {
          title: 'OPCIONES:',
          cssClass: 'action-sheets-basic-page',
          buttons: [
+            {
+               text: 'Sugerencias',
+               handler: () => {
+                  console.log('Suggestions');
+                  this.navCtrl.push('SuggestionsPage', {
+                     title: 'Sugerencias'
+                  })
+               }
+            },            
             {
                text: 'Bajar App',
                handler: () => {
@@ -137,6 +141,13 @@ export class HomePage implements OnInit, OnDestroy {
          return "arrow-dropdown"
       else 
          return "arrow-dropup"
+   }
+   private save(data){
+      if (data === null) return
+      data.evt.members = this.mapContactsToMembers(data.contacts)
+      data.evt.owner = this.user.uid
+      data.evt.ownerName = this.user.displayName
+      this.fs.saveEvent(data.evt)
    }
    private mapMembersToContacts(contacts, members) {
       const lst: any = []
