@@ -30,21 +30,28 @@
       </div>
     </div>
     <div id="participantes">
-      <ion-icon name="arrow-dropleft-circle" class="btnClose" (click)="prevWeek()"></ion-icon>
-      <button ion-button (click)="showMembers()" >
+      <div>
+        <!-- <ion-icon name="arrow-dropleft-circle" class="btnClose" (click)="prevWeek()"></ion-icon> -->
+      </div>
+      <button ion-button (click)="showMembers()">
         <ion-icon name="person"></ion-icon>
-        <span style="margin-left:10px">Miembros</span>
+        <span style="margin-left:10px">Miembros ({{totalMembers}})</span>
       </button>
-      <button ion-button (click)="showComments()" >
-            <ion-icon name="list-box"></ion-icon>
-            <span style="margin-left:10px">Comentarios</span>
-          </button>      
-      <ion-icon name="arrow-dropright-circle" class="btnClose" (click)="nextWeek()"></ion-icon>
+      <button ion-button (click)="showComments()">
+        <ion-icon name="list-box"></ion-icon>
+        <span style="margin-left:10px">Comentarios</span>
+      </button>
+      <div>
+        <!-- <ion-icon name="arrow-dropright-circle" class="btnClose" (click)="nextWeek()"></ion-icon> -->
+      </div>
     </div>
     <div id="dias">
       <div class="grdDays">
         <div class="grdDaysNames">
-          <div></div>
+          <div>
+            <ion-icon name="arrow-dropleft-circle" class="btnClose" (click)="prevWeek()"></ion-icon>
+            <ion-icon name="arrow-dropright-circle" class="btnClose" (click)="nextWeek()"></ion-icon>
+          </div>
           <div *ngFor="let d of weekDataKeys" (click)="toggleAllDay(d)">
             <div class="dayName">{{weekData[d].dayName}}</div>
             <div class="dayNum">{{weekData[d].dayNum}}</div>

@@ -5,4 +5,11 @@ Cambio de nombre de owner x displayName
 Grabado de comentario en confirmacion de guardado de cambios en calendario
 Acceso a todos los comentarios de los miembros con Icono en el eventos
 En Home agregar Bitacora de sugerencias y errores
-Corregir altura scroll vertical en Event.html
+* Corregir altura scroll vertical en Event.html
+Mostrar total miembros
+Seleccion de todos/ninguno de miembros
+Agregar icono Check para ver asistencia en esa hora
+Agreagr icono create para ver que haya cargado algo
+Si se presiona el icono create navega a la semana de la primer carga
+Cambio de flechas de semanas al lado de los dias
+

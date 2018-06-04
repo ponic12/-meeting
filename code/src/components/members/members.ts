@@ -10,13 +10,13 @@ import * as moment from 'moment'
    templateUrl: 'members.html'
 })
 export class MembersPage implements OnInit, OnDestroy {
-   title:string
-   evt:any
-   members:any
-
+   title: string
+   evt: any
+   members: any
+   selectFlag: boolean = false
    searchText: string
    sortField: string = 'creationDate'
-   direction:boolean = false
+   direction: boolean = false
 
    constructor(
       private navParams: NavParams,
@@ -34,27 +34,47 @@ export class MembersPage implements OnInit, OnDestroy {
       this.evt = this.navParams.get('evt')
       this.members = this.navParams.get('members');
    }
-   statusChanged(ct){
+   statusChanged(ct) {
       ct.onoff = !ct.onoff
    }
-   getSorted(sort, fab){
+   selectAll(){
+      this.selectFlag = !this.selectFlag
+      this.members.forEach(item => {
+         item.onoff = this.selectFlag
+      });
+   }
+   getSorted(sort, fab) {
       this.sortField = sort
       this.direction = !this.direction
       fab.close()
-   }   
-   getSortName(){
-      if (this.sortField === "displayName")
-         return "Persona"
-      else
-         return "Miembros"
-   }   
-   getIcon(){
+   }
+   getSortName() {
+      let res = ""
+      switch (this.sortField) {
+         case "displayName":
+            res = "Alfabetico"
+            break;
+         case "onoff":
+            res = "Miembros"
+            break;
+         case "present":
+            res = "Presentes"
+            break;
+         case "pending":
+            res = "Pendientes"
+            break;
+         default:
+            break;
+      }
+      return res
+   }
+   getIcon() {
       if (this.direction === true)
          return "arrow-dropdown"
-      else 
+      else
          return "arrow-dropup"
-   }   
-   closeModal(){
+   }
+   closeModal() {
       this.view.dismiss(null)
    }
 

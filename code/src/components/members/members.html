@@ -5,25 +5,26 @@
 </ion-header>
 
 <ion-content class="backPage">
-  <ion-grid>
-    <ion-row>
-      <ion-icon name="search" class="searchIcon"></ion-icon>
-      <ion-input type="text" class="searchBar" placeholder="Buscar miembro" [(ngModel)]="searchText"></ion-input>
-      <p>Orden: {{getSortName()}}</p>
-      <ion-icon name="{{getIcon()}}" class="sortName searchIcon"></ion-icon>
-    </ion-row>
-  </ion-grid>
+  <div class="grdSearchFilter">
+    <div></div>
+    <ion-icon name="search" class="optsIcon"></ion-icon>
+    <ion-input type="text" class="searchBar" placeholder="Buscar miembro" [(ngModel)]="searchText"></ion-input>
+    <p>Orden: {{getSortName()}}</p>
+    <ion-icon name="{{getIcon()}}" class="sortName optsIcon"></ion-icon>
+    <div></div>
+  </div>
 
-  <div *ngFor="let ct of members | searchInfo: searchText | orderBy:sortField:direction" 
-  class="grdMembers" 
-  [ngClass]="{'memberON':ct.onoff === true}"
-  (click)="statusChanged(ct)">
+  <div *ngFor="let ct of members | searchInfo: searchText | orderBy:sortField:direction" class="grdMembers" [ngClass]="{'memberON':ct.onoff === true}"
+    (click)="statusChanged(ct)">
+    <img src="assets/imgs/handfinger.png" *ngIf="ct.present === undefined" class="presentIcon">
     <ion-avatar class="mid midCenter">
       <img class="avatar" [src]="ct.photoURL">
     </ion-avatar>
     <div class="mid">{{ct.displayName}}</div>
+    <img src="assets/imgs/sand_clock.png" *ngIf="ct.pending === undefined" class="pendingIcon">
+    <!-- <ion-icon name="checkmark-circle" [ngClass]="{}"></ion-icon>     -->
   </div>
-  
+
   <ion-fab class="btnSort" top right #fab>
     <button ion-fab mini>
       <ion-icon name="funnel"></ion-icon>
@@ -35,6 +36,17 @@
       <button ion-fab mini (click)="getSorted('onoff', fab)">
         <ion-icon name="checkmark-circle"></ion-icon>
       </button>
+      <button ion-fab mini (click)="getSorted('present', fab)">
+        <ion-icon name="hand"></ion-icon>
+      </button>
+      <button ion-fab mini (click)="getSorted('pending', fab)">
+        <ion-icon name="clock"></ion-icon>
+      </button>
     </ion-fab-list>
   </ion-fab>
+  <ion-fab class="btnCheckAll" top left #fab>
+      <button ion-fab mini (click)="selectAll()">
+        <ion-icon name="done-all"></ion-icon>
+      </button>
+    </ion-fab>  
 </ion-content>
