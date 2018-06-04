@@ -44,7 +44,8 @@ export class EventPage implements OnInit, OnDestroy {
       this.evt = this.navParams.get('evt')
       this.members = this.navParams.get('contacts')
       this.totalMembers = Object.keys(this.evt.members).length
-      this.processDays(this.evt.creationDate)
+      this.startWeek = moment(this.evt.creationDate).day(0)
+      this.processDays()
    }
 
    showMembers() {
@@ -65,9 +66,11 @@ export class EventPage implements OnInit, OnDestroy {
 
    prevWeek(){
       this.startWeek = moment(this.startWeek).add(-7, 'days') 
+      this.processDays()
    }
    nextWeek(){
       this.startWeek = moment(this.startWeek).add(7, 'days') 
+      this.processDays()
    }
    showAssistants(ev) {
       if (this.editMode === true)
@@ -76,9 +79,7 @@ export class EventPage implements OnInit, OnDestroy {
          this.assistants = ev.hr.members
    }
 
-   private processDays(d?) {
-      if (d)
-         this.startWeek = moment(d).day(0)
+   private processDays() {
       this.weekData = this.resetDays(this.startWeek)
       this.weekDataKeys = Object.keys(this.weekData)
       this.members.forEach(member => {

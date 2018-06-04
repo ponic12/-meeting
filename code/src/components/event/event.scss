@@ -71,8 +71,12 @@ page-event {
     text-align: right;
   }
   #participantes {
-    grid-area: participantes;
-    justify-self: center;
+   grid-area: participantes;
+   display: grid;
+   grid-template-columns: 40px 1fr 40px;
+   align-items: center;
+   justify-self: center;   
+   width: 100%;
   }
   .grdInvitations {
     display: grid;
@@ -103,7 +107,7 @@ page-event {
   }
   .grdDays {
     display: grid;
-    grid-template-rows:65px 1fr;
+    grid-template-rows:60px 1fr;
   }
   .grdDaysNames {
     display: grid;
@@ -131,13 +135,25 @@ page-event {
     grid-template-columns: repeat(7, 1fr);
   }
   .dayName {
-    border: 1px solid;
-    text-shadow: 1px 1px 1px #666;
-    text-align: center;
-    font-size: 15px;
-    background: #bbb;
-    height: 30px;
-    padding-top: 7px;
+   border: 1px solid;
+   text-shadow: 1px 1px 1px #666;
+   text-align: center;
+   font-size: 15px;
+   background: #bbb;
+   height: 30px;
+   padding-top: 7px;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+   border-bottom: none;
+  }
+  .dayNum{
+   border: 1px solid;
+   text-shadow: 1px 1px 1px #666;
+   text-align: center;
+   font-size: 17px;
+   background: #bbb;
+   height: 30px;
+   border-top: none;
   }
   .fechaProgramada{
     position: absolute;
