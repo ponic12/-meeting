@@ -24,6 +24,7 @@ export class EventPage implements OnInit, OnDestroy {
    weekDataKeys: any = []
    assistants: any
    editMode: boolean = true
+   allDayFlag: boolean = false
 
    constructor(
       private navParams: NavParams,
@@ -64,6 +65,13 @@ export class EventPage implements OnInit, OnDestroy {
       this.view.dismiss(null)
    }
 
+   toggleAllDay(d){
+      this.allDayFlag = !this.toggleAllDay
+      for (let i = 0; i < 24; i++) {
+         // cambiar data DB (NO weekdata)
+         
+      }
+   }
    prevWeek(){
       this.startWeek = moment(this.startWeek).add(-7, 'days') 
       this.processDays()
@@ -73,10 +81,11 @@ export class EventPage implements OnInit, OnDestroy {
       this.processDays()
    }
    showAssistants(ev) {
-      if (this.editMode === true)
-         ev.hr.value = 1 - ev.hr.value
+      if (this.editMode === true){
+         this.evt.availability[this.evt.owner]
+      }
       else
-         this.assistants = ev.hr.members
+         this.showMembers()
    }
 
    private processDays() {

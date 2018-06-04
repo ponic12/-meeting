@@ -2,8 +2,8 @@
   <div>
     <img class="logoTipo" src="assets/imgs/calendar.png">
     <div class="fechaProgramada">
-      <div class="dia">31</div>
-      <div class="mes">MAY</div>
+      <div class="dia">{{evt.estimationDate.day}}</div>
+      <div class="mes">{{evt.estimationDate.month}}</div>
     </div>
   </div>
   <div class="title">{{title}}</div>
@@ -35,13 +35,17 @@
         <ion-icon name="person"></ion-icon>
         <span style="margin-left:10px">Miembros</span>
       </button>
+      <button ion-button (click)="showComments()" >
+            <ion-icon name="list-box"></ion-icon>
+            <span style="margin-left:10px">Comentarios</span>
+          </button>      
       <ion-icon name="arrow-dropright-circle" class="btnClose" (click)="nextWeek()"></ion-icon>
     </div>
     <div id="dias">
       <div class="grdDays">
         <div class="grdDaysNames">
           <div></div>
-          <div *ngFor="let d of weekDataKeys">
+          <div *ngFor="let d of weekDataKeys" (click)="toggleAllDay(d)">
             <div class="dayName">{{weekData[d].dayName}}</div>
             <div class="dayNum">{{weekData[d].dayNum}}</div>
           </div>
