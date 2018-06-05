@@ -16,12 +16,16 @@
 
   <div *ngFor="let ct of members | searchInfo: searchText | orderBy:sortField:direction" class="grdMembers" [ngClass]="{'memberON':ct.onoff === true}"
     (click)="statusChanged(ct)">
-    <img src="assets/imgs/handfinger.png" *ngIf="ct.present === undefined" class="presentIcon">
+    <div>
+      <img src="assets/imgs/handfinger.png" *ngIf="ct.present === true" class="presentIcon">
+    </div>
     <ion-avatar class="mid midCenter">
       <img class="avatar" [src]="ct.photoURL">
     </ion-avatar>
     <div class="mid">{{ct.displayName}}</div>
-    <img src="assets/imgs/sand_clock.png" *ngIf="ct.pending === undefined" class="pendingIcon">
+    <div>
+      <img src="assets/imgs/sand_clock.png" *ngIf="ct.pending === true" class="pendingIcon">
+    </div>
     <!-- <ion-icon name="checkmark-circle" [ngClass]="{}"></ion-icon>     -->
   </div>
 
@@ -45,8 +49,8 @@
     </ion-fab-list>
   </ion-fab>
   <ion-fab class="btnCheckAll" top left #fab>
-      <button ion-fab mini (click)="selectAll()">
-        <ion-icon name="done-all"></ion-icon>
-      </button>
-    </ion-fab>  
+    <button ion-fab mini (click)="selectAll()">
+      <ion-icon name="done-all"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

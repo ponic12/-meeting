@@ -73,7 +73,20 @@ export class EventPage implements OnInit, OnDestroy {
       mod.onDidDismiss(data => {
       })
    }
-
+   showAssistants(ev) {
+      this.editMode = this.checkEditMode()
+      if (this.editMode === true){
+         //this.evt.availability[this.evt.owner]
+      }
+      else{
+         this.members.forEach(m => {
+            let obj = ev.members.find(id => id === m.id)
+            m.present = (obj != undefined)
+            m.pending = (this.evt.availability[m.id] == undefined)
+         });
+         this.showMembers()
+      }
+   }
    toggleAllDay(d){
       this.allDayFlag = !this.toggleAllDay
       for (let i = 0; i < 24; i++) {
@@ -88,14 +101,6 @@ export class EventPage implements OnInit, OnDestroy {
    nextWeek(){
       this.startWeek = moment(this.startWeek).add(7, 'days') 
       this.processDays()
-   }
-   showAssistants(ev) {
-      this.editMode = this.checkEditMode()
-      if (this.editMode === true){
-         //this.evt.availability[this.evt.owner]
-      }
-      else
-         this.showMembers()
    }
 
    private checkEditMode(){
@@ -121,7 +126,7 @@ export class EventPage implements OnInit, OnDestroy {
                   let wd = this.weekData[day]
                   if (wd){
                      wd.info[hour].value = wd.info[hour].value + 1
-                     wd.info[hour].members.push(member.displayName)
+                     wd.info[hour].members.push(member.id)
                      if (wd.info[hour].value > this.maxValue){
                         this.maxValue = wd.info[hour].value
                         this.evt.estimationDate = {

@@ -29,7 +29,7 @@ export class HoursComponent implements OnInit, OnDestroy {
    }
 
    selCell(hr){
-      this.selectedCell.emit({hr: hr})
+      this.selectedCell.emit(hr)
    }
 
    calculateOpacity(val){
