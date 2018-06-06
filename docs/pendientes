@@ -1,18 +1,16 @@
-Seleccion de todas las horas del dia con click en DIA/Num
+* Seleccion de todas las horas del dia con click en DIA/Num
 * Al hacer click en hora se abre Miembros con ONOFF de los que asisten a ese dia/hora
-Tipo de eventos Implementacion (Calendario / Seleccion / Votacion ) Tipo de respuesta SI/NO y Ranking
 * Cambio de nombre de owner x displayName
-Grabado de comentario en confirmacion de guardado de cambios en calendario
-Acceso a todos los comentarios de los miembros con Icono en el eventos
-En Home agregar Bitacora de sugerencias y errores
 * Corregir altura scroll vertical en Event.html
 * Mostrar total miembros
-Bug de muestra de solo miembros en ShowEvent---> muestra todos los contactos
 * Seleccion de todos/ninguno de miembros
 * Agregar icono Check para ver asistencia en esa hora
 * Agreagr icono create para ver que haya cargado algo
-Si se presiona el icono create navega a la semana de la primer carga
 * Cambio de flechas de semanas al lado de los dias
-Seleccionar de otro color el dia actual
-
-
+* Seleccionar de otro color el dia actual
+Implementar comentarios
+Implementar sugerencias
+Tipo de eventos Implementacion (Calendario / Seleccion / Votacion / Clasificacion ) Tipo de respuesta SI/NO y Ranking
+Si se presiona el icono create navega a la semana de la primer carga
+Bug de muestra de solo miembros en ShowEvent---> muestra todos los contactos
+Bug de Admin (owner.displayName) lo graba Votacion

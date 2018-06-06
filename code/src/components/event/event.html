@@ -29,34 +29,18 @@
         </div>
       </div>
     </div>
-    <div id="participantes">
+    <!-- <div id="participantes">
       <button ion-button (click)="showMembers()">
         <ion-icon name="person"></ion-icon>
         <span style="margin-left:10px">Miembros ({{totalMembers}})</span>
       </button>
-      <button ion-button (click)="showComments()">
-        <ion-icon name="list-box"></ion-icon>
-        <!-- <span style="margin-left:10px">Comentarios</span> -->
-      </button>
-      <button ion-button (click)="save()" color="light">
-        <ion-icon name="archive"></ion-icon>
-        <span style="margin-left:10px">Guardar</span>
-      </button>
-      <button ion-button (click)="prevWeek()" color="secondary">
-        <ion-icon name="rewind" class=""></ion-icon>
-      </button>
-      <button ion-button (click)="nextWeek()" color="secondary">
-        <ion-icon name="fastforward" class=""></ion-icon>
-      </button>
-
-      <!-- <ion-icon name="arrow-dropright-circle" class="btnClose" (click)="nextWeek()"></ion-icon> -->
-    </div>
+    </div> -->
     <div id="dias">
       <div class="grdDays">
         <div class="grdDaysNames">
           <div>
           </div>
-          <div *ngFor="let d of weekDataKeys" (click)="toggleAllDay(d)" >
+          <div *ngFor="let d of weekDataKeys" (click)="toggleAllDay(d)">
             <div class="dayName">{{weekData[d].dayName}}</div>
             <div class="dayNum" [ngClass]="{'today':isToday(d)}">{{weekData[d].dayNum}}</div>
           </div>
@@ -98,5 +82,22 @@
         </div>
       </div>
     </div>
+    <div id="botonera">
+      <button ion-button (click)="prevWeek()" color="dark">
+        <ion-icon name="rewind" class=""></ion-icon>
+      </button>
+      <button ion-button (click)="save()" color="primary">
+        <ion-icon name="archive"></ion-icon>
+        <span style="margin-left:10px">Guardar</span>
+      </button>
+      <button ion-button (click)="nextWeek()" color="dark">
+        <ion-icon name="fastforward" class=""></ion-icon>
+      </button>
+    </div>
   </div>
+  <ion-fab class="btnComments" >
+    <button ion-fab mini (click)="showComments()">
+      <ion-icon name="list-box"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
