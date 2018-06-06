@@ -18,7 +18,7 @@
   </ion-grid>
 
   <ion-list *ngIf="events">
-   <ion-item-sliding class="eventCard" *ngFor="let evt of events | searchInfo: searchText | orderBy:sortField:direction ">    
+    <ion-item-sliding class="eventCard" *ngFor="let evt of events | searchInfo: searchText | orderBy:sortField:direction ">
       <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }" (click)="showEvent(evt, i)">
         <div>
           <strong>Evento:</strong> {{evt.name}}
@@ -42,6 +42,12 @@
         </div> -->
         <div class="adminFlag" *ngIf="evt.owner === user.uid">
           <img src="assets/imgs/crown.png">
+        </div>
+        <div class="adminFlag" *ngIf="evt.owner != user.uid">
+            <img src="evt.ownerPhotoUrl">
+        </div>        
+        <div class="eventType">
+          <img src="{{evalTypeIcon(evt.type)}}">
         </div>
       </ion-item>
       <ion-item-options side="right">

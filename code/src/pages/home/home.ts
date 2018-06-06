@@ -17,7 +17,7 @@ export class HomePage implements OnInit, OnDestroy {
    today: number = new Date().getTime()
    searchText: string
    sortField: string = 'creationDate'
-   direction:boolean = false
+   direction: boolean = false
    events: any
    //    { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Consorcio Besares 3950', description: 'Reunion de consorcio para definir tareas' },
    //    { creationDate: 1524295836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Cumple Gallo', description: 'Fiesta sorpresa' },
@@ -45,7 +45,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.fs.getContactsByUid(this.user.uid).subscribe(data => {
          this.user.contacts = data
       })
-      this.fs.getEventsByUid(this.user.uid).subscribe(data=>{
+      this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
       })
    }
@@ -56,7 +56,7 @@ export class HomePage implements OnInit, OnDestroy {
    addEvent() {
       const mod: Modal = this.modal.create('EditEventPage', {
          title: 'Nuevo Evento',
-         evt: {members:[]},
+         evt: { members: [] },
          contacts: this.mapMembersToContacts(this.user.contacts, [])
       }, {})
       mod.present()
@@ -81,7 +81,7 @@ export class HomePage implements OnInit, OnDestroy {
          evt: ev,
          contacts: this.mapMembersToContacts(this.user.contacts, ev.members)
       })
-   } 
+   }
 
    removeEvent(ev, i) {
 
@@ -99,7 +99,7 @@ export class HomePage implements OnInit, OnDestroy {
                      title: 'Sugerencias'
                   })
                }
-            },            
+            },
             {
                text: 'Bajar App',
                handler: () => {
@@ -124,25 +124,44 @@ export class HomePage implements OnInit, OnDestroy {
       });
       actionSheet.present();
    }
-
-   getSortedEvents(sort, fab){
+   evalTypeIcon(t) {
+      let src = ""
+      switch (t) {
+         case "calendario":
+            src = "assets/imgs/cal.png"
+            break;
+         case "seleccion":
+            src = "assets/imgs/seleccion.png"
+            break;
+         case "votacion":
+            src = "assets/imgs/votacion.png"
+            break;
+         case "clasificacion":
+            src = "assets/imgs/clasificacion.png"
+            break;
+         default:
+            break;
+      }
+      return src
+   }
+   getSortedEvents(sort, fab) {
       this.sortField = sort
       this.direction = !this.direction
       fab.close()
    }
-   getSortName(){
+   getSortName() {
       if (this.sortField === "creationDate")
          return "Fecha"
       else
          return "Evento"
    }
-   getIcon(){
+   getIcon() {
       if (this.direction === true)
          return "arrow-dropdown"
-      else 
+      else
          return "arrow-dropup"
    }
-   private save(data){
+   private save(data) {
       if (data === null) return
       data.evt.members = this.mapContactsToMembers(data.contacts)
       data.evt.owner = this.user.uid
@@ -159,8 +178,8 @@ export class HomePage implements OnInit, OnDestroy {
       });
       return lst
    }
-   private mapContactsToMembers(contacts){
-      const members:any = {}
+   private mapContactsToMembers(contacts) {
+      const members: any = {}
       contacts.forEach(item => {
          if (item.selected)
             members[item.id] = true
