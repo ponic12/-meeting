@@ -34,8 +34,8 @@ export class MembersPage implements OnInit, OnDestroy {
       this.evt = this.navParams.get('evt')
       this.members = this.navParams.get('members');
    }
-   statusChanged(ct) {
-      ct.onoff = !ct.onoff
+   statusChanged(m) {
+      m.onoff = !m.onoff
    }
    selectAll(){
       this.selectFlag = !this.selectFlag
@@ -75,7 +75,7 @@ export class MembersPage implements OnInit, OnDestroy {
          return "arrow-dropup"
    }
    closeModal() {
-      this.view.dismiss(null)
+      this.view.dismiss(this.members)
    }
 
 

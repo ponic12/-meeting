@@ -1,5 +1,4 @@
 page-event {
-
   .abs {
     position: absolute;
     height: 100px;
@@ -13,27 +12,27 @@ page-event {
   }
   @media (min-width: 500px) {
     .grdEvento {
-      grid-template-areas: "evento evento"  "participantes participantes " "dias dias"
+      grid-template-areas: "evento evento" "participantes participantes " "dias dias"
     }
   }
   #evento {
     grid-area: evento
   }
-  .grdInfo{
-    display:grid;
+  .grdInfo {
+    display: grid;
     grid-template-columns: 1fr;
   }
-  .info{
+  .info {
     margin: 5px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 0.8fr 0.8fr;
     background-color: #ececec;
   }
-  .item{
-    padding:0 5px;
+  .item {
+    padding: 0 5px;
   }
-  .evtName{
+  .evtName {
     grid-column: 1 / 3;
     font-size: 16px;
     font-weight: bold;
@@ -45,14 +44,14 @@ page-event {
     padding-bottom: 5px;
     color: #737373;
   }
-  .evtDesc{
+  .evtDesc {
     grid-column: 1 / 3;
     font-size: 15px;
     color: #6f6f6f;
     padding-top: 3px;
     box-shadow: 0px 1px 7px #4a4a4a;
   }
-  .evtAdmin{
+  .evtAdmin {
     font-size: 13px;
     color: #888;
     -webkit-box-shadow: 0px 1px 7px #4a4a4a;
@@ -60,7 +59,7 @@ page-event {
     padding-top: 2px;
     align-self: center;
   }
-  .evtUltMod{
+  .evtUltMod {
     font-size: 13px;
     color: #888;
     -webkit-box-shadow: 0px 1px 7px #4a4a4a;
@@ -71,12 +70,12 @@ page-event {
     text-align: right;
   }
   #participantes {
-   grid-area: participantes;
-   display: grid;
-   grid-template-columns: 40px 1fr 1fr 40px;
-   align-items: center;
-   justify-self: center;   
-   width: 100%;
+    grid-area: participantes;
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr 40px 40px;
+    align-items: center;
+    justify-self: center;
+    width: 100%;
   }
   .grdInvitations {
     display: grid;
@@ -95,9 +94,7 @@ page-event {
     border-radius: 5px;
     box-shadow: 1px 1px 3px #888;
   }
-  .btnMembers {
-
-  }
+  .btnMembers {}
   .selMember {
     width: 21px;
   }
@@ -107,7 +104,7 @@ page-event {
   }
   .grdDays {
     display: grid;
-    grid-template-rows:60px 1fr;
+    grid-template-rows: 60px 1fr;
   }
   .grdDaysNames {
     display: grid;
@@ -116,7 +113,7 @@ page-event {
   .grdScheduler {
     display: grid;
     grid-template-columns: 30px 1fr;
-    height: calc(100vh - 280px);
+    height: calc(100vh - 285px);
     overflow: auto;
   }
   .hoursNum {
@@ -134,39 +131,43 @@ page-event {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
   }
+  .today {
+    background: #478aff !important;
+    color: white !important;
+    border: 1px solid black !important;
+  }
   .dayName {
-   border: 1px solid;
-   text-shadow: 1px 1px 1px #666;
-   text-align: center;
-   font-size: 15px;
-   background: #bbb;
-   height: 30px;
-   padding-top: 7px;
-   border-top-left-radius: 10px;
-   border-top-right-radius: 10px;
-   border-bottom: none;
+    border: 1px solid;
+    text-shadow: 1px 1px 1px #666;
+    text-align: center;
+    font-size: 15px;
+    background: #bbb;
+    height: 30px;
+    padding-top: 7px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: none;
   }
-  .dayNum{
-   border: 1px solid;
-   text-shadow: 1px 1px 1px #666;
-   text-align: center;
-   font-size: 17px;
-   background: #bbb;
-   height: 30px;
-   border-top: none;
+  .dayNum {
+    border: 1px solid;
+    text-shadow: 1px 1px 1px #666;
+    text-align: center;
+    font-size: 17px;
+    background: #bbb;
+    height: 30px;
+    border-top: none;
   }
-  .fechaProgramada{
+  .fechaProgramada {
     position: absolute;
     top: 18px;
     left: 23px;
     text-align: center;
   }
-  .dia{
+  .dia {
     font-size: 20px;
   }
-  .mes{
+  .mes {
     font-size: 10px;
-    margin-top:-7px;
+    margin-top: -7px;
   }
-
 }

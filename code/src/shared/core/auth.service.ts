@@ -19,7 +19,7 @@ import { FirebaseApp } from 'angularfire2';
 
 @Injectable()
 export class AuthService {
-   user: Observable<User>;
+   user: Observable<User>
 
    constructor(
       private platform: Platform,
@@ -27,7 +27,7 @@ export class AuthService {
       private afs: AngularFirestore, 
       private facebook:Facebook
    ) {
-      console.log('AuthService constructor');
+      console.log('AuthService constructor')
 
       // this.user = this.afAuth.authState
       //    .switchMap(user => {
@@ -39,29 +39,13 @@ export class AuthService {
    }
 
    verifyLoggedIn() { 
-      return this.afAuth.authState;
+      const res = this.afAuth.authState
+      return res
    }
-
    loginGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
       return this.oAuthLogin(provider);
    }
-   signOutUser() {
-      this.afAuth.auth.signOut();
-      //this.provider.loggedin = false;
-
-      //     mAuth.signOut();
-
-      //     // Google sign out
-      //     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-      //         new ResultCallback<Status>() {
-      //             @Override
-      //     public void onResult(@NonNull Status status) {
-      //         updateUI(null);
-      //     }
-      // });
-   }
-
    loginFacebook() {
       if (this.platform.is('cordova')){
          return this.facebook.login(['public_profile','email']).then(res =>{
@@ -98,11 +82,22 @@ export class AuthService {
       //    const provider = new firebase.auth.FacebookAuthProvider();  
       //    return this.oAuthLogin(provider);
       // }
-   }
-   logoutFacebook(){
+   }   
+   signOutUser() {
       this.afAuth.auth.signOut();
-   }
+      //this.provider.loggedin = false;
 
+      //     mAuth.signOut();
+
+      //     // Google sign out
+      //     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+      //         new ResultCallback<Status>() {
+      //             @Override
+      //     public void onResult(@NonNull Status status) {
+      //         updateUI(null);
+      //     }
+      // });
+   }
    
    async signInUser(email, pass) {
       const res = await this.afAuth.auth.signInWithEmailAndPassword(email, pass)
@@ -142,7 +137,6 @@ export class AuthService {
          //    // )
          // })
    }
-
    private updateUserData(user) {
       const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
       const data: User = {

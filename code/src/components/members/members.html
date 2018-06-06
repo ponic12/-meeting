@@ -14,19 +14,18 @@
     <div></div>
   </div>
 
-  <div *ngFor="let ct of members | searchInfo: searchText | orderBy:sortField:direction" class="grdMembers" [ngClass]="{'memberON':ct.onoff === true}"
-    (click)="statusChanged(ct)">
+  <div *ngFor="let m of members | searchInfo: searchText | orderBy:sortField:direction" class="grdMembers" [ngClass]="{'memberON':m.onoff === true}"
+    (click)="statusChanged(m)">
     <div>
-      <img src="assets/imgs/handfinger.png" *ngIf="ct.present === true" class="presentIcon">
+      <img src="assets/imgs/handfinger.png" *ngIf="m.present === true" class="presentIcon">
     </div>
     <ion-avatar class="mid midCenter">
-      <img class="avatar" [src]="ct.photoURL">
+      <img class="avatar" [src]="m.photoURL">
     </ion-avatar>
-    <div class="mid">{{ct.displayName}}</div>
+    <div class="mid">{{m.displayName}}</div>
     <div>
-      <img src="assets/imgs/sand_clock.png" *ngIf="ct.pending === true" class="pendingIcon">
+      <img src="assets/imgs/sand_clock.png" *ngIf="m.pending === true" class="pendingIcon">
     </div>
-    <!-- <ion-icon name="checkmark-circle" [ngClass]="{}"></ion-icon>     -->
   </div>
 
   <ion-fab class="btnSort" top right #fab>

@@ -84,7 +84,7 @@ export class LoginPage implements OnInit, OnDestroy {
                photoURL: 'assets/imgs/person.png',
                uid: this.getUid(data.email)
             }
-            //this.globalSrv.save('user', o)
+            this.fs.updateUser(o)
             this.navCtrl.setRoot('HomePage', { usr: o })
          }
       }).catch(err => {

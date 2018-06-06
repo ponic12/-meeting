@@ -30,31 +30,35 @@
       </div>
     </div>
     <div id="participantes">
-      <div>
-        <!-- <ion-icon name="arrow-dropleft-circle" class="btnClose" (click)="prevWeek()"></ion-icon> -->
-      </div>
       <button ion-button (click)="showMembers()">
         <ion-icon name="person"></ion-icon>
         <span style="margin-left:10px">Miembros ({{totalMembers}})</span>
       </button>
       <button ion-button (click)="showComments()">
         <ion-icon name="list-box"></ion-icon>
-        <span style="margin-left:10px">Comentarios</span>
+        <!-- <span style="margin-left:10px">Comentarios</span> -->
       </button>
-      <div>
-        <!-- <ion-icon name="arrow-dropright-circle" class="btnClose" (click)="nextWeek()"></ion-icon> -->
-      </div>
+      <button ion-button (click)="save()" color="light">
+        <ion-icon name="archive"></ion-icon>
+        <span style="margin-left:10px">Guardar</span>
+      </button>
+      <button ion-button (click)="prevWeek()" color="secondary">
+        <ion-icon name="rewind" class=""></ion-icon>
+      </button>
+      <button ion-button (click)="nextWeek()" color="secondary">
+        <ion-icon name="fastforward" class=""></ion-icon>
+      </button>
+
+      <!-- <ion-icon name="arrow-dropright-circle" class="btnClose" (click)="nextWeek()"></ion-icon> -->
     </div>
     <div id="dias">
       <div class="grdDays">
         <div class="grdDaysNames">
           <div>
-            <ion-icon name="arrow-dropleft-circle" class="btnClose" (click)="prevWeek()"></ion-icon>
-            <ion-icon name="arrow-dropright-circle" class="btnClose" (click)="nextWeek()"></ion-icon>
           </div>
-          <div *ngFor="let d of weekDataKeys" (click)="toggleAllDay(d)">
+          <div *ngFor="let d of weekDataKeys" (click)="toggleAllDay(d)" >
             <div class="dayName">{{weekData[d].dayName}}</div>
-            <div class="dayNum">{{weekData[d].dayNum}}</div>
+            <div class="dayNum" [ngClass]="{'today':isToday(d)}">{{weekData[d].dayNum}}</div>
           </div>
         </div>
         <div>
@@ -87,7 +91,7 @@
             </div>
             <div class="grdCalendar">
               <div *ngFor="let d of weekDataKeys">
-                <hours [dictionary]="weekData[d].info" [max]="totalMembers" (selectedCell)="showAssistants($event)"></hours>
+                <hours [dictionary]="weekData[d].info" [max]="totalMembers" (selectedCell)="showAssistants($event, d)"></hours>
               </div>
             </div>
           </div>
