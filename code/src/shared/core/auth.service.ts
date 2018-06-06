@@ -117,7 +117,7 @@ export class AuthService {
       return res
    }
 
-
+   
    private oAuthLogin(provider) {
       return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
          .then(()=>{

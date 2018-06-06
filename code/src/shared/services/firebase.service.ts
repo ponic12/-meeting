@@ -28,6 +28,11 @@ export class FirebaseService {
    ///////////////////////////////////////////////
    // USUARIOS
    ///////////////////////////////////////////////
+   getUserById(uid){
+      const ref = this.afs.collection('users').doc(uid)
+      const obs = ref.valueChanges()
+      return obs
+   }
    addUser(usr) {
       const ref = this.afs.collection('users').doc(usr.uid).set(usr)
       return ref;
@@ -72,6 +77,11 @@ export class FirebaseService {
       else
          this.afs.collection('events').doc(evt.id).set(evt)
    }
+   deleteEvent(evt){
+      const ref = this.afs.collection('events').doc(evt.id).delete()
+      return ref
+   }
+
 
 
    ///////////////////////////////////////////////

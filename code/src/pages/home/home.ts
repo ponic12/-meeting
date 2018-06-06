@@ -19,12 +19,6 @@ export class HomePage implements OnInit, OnDestroy {
    sortField: string = 'creationDate'
    direction: boolean = false
    events: any
-   //    { creationDate: 1526296836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Consorcio Besares 3950', description: 'Reunion de consorcio para definir tareas' },
-   //    { creationDate: 1524295836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Cumple Gallo', description: 'Fiesta sorpresa' },
-   //    { creationDate: 1522294836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Vacaciones invierno 2018', description: 'Rango de fechas de vacas' },
-   //    { creationDate: 1521293836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Viaje Espana 2018', description: 'Reunion de integrantes' },
-   //    { creationDate: 1520292836286, lastModification: 1526297935286, estimatedDate: 1526398936286, eventName: 'Reunion Siemens', description: 'Ex trabajadores de Siemens' }
-   // ]
 
    constructor(
       public navCtrl: NavController,
@@ -52,7 +46,6 @@ export class HomePage implements OnInit, OnDestroy {
    ngOnDestroy() {
       console.log('HomePage destroy')
    }
-
    addEvent() {
       const mod: Modal = this.modal.create('EditEventPage', {
          title: 'Nuevo Evento',
@@ -82,15 +75,23 @@ export class HomePage implements OnInit, OnDestroy {
          contacts: this.mapMembersToContacts(this.user.contacts, ev.members)
       })
    }
-
    removeEvent(ev, i) {
-
+      this.fs.deleteEvent(ev)
    }
    openMenuSheet() {
       let actionSheet = this.actionCtrl.create({
          title: 'OPCIONES:',
          cssClass: 'action-sheets-basic-page',
          buttons: [
+            {
+               text: 'Contactos',
+               handler: () => {
+                  console.log('Contacts Admin');
+                  this.navCtrl.push('CommunityPage', {
+                     title: 'Contactos'
+                  })
+               }
+            },            
             {
                text: 'Sugerencias',
                handler: () => {

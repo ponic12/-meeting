@@ -19,6 +19,7 @@ export class LoginPage implements OnInit, OnDestroy {
    email: string;
    password: string;
    todo: FormGroup;
+   obsAuth:any
 
    constructor(
       private appSrv: ApplicationService,
@@ -35,23 +36,15 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    ngOnDestroy() {
       console.warn('HomePage destroy')
+      this.obsAuth.unsubscribe()
    }
    ngOnInit() {
       console.log('LoginPage init');
-      // this.globalSrv.get('user').subscribe(data =>
-      //   this.go(data)
-      // );
-
-      this.authSrv.verifyLoggedIn().subscribe(data => {
+      this.obsAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
          if (data) {
-            var o = {
-               displayName: data.displayName,
-               email: data.email,
-               photoURL: data.photoURL,
-               uid: this.getUid(data.email)
-            };
-            //this.globalSrv.save('user', o);
-            this.navCtrl.setRoot('HomePage', { usr: o });
+            this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
+               this.navCtrl.setRoot('HomePage', { usr: usr });               
+            })
          }
       });
    }
