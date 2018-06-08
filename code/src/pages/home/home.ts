@@ -40,37 +40,21 @@ export class HomePage implements OnInit, OnDestroy {
    ngOnInit() {
       console.log('HomePage init')
       this.fs.getEventsByUid(this.user.uid).subscribe(data => {
-         this.events = data
+         this.events = data      
       })
       this.fs.getCommunity().subscribe(data =>{
          this.community = data
          this.contactsFull = this.getContactsFull()
-      })
+      })         
    }
    ngOnDestroy() {
       console.log('HomePage destroy')
    }
    addEvent() {
-      const mod: Modal = this.modal.create('EditEventPage', {
-         title: 'Nuevo Evento',
-         evt: { members: [] },
-         user: this.user,
-         contactsFull: this.contactsFull
-      }, {})
-      mod.present()
-      mod.onDidDismiss(data => {
-      })
+      this.showEditEvent('Nuevo Evento', {members:[]})
    }
    editEvent(ev, i) {
-      const mod: Modal = this.modal.create('EditEventPage', {
-         title: 'Editar Evento',
-         evt: ev,
-         user: this.user,
-         contactsFull: this.contactsFull
-      }, {})
-      mod.present()
-      mod.onDidDismiss(data => {
-      })
+      this.showEditEvent('Editar Evento', ev)
    }
    showEvent(ev, i) {
       this.navCtrl.push('EventPage', {
@@ -169,17 +153,27 @@ export class HomePage implements OnInit, OnDestroy {
          return "arrow-dropup"
    }
 
+   private showEditEvent(tit, ev){
+      const mod: Modal = this.modal.create('EditEventPage', {
+         title: tit,
+         evt: ev,
+         user: this.user,
+         contactsFull: this.contactsFull
+      }, {})
+      mod.present()
+      mod.onDidDismiss(data => {
+      })
+   }
    private getContactsFull() {
       const lst: any = []
       this.community.forEach(p => {
-         const sel = (this.user.contacts[p.id])
+         const sel = (this.user.contacts[p.uid])
          if (sel == true){
             lst.push(p)
          }
       });
       return lst
    }
-
    private logout() {
       this.appSrv.message('Aviso', 'Saliendo...');
       this.authSrv.signOutUser();

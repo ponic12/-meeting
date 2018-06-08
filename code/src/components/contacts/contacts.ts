@@ -38,7 +38,7 @@ export class ContactsPage implements OnInit, OnDestroy {
    ngOnInit(): void {
       console.log('ContactsPage init');
       this.community.forEach(p => {
-         p.selected = (this.user.contacts[p.id]==true)
+         p.selected = (this.user.contacts[p.uid]==true)
       });
    }
    selChanged(ct){
@@ -48,7 +48,7 @@ export class ContactsPage implements OnInit, OnDestroy {
       const friends = {}
       this.community.forEach(p => {
          if (p.selected == true){         
-            friends[p.id] = true
+            friends[p.uid] = true
          }
       });
       this.user.contacts = friends

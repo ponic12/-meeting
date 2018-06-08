@@ -93,7 +93,7 @@ export class EditEventPage implements OnInit, OnDestroy {
    private getMembersFromContacts(){
       this.contactsFull.forEach(item=>{
          if (item.selected == true)
-            this.evt.members[item.id] = true
+            this.evt.members[item.uid] = true
       })
    }
 }

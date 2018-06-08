@@ -30,13 +30,14 @@ export class FirebaseService {
    ///////////////////////////////////////////////
    getCommunity(){
       const ref = this.afs.collection('users')
-      const obs = ref.snapshotChanges().map(actions => {
-         return actions.map(a => {
-            const data = a.payload.doc.data()
-            const id = a.payload.doc.id
-            return { id, ...data }
-         })
-      })
+      const obs = ref.valueChanges()
+      // const obs = ref.snapshotChanges().map(actions => {
+      //    return actions.map(a => {
+      //       const data = a.payload.doc.data()
+      //       const id = a.payload.doc.id
+      //       return { id, ...data }
+      //    })
+      // })
       return obs
    }
    getUserById(uid){
@@ -50,17 +51,6 @@ export class FirebaseService {
    }
    updateUser(usr) {
       const ref = this.afs.collection('users').doc(usr.uid).set(usr, { merge: true })
-   }
-   getContactsByUid(uid) {
-      const ref = this.afs.collection('users').doc(uid).collection('contacts')
-      const obs = ref.snapshotChanges().map(actions => {
-         return actions.map(a => {
-            const data = a.payload.doc.data()
-            const id = a.payload.doc.id
-            return { id, ...data }
-         })
-      })
-      return obs
    }
 
 

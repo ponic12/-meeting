@@ -36,7 +36,7 @@ export class MembersPage implements OnInit, OnDestroy {
    selectAll() {
       this.selectFlag = !this.selectFlag
       this.contactsFull.forEach(item => {
-         item.onoff = this.selectFlag
+         item.selected = this.selectFlag
       });
    }
    getSorted(sort, fab) {
