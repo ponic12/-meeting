@@ -28,6 +28,17 @@ export class FirebaseService {
    ///////////////////////////////////////////////
    // USUARIOS
    ///////////////////////////////////////////////
+   getCommunity(){
+      const ref = this.afs.collection('users')
+      const obs = ref.snapshotChanges().map(actions => {
+         return actions.map(a => {
+            const data = a.payload.doc.data()
+            const id = a.payload.doc.id
+            return { id, ...data }
+         })
+      })
+      return obs
+   }
    getUserById(uid){
       const ref = this.afs.collection('users').doc(uid)
       const obs = ref.valueChanges()

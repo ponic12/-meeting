@@ -24,7 +24,7 @@
       <ion-input type="text" [(ngModel)]="evt.description"></ion-input>
     </ion-item>
     <div class="grdBtnsMembers">
-      <button ion-button (click)="addMembers()" style="width:100%">
+      <button ion-button (click)="adminMembers()" style="width:100%">
         <ion-icon name="person"> </ion-icon>
         <p style="margin-left:5px">Contactos</p>
       </button>
@@ -34,20 +34,6 @@
       </button>
     </div>
   </ion-list>
-  <ion-card style="margin-top: -30px;padding:10px">
-    <div class="titleMembers">Miembros</div>
-    <div>
-      <div *ngFor="let ct of contacts">
-        <div class="grdMember" *ngIf="ct.selected === true">
-          <ion-avatar class="mid midCenter">
-            <img class="avatar" [src]="ct.photoURL">
-          </ion-avatar>
-          <div class="mid">{{ct.displayName}}</div>
-          <ion-icon class="btnClose mid" (click)="ct.selected=false" name="close-circle"></ion-icon>
-        </div>
-      </div>
-    </div>
-  </ion-card>
   <div style="text-align: center">
     <button ion-button (click)="save()" [disabled]="(evt.name === '')" style="width:50%">
       <ion-icon name="cloud-upload"></ion-icon>

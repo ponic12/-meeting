@@ -48,7 +48,7 @@ export class EventPage implements OnInit, OnDestroy {
       console.log('EventPage init');
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
-      this.members = this.navParams.get('contacts')
+      this.members = this.navParams.get('members')
       this.totalMembers = Object.keys(this.evt.members).length
       this.startWeek = moment(this.evt.creationDate).day(0)
       this.processDays()
@@ -82,7 +82,7 @@ export class EventPage implements OnInit, OnDestroy {
       }
    }
    showMembers() {
-      const mod: Modal = this.modal.create('MembersPage', {
+      const mod: Modal = this.modal.create('MemberStatusPage', {
          title: "Miembros",
          evt: this.evt,
          members: this.members

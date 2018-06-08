@@ -6,36 +6,40 @@ import * as moment from 'moment'
 
 @IonicPage()
 @Component({
-   selector: 'page-members',
-   templateUrl: 'members.html'
+   selector: 'page-memberStatus',
+   templateUrl: 'memberStatus.html'
 })
-export class MembersPage implements OnInit, OnDestroy {
+export class MemberStatusPage implements OnInit, OnDestroy {
    title: string
-   contactsFull: any
+   evt: any
+   members: any
    selectFlag: boolean = false
    searchText: string
    sortField: string = 'creationDate'
    direction: boolean = false
-   confirmFlag: boolean = false
 
    constructor(
       private navParams: NavParams,
       private view: ViewController,
       private appSrv: ApplicationService
    ) {
-      console.log('MembersPage constructor');
+      console.log('MemberStatusPage constructor');
    }
    ngOnDestroy() {
-      console.warn('MembersPage destroy');
+      console.warn('MemberStatusPage destroy');
    }
    ngOnInit(): void {
-      console.log('MembersPage init');
+      console.log('MemberStatusPage init');
       this.title = this.navParams.get('title')
-      this.contactsFull = this.navParams.get('contactsFull');
+      this.evt = this.navParams.get('evt')
+      this.members = this.navParams.get('members');
    }
-   selectAll() {
+   statusChanged(m) {
+      m.onoff = !m.onoff
+   }
+   selectAll(){
       this.selectFlag = !this.selectFlag
-      this.contactsFull.forEach(item => {
+      this.members.forEach(item => {
          item.onoff = this.selectFlag
       });
    }
@@ -53,6 +57,12 @@ export class MembersPage implements OnInit, OnDestroy {
          case "onoff":
             res = "Miembros"
             break;
+         case "present":
+            res = "Presentes"
+            break;
+         case "pending":
+            res = "Pendientes"
+            break;
          default:
             break;
       }
@@ -65,6 +75,13 @@ export class MembersPage implements OnInit, OnDestroy {
          return "arrow-dropup"
    }
    closeModal() {
-      this.view.dismiss(this.contactsFull)
+      this.view.dismiss(this.members)
    }
+
+
+   // availability(username) {
+   //    if (!this.assistants) return
+   //    const res = !(this.assistants.indexOf(username) == -1)
+   //    return res
+   // }
 }

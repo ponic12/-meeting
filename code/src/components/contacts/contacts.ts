@@ -4,6 +4,7 @@ import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
 
 import * as moment from 'moment'
+import { FirebaseService } from '../../shared/services/firebase.service';
 
 @IonicPage()
 @Component({
@@ -12,7 +13,8 @@ import * as moment from 'moment'
 })
 export class ContactsPage implements OnInit, OnDestroy {
    title:string
-   contacts:any[] = []
+   user:any
+   community:any
    searchText: string
    sortField: string = 'creationDate'
    direction:boolean = false
@@ -21,29 +23,37 @@ export class ContactsPage implements OnInit, OnDestroy {
    constructor(
       private navParams: NavParams,
       private view: ViewController,
+      private fs: FirebaseService,
       private appSrv: ApplicationService,
-      private modal: ModalController,
-      private socialSharing: SocialSharing
+      private modal: ModalController
    ) {
-      console.log('ContactsPage constructor');
+      console.log('ContactsPage constructor')
       this.title = this.navParams.get('title')
-      const origContacts = this.navParams.get('contacts')
-      Object.assign(this.contacts, origContacts)
+      this.user = this.navParams.get('user')
+      this.community = this.navParams.get('community')
    }
    ngOnDestroy() {
       console.warn('ContactsPage destroy');
    }
    ngOnInit(): void {
       console.log('ContactsPage init');
+      this.community.forEach(p => {
+         p.selected = (this.user.contacts[p.id]==true)
+      });
    }
    selChanged(ct){
       this.confirmFlag = true
    }
-   saveMembers(){
-      const data ={
-         members:this.contacts
-      }
-      this.view.dismiss(data)
+   saveToContacts(){
+      const friends = {}
+      this.community.forEach(p => {
+         if (p.selected == true){         
+            friends[p.id] = true
+         }
+      });
+      this.user.contacts = friends
+      this.fs.updateUser(this.user)
+      this.view.dismiss()
    }
    getSortedContacts(sort, fab){
       this.sortField = sort

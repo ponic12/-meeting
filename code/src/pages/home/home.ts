@@ -13,12 +13,15 @@ import { FirebaseService } from '../../shared/services/firebase.service';
 export class HomePage implements OnInit, OnDestroy {
    title: string = "Meeting Master"
    user: any
+   community: any[]
+   contactsFull: any[]
+   events: any
    photoPath: string
    today: number = new Date().getTime()
    searchText: string
    sortField: string = 'creationDate'
    direction: boolean = false
-   events: any
+
 
    constructor(
       public navCtrl: NavController,
@@ -36,11 +39,12 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      this.fs.getContactsByUid(this.user.uid).subscribe(data => {
-         this.user.contacts = data
-      })
       this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
+      })
+      this.fs.getCommunity().subscribe(data =>{
+         this.community = data
+         this.contactsFull = this.getContactsFull()
       })
    }
    ngOnDestroy() {
@@ -50,29 +54,29 @@ export class HomePage implements OnInit, OnDestroy {
       const mod: Modal = this.modal.create('EditEventPage', {
          title: 'Nuevo Evento',
          evt: { members: [] },
-         contacts: this.mapMembersToContacts(this.user.contacts, [])
+         user: this.user,
+         contactsFull: this.contactsFull
       }, {})
       mod.present()
       mod.onDidDismiss(data => {
-         this.save(data)
       })
    }
    editEvent(ev, i) {
       const mod: Modal = this.modal.create('EditEventPage', {
          title: 'Editar Evento',
          evt: ev,
-         contacts: this.mapMembersToContacts(this.user.contacts, ev.members)
+         user: this.user,
+         contactsFull: this.contactsFull
       }, {})
       mod.present()
       mod.onDidDismiss(data => {
-         this.save(data)
       })
    }
    showEvent(ev, i) {
       this.navCtrl.push('EventPage', {
          title: 'Evento',
          evt: ev,
-         contacts: this.mapMembersToContacts(this.user.contacts, ev.members)
+         contactsFull: this.contactsFull
       })
    }
    removeEvent(ev, i) {
@@ -87,8 +91,10 @@ export class HomePage implements OnInit, OnDestroy {
                text: 'Contactos',
                handler: () => {
                   console.log('Contacts Admin');
-                  this.navCtrl.push('CommunityPage', {
-                     title: 'Contactos'
+                  this.navCtrl.push('ContactsPage', {
+                     title: 'Contactos',
+                     user: this.user,
+                     community: this.community 
                   })
                }
             },            
@@ -162,34 +168,20 @@ export class HomePage implements OnInit, OnDestroy {
       else
          return "arrow-dropup"
    }
-   private save(data) {
-      if (data === null) return
-      data.evt.members = this.mapContactsToMembers(data.contacts)
-      data.evt.owner = this.user.uid
-      data.evt.ownerName = this.user.displayName
-      this.fs.saveEvent(data.evt)
-   }
-   private mapMembersToContacts(contacts, members) {
+
+   private getContactsFull() {
       const lst: any = []
-      contacts.forEach(item => {
-         const sel = members[item.id]
-         item.selected = (sel != undefined)
-         item.onoff = item.selected
-         lst.push(item)
+      this.community.forEach(p => {
+         const sel = (this.user.contacts[p.id])
+         if (sel == true){
+            lst.push(p)
+         }
       });
       return lst
    }
-   private mapContactsToMembers(contacts) {
-      const members: any = {}
-      contacts.forEach(item => {
-         if (item.selected)
-            members[item.id] = true
-      });
-      return members
-   }
+
    private logout() {
       this.appSrv.message('Aviso', 'Saliendo...');
-      //this.globalSrv.save('user', null);
       this.authSrv.signOutUser();
       this.navCtrl.setRoot('LoginPage');
    }

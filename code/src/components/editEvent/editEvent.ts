@@ -4,6 +4,7 @@ import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
 
 import * as moment from 'moment'
+import { FirebaseService } from '../../shared/services/firebase.service';
 
 @IonicPage()
 @Component({
@@ -13,13 +14,15 @@ import * as moment from 'moment'
 export class EditEventPage implements OnInit, OnDestroy {
    title:string
    evt:any
-   contacts:any
+   user:any
+   contactsFull:any[]
 
    constructor(
       private platform: Platform,
       private navParams: NavParams,
       private view: ViewController,
       private appSrv: ApplicationService,
+      private fs: FirebaseService,
       private modal: ModalController,
       private socialSharing: SocialSharing
    ) {
@@ -32,31 +35,30 @@ export class EditEventPage implements OnInit, OnDestroy {
       console.log('EditEventPage init')
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
-      this.contacts = this.navParams.get('contacts')
+      this.user = this.navParams.get('user')
+      this.contactsFull = this.navParams.get('contactsFull')
    }
 
-   addMembers(){
-      const mod: Modal = this.modal.create('ContactsPage', {
-         title:"Contactos",
-         contacts:this.contacts
+   adminMembers(){
+      const mod: Modal = this.modal.create('MembersPage', {
+         title:"Miembros",
+         contactsFull: this.contactsFull
       }, {})
       mod.present() 
-      mod.onDidDismiss(x=>{
-         if (x != null)
-            this.contacts = x.members
+      mod.onDidDismiss(cf=>{
       })
    }
    save(){
-      const data ={
-         evt:this.evt,
-         contacts: this.contacts
-      }
-      this.view.dismiss(data)
+      this.getMembersFromContacts()
+      this.evt.owner = this.user.uid
+      this.evt.ownerName = this.user.displayName
+      this.evt.ownerPhotoURL = this.user.photoURL
+      this.fs.saveEvent(this.evt)      
+      this.view.dismiss()
    }
    closeModal(){
       this.view.dismiss(null)
    }
-
    share() {
       if (this.platform.is('cordova')) {
          //const url = "https://firebasestorage.googleapis.com/v0/b/events-12be3.appspot.com/o/MeetingMaster.apk?alt=media&token=66af8eb0-463c-44ed-a596-5a7b21ff5d8a"
@@ -87,5 +89,11 @@ export class EditEventPage implements OnInit, OnDestroy {
       // }).catch(() => {
       //    // Error!
       // });
+   }
+   private getMembersFromContacts(){
+      this.contactsFull.forEach(item=>{
+         if (item.selected == true)
+            this.evt.members[item.id] = true
+      })
    }
 }
