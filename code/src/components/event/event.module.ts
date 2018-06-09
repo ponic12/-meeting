@@ -12,7 +12,7 @@ import { SharedModule } from '../../shared/shared.module'
       EventPage
    ],
    imports: [
-      SharedModule,
+      SharedModule.forRoot(),
       CommonModule,
       IonicPageModule.forChild(EventPage)
    ],

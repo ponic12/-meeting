@@ -13,7 +13,7 @@ import { PipesModule } from '../../shared/pipes/pipes.module';
       HomePage
    ],
    imports: [
-      SharedModule,
+      SharedModule.forRoot(),
       EventPageModule,
       PipesModule,
       //OrderModule,

@@ -7,7 +7,7 @@ import { FirebaseService } from '../../shared/services/firebase.service';
 
 @NgModule({
    imports: [
-      SharedModule,
+      SharedModule.forRoot(),
       IonicPageModule.forChild(LoginPage),
    ],
    declarations: [

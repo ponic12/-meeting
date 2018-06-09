@@ -15,7 +15,7 @@ import { PipesModule } from '../../shared/pipes/pipes.module';
       SuggestionsPage
    ],
    imports: [
-      SharedModule,
+      SharedModule.forRoot(),
       PipesModule,
       CommonModule,
       OrderModule,

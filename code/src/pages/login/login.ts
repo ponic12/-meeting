@@ -103,7 +103,7 @@ export class LoginPage implements OnInit, OnDestroy {
    private getDisplayName(dn){
       let res = dn
       if (!dn){
-
+         this.fs
       }
       return res
    }
