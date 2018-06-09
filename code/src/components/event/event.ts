@@ -17,7 +17,7 @@ export class EventPage implements OnInit, OnDestroy {
 
    title: string = "Evento"
    evt: any
-   members: any
+   membersFull: any
    totalMembers: number = 0
    startWeek: any
    weekData: any
@@ -48,7 +48,7 @@ export class EventPage implements OnInit, OnDestroy {
       console.log('EventPage init');
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
-      this.members = this.navParams.get('members')
+      this.membersFull = this.navParams.get('membersFull')
       this.totalMembers = Object.keys(this.evt.members).length
       this.startWeek = moment(this.evt.creationDate).day(0)
       this.processDays()
@@ -85,18 +85,18 @@ export class EventPage implements OnInit, OnDestroy {
       const mod: Modal = this.modal.create('MemberStatusPage', {
          title: "Miembros",
          evt: this.evt,
-         members: this.members
+         members: this.membersFull
       }, {})
       mod.present()
       mod.onDidDismiss(data => {
-         this.members = data
+         this.membersFull = data
          this.processDays()
       })
    }
    showComments() {
       const mod: Modal = this.modal.create('CommentsPage', {
          title: "Comentarios",
-         members: this.members,
+         members: this.membersFull,
          comments: this.evt.comments
       }, {})
       mod.present()
@@ -118,20 +118,20 @@ export class EventPage implements OnInit, OnDestroy {
          if (idx == -1) {
             hours.push(ev.hour.toString())
             ev.value = ev.value + 1
-            ev.members.push(this.evt.owner.id)
+            ev.members.push(this.evt.owner)
          }
          else {
             hours.splice(idx, 1)
             ev.value = ev.value - 1
-            const idm = ev.members.indexOf(this.evt.owner.id)
+            const idm = ev.members.indexOf(this.evt.owner)
             ev.members.splice(idm, 1)
          }
       }
       else {
-         this.members.forEach(m => {
-            let obj = ev.members.find(id => id === m.id)
+         this.membersFull.forEach(m => {
+            let obj = ev.members.find(uid => uid === m.uid)
             m.present = (obj != undefined)
-            m.pending = (this.evt.availability[m.id] == undefined)
+            m.pending = (this.evt.availability[m.uid] == undefined)
          });
          this.showMembers()
       }
@@ -148,7 +148,7 @@ export class EventPage implements OnInit, OnDestroy {
                if (this.allDayFlag == true) {
                   this.evt.availability[this.evt.owner][d].push(i.toString())
                   this.weekData[d].info[i].value = 1
-                  this.weekData[d].info[i].members.push(this.evt.owner.id)
+                  this.weekData[d].info[i].members.push(this.evt.owner.uid)
                }
             }
          }
@@ -179,19 +179,19 @@ export class EventPage implements OnInit, OnDestroy {
    private checkEditMode() {
       let res = false
       const membersON = []
-      this.members.forEach(item => {
+      this.membersFull.forEach(item => {
          if (item.onoff === true)
             membersON.push(item)
       });
-      res = ((membersON.length == 1) && (membersON.filter(m => (m.id === this.evt.owner)).length > 0))
+      res = ((membersON.length == 1) && (membersON.filter(m => (m.uid === this.evt.owner)).length > 0))
       if (res == true) this.dirtyFlag = true
       return res
    }
    private processDays() {
       this.weekData = this.resetDays(this.startWeek)
       this.weekDataKeys = Object.keys(this.weekData)
-      this.members.forEach(member => {
-         let memberData = this.evt.availability[member.id]
+      this.membersFull.forEach(member => {
+         let memberData = this.evt.availability[member.uid]
          if ((member.onoff === true) && (memberData)) {
             const days = Object.keys(memberData)
             days.forEach(day => {
@@ -199,7 +199,7 @@ export class EventPage implements OnInit, OnDestroy {
                   let wd = this.weekData[day]
                   if (wd) {
                      wd.info[hour].value = wd.info[hour].value + 1
-                     wd.info[hour].members.push(member.id)
+                     wd.info[hour].members.push(member.uid)
                      if (wd.info[hour].value > this.maxValue) {
                         this.maxValue = wd.info[hour].value
                         this.evt.estimationDate = {

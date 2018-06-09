@@ -21,31 +21,26 @@
     <ion-item-sliding class="eventCard" *ngFor="let evt of events | searchInfo: searchText | orderBy:sortField:direction ">
       <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }" (click)="showEvent(evt, i)">
         <div>
-          <strong>Evento:</strong> {{evt.name}}
+          <strong>{{evt.name}}</strong> 
         </div>
         <div>
-          <strong>Descripcion:</strong> {{evt.description}}
+          {{evt.description}}
         </div>
         <div>
-          <strong>Creacion:</strong>
-          {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
+          <strong>Creacion:</strong> {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
-        <!-- <div>
-          <strong>
-            Ultima modificacion:
-          </strong>
-          {{evt.lastModification | date:'dd/MM/yyyy HH:mm'}}
-        </div> -->
-        <!-- <div>
-          <strong>Fecha estimada: </strong>
-          {{evt.estimatedDate | date:'dd/MM/yyyy HH:mm'}}
-        </div> -->
+        <div>
+          <strong>Ult.mod.:</strong> {{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}
+        </div>
         <div class="adminFlag" *ngIf="evt.owner === user.uid">
           <img src="assets/imgs/crown.png">
         </div>
         <div class="adminFlag" *ngIf="evt.owner != user.uid">
             <img src="{{evt.ownerPhotoURL}}">
-        </div>        
+        </div>    
+        <!-- <div class="adminName">
+            {{evt.ownerName}}
+        </div>              -->
         <div class="eventType">
           <img src="{{evalTypeIcon(evt.type)}}">
         </div>

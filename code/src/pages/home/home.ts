@@ -4,6 +4,7 @@ import { ApplicationService } from '../../shared/services/application.service'
 import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
+import { Observable } from '@firebase/util';
 
 @IonicPage()
 @Component({
@@ -21,7 +22,8 @@ export class HomePage implements OnInit, OnDestroy {
    searchText: string
    sortField: string = 'creationDate'
    direction: boolean = false
-
+   private prEvents: any
+   private prCommunity: any
 
    constructor(
       public navCtrl: NavController,
@@ -39,16 +41,20 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      this.fs.getEventsByUid(this.user.uid).subscribe(data => {
+      this.prEvents = this.fs.getEventsByUid(this.user.uid)
+      this.prEvents.subscribe(data => {
          this.events = data      
       })
-      this.fs.getCommunity().subscribe(data =>{
+      this.prCommunity = this.fs.getCommunity()
+      this.prCommunity.subscribe(data =>{
          this.community = data
          this.contactsFull = this.getContactsFull()
       })         
    }
    ngOnDestroy() {
       console.log('HomePage destroy')
+      // this.prEvents.unsubscribe()
+      // this.prCommunity.unsubscribe()
    }
    addEvent() {
       this.showEditEvent('Nuevo Evento', {members:[]})
@@ -60,7 +66,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.navCtrl.push('EventPage', {
          title: 'Evento',
          evt: ev,
-         contactsFull: this.contactsFull
+         membersFull: this.getMembersFull(ev)
       })
    }
    removeEvent(ev, i) {
@@ -176,6 +182,18 @@ export class HomePage implements OnInit, OnDestroy {
       }
       return lst
    }
+   private getMembersFull(ev) {
+      const lst: any = []
+      if (ev.members){
+         this.contactsFull.forEach(p => {
+            const sel = (ev.members[p.uid])
+            if (sel == true){
+               lst.push(p)
+            }
+         });
+      }
+      return lst
+   }   
    private logout() {
       this.appSrv.message('Aviso', 'Saliendo...');
       this.authSrv.signOutUser();

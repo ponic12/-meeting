@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/map'
 import * as firebaseStorge from 'firebase/storage';
 
-import * as firebase from 'firebase'; // for typings
+import * as firebase from 'firebase/app'; // for typings
 import { FirebaseApp } from 'angularfire2';
 
 

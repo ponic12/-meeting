@@ -71,41 +71,39 @@ export class LoginPage implements OnInit, OnDestroy {
          if (data === undefined)
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
          else {
-            const o = {
-               email: data.email,
-               displayName: this.getDisplayName(data.displayName),
-               photoURL: 'assets/imgs/person.png',
-               uid: this.getUid(data.email)
-            }
-            //this.fs.updateUser(o)
-            this.navCtrl.setRoot('HomePage', { usr: o })
+            this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
+               this.navCtrl.setRoot('HomePage', { usr: usr })
+            })
          }
       }).catch(err => {
          this.appSrv.message('Error', 'Falla en la autenticacion!')
       });
    }
    loginGoogle() {
-      this.authSrv.loginGoogle().then(x => {
-         //this.fs.updateUser(x)
-         this.navCtrl.push('HomePage')
+      this.authSrv.loginGoogle().then((data) => {
+         this.redirectHome(data)
+      }).catch((err)=>{
+         console.log('Error: ', err.message)
       })
    }
    loginFacebook() {
-      this.authSrv.loginFacebook().then(x => {
-         //this.fs.updateUser(x)
-         this.navCtrl.push('HomePage')
+      this.authSrv.loginFacebook().then((data) => {
+         this.redirectHome(data)
       })
    }
    download() {
       this.fs.download('MeetingMaster.apk')
    }
 
-   private getDisplayName(dn){
-      let res = dn
-      if (!dn){
-         this.fs
+   private redirectHome(data){
+      console.log('login provider: ' + data)
+      const usr = {
+         displayName : data.displayName,
+         email : data.email,
+         photoURL : data.photoURL
       }
-      return res
+      this.fs.updateUser(usr)
+      this.navCtrl.push('HomePage', {usr : usr})
    }
    private getUid(str) {
       const res = str.replace(/\./gi, '')
