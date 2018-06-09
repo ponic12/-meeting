@@ -166,12 +166,14 @@ export class HomePage implements OnInit, OnDestroy {
    }
    private getContactsFull() {
       const lst: any = []
-      this.community.forEach(p => {
-         const sel = (this.user.contacts[p.uid])
-         if (sel == true){
-            lst.push(p)
-         }
-      });
+      if (this.user.contacts){
+         this.community.forEach(p => {
+            const sel = (this.user.contacts[p.uid])
+            if (sel == true){
+               lst.push(p)
+            }
+         });
+      }
       return lst
    }
    private logout() {

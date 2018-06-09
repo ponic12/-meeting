@@ -36,17 +36,17 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    ngOnDestroy() {
       console.warn('HomePage destroy')
-      this.obsAuth.unsubscribe()
+      //this.obsAuth.unsubscribe()
    }
    ngOnInit() {
       console.log('LoginPage init');
-      this.obsAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
-         if (data) {
-            this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
-               this.navCtrl.setRoot('HomePage', { usr: usr });               
-            })
-         }
-      });
+      // this.obsAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
+      //    if (data) {
+      //       this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
+      //          this.navCtrl.setRoot('HomePage', { usr: usr });               
+      //       })
+      //    }
+      // });
    }
    register(): void {
       this.authSrv.registerUser(this.email, this.password).then((res) => {
@@ -73,11 +73,11 @@ export class LoginPage implements OnInit, OnDestroy {
          else {
             const o = {
                email: data.email,
-               displayName: data.displayName,
+               displayName: this.getDisplayName(data.displayName),
                photoURL: 'assets/imgs/person.png',
                uid: this.getUid(data.email)
             }
-            this.fs.updateUser(o)
+            //this.fs.updateUser(o)
             this.navCtrl.setRoot('HomePage', { usr: o })
          }
       }).catch(err => {
@@ -86,13 +86,13 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    loginGoogle() {
       this.authSrv.loginGoogle().then(x => {
-         this.fs.updateUser(x)
+         //this.fs.updateUser(x)
          this.navCtrl.push('HomePage')
       })
    }
    loginFacebook() {
       this.authSrv.loginFacebook().then(x => {
-         this.fs.updateUser(x)
+         //this.fs.updateUser(x)
          this.navCtrl.push('HomePage')
       })
    }
@@ -100,6 +100,13 @@ export class LoginPage implements OnInit, OnDestroy {
       this.fs.download('MeetingMaster.apk')
    }
 
+   private getDisplayName(dn){
+      let res = dn
+      if (!dn){
+
+      }
+      return res
+   }
    private getUid(str) {
       const res = str.replace(/\./gi, '')
       return res

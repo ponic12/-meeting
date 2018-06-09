@@ -44,7 +44,7 @@
           <img src="assets/imgs/crown.png">
         </div>
         <div class="adminFlag" *ngIf="evt.owner != user.uid">
-            <img src="evt.ownerPhotoUrl">
+            <img src="{{evt.ownerPhotoURL}}">
         </div>        
         <div class="eventType">
           <img src="{{evalTypeIcon(evt.type)}}">

@@ -59,10 +59,9 @@ export class AuthService {
                displayName: res.user.displayName,
                photoURL: res.user.photoURL,
                email: res.user.email,
-               uid: res.user.uid,
-               username: res.user.username
+               uid: res.user.uid
             }
-            this.updateUserData(fbo)
+            //this.updateUserData(fbo)
             console.log(fbo)
          })
       }
@@ -123,7 +122,7 @@ export class AuthService {
          .then(()=>{
             this.afAuth.auth.getRedirectResult()
                .then((result)=>{
-                  this.updateUserData(result);
+                  //this.updateUserData(result);
                   console.log("res: ", result)
             })
             .catch((err)=>{
@@ -143,8 +142,7 @@ export class AuthService {
          uid: user.uid,
          email: user.email,
          displayName: user.displayName,
-         photoURL: user.photoURL,
-         username: user.uid
+         photoURL: user.photoURL
       }
       return userRef.set(data);
    }

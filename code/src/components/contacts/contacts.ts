@@ -37,9 +37,11 @@ export class ContactsPage implements OnInit, OnDestroy {
    }
    ngOnInit(): void {
       console.log('ContactsPage init');
-      this.community.forEach(p => {
-         p.selected = (this.user.contacts[p.uid]==true)
-      });
+      if (this.user.contacts){
+         this.community.forEach(p => {
+            p.selected = (this.user.contacts[p.uid]==true)
+         });   
+      }
    }
    selChanged(ct){
       this.confirmFlag = true

@@ -77,11 +77,4 @@ export class MemberStatusPage implements OnInit, OnDestroy {
    closeModal() {
       this.view.dismiss(this.members)
    }
-
-
-   // availability(username) {
-   //    if (!this.assistants) return
-   //    const res = !(this.assistants.indexOf(username) == -1)
-   //    return res
-   // }
 }
