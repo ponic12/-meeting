@@ -9,10 +9,11 @@ exports.onEvents = functions.firestore.document('events/{evtId}').onWrite((event
     // Tomo los miembros del evento y recorro uno por uno
     // En cada miembro recorro todos sus contactos para ver si estan todos los miembros
     // si no esta alguno, lo agrego a sus contactos, sino no hago nada
+    const proms = [];
     const evt = event.after.data();
     const memKeys = Object.keys(evt.members);
     memKeys.forEach(mkey => {
-        return admin.firestore().collection("users").doc(mkey).get()
+        const uProm = admin.firestore().collection("users").doc(mkey).get()
             .then(dss => {
             const usr = dss.data();
             const ctKeys = Object.keys(usr.contacts);
@@ -26,9 +27,8 @@ exports.onEvents = functions.firestore.document('events/{evtId}').onWrite((event
             usr.contacts = cts;
             return admin.firestore().collection("users").doc(mkey).set(usr);
         });
+        proms.push(uProm);
     });
+    return Promise.all(proms);
 });
-// export const onUsers = functions.firestore.document('users/{usrId}').onWrite((event) => {
-//    const usr = event.after.data()
-// })
 //# sourceMappingURL=index.js.map

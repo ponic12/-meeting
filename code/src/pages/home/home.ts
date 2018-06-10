@@ -41,10 +41,13 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      this.prEvents = this.fs.getEventsByUid(this.user.uid)
-      this.prEvents.subscribe(data => {
-         this.events = data      
-      })
+      this.events = this.fs.getEventsByUid(this.user.uid)
+
+      // this.prEvents = this.fs.getEventsByUid(this.user.uid)
+      // this.prEvents.subscribe(data => {
+      //    this.events = data      
+      // })
+      
       this.prCommunity = this.fs.getCommunity()
       this.prCommunity.subscribe(data =>{
          this.community = data

@@ -35,7 +35,7 @@ export class LoginPage implements OnInit, OnDestroy {
       });
    }
    ngOnDestroy() {
-      console.warn('HomePage destroy')
+      console.warn('LoginPage destroy')
       //this.obsAuth.unsubscribe()
    }
    ngOnInit() {
@@ -103,7 +103,7 @@ export class LoginPage implements OnInit, OnDestroy {
          photoURL : data.photoURL
       }
       this.fs.updateUser(usr)
-      this.navCtrl.push('HomePage', {usr : usr})
+      this.navCtrl.setRoot('HomePage', {usr : usr})
    }
    private getUid(str) {
       const res = str.replace(/\./gi, '')

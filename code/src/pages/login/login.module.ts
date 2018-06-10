@@ -3,7 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 
 import { SharedModule } from '../../shared/shared.module'
 import { LoginPage } from './login';
-import { FirebaseService } from '../../shared/services/firebase.service';
 
 @NgModule({
    imports: [
@@ -14,9 +13,7 @@ import { FirebaseService } from '../../shared/services/firebase.service';
       LoginPage
    ],
    entryComponents: [],
-   providers: [
-      FirebaseService
-   ]
+   providers: []
 })
 export class LoginModule {
    constructor() {

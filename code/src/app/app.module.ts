@@ -7,7 +7,6 @@ import { Facebook } from '@ionic-native/facebook'
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { CoreModule } from '../shared/core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { MeetingApp } from './app.component';
 
@@ -19,8 +18,7 @@ import { MeetingApp } from './app.component';
       BrowserModule,
       BrowserAnimationsModule,
       IonicModule.forRoot(MeetingApp),
-      SharedModule.forRoot(),
-      CoreModule
+      SharedModule.forRoot()
    ],
    bootstrap: [IonicApp],
    entryComponents: [

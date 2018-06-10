@@ -14,14 +14,18 @@ import { FirebaseApp } from 'angularfire2';
 @Injectable()
 export class FirebaseService {
 
-   //userRef: AngularFirestoreDocument<any>;
-   user$: Observable<any>;
+   communityRef:AngularFirestoreCollection<any>
+   community$: Observable<any[]>
+
+   userRef: AngularFirestoreDocument<any>
+   user$: Observable<any[]>
 
    constructor(
       private afs: AngularFirestore
    ) {
       console.log('FirebaseService constructor');
-      //afs.firestore.settings({timestampsInSnapshots:true})
+      afs.firestore.settings({timestampsInSnapshots:true})
+      //this.afs.firestore.enablePersistence();
    }
 
    
@@ -29,8 +33,8 @@ export class FirebaseService {
    // USUARIOS
    ///////////////////////////////////////////////
    getCommunity(){
-      const ref = this.afs.collection('users')
-      const obs = ref.valueChanges()
+      this.communityRef = this.afs.collection('users')
+      this.community$ = this.communityRef.valueChanges()
       // const obs = ref.snapshotChanges().map(actions => {
       //    return actions.map(a => {
       //       const data = a.payload.doc.data()
@@ -38,7 +42,7 @@ export class FirebaseService {
       //       return { id, ...data }
       //    })
       // })
-      return obs
+      return this.community$
    }
    getUserById(uid){
       const ref = this.afs.collection('users').doc(uid)
@@ -58,16 +62,17 @@ export class FirebaseService {
    // EVENTOS
    ///////////////////////////////////////////////   
    getEventsByUid(uid) {
+      let res = []
       const field: string = 'members.' + uid
       const ref = this.afs.collection('events', ref => ref.where(field, '==', true))
-      const obs = ref.snapshotChanges().map(actions => {
-         return actions.map(a => {
-            const data = a.payload.doc.data()
-            const id = a.payload.doc.id
-            return { id, ...data }
+      const obs = ref.snapshotChanges().subscribe(lst =>{
+         res = lst.map(item => {
+            const data = item.payload.doc.data()
+            const id = item.payload.doc.id
+            const  o = { id, ...data }
+            return o
          })
       })
-      return obs
    }
    saveEvent(evt) {
       evt.modificationDate = new Date().getTime()

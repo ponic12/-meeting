@@ -22,8 +22,8 @@ import { PipesModule } from '../../shared/pipes/pipes.module';
    ],
    providers: []
 })
-export class HomeModule {
+export class HomePageModule {
    constructor() {
-      console.log('HomeModule constructor');
+      console.log('HomePageModule constructor');
    }
 }
