@@ -6,15 +6,15 @@
 
 <ion-content class="backPage">
   <ion-list padding>
-     <ion-item>
-         <ion-label>Tipo de evento:</ion-label>
-         <ion-select [(ngModel)]="evt.type">
-           <ion-option value="calendario">Calendario</ion-option>
-           <ion-option value="seleccion">Seleccion</ion-option>          
-           <ion-option value="votacion">Votacion</ion-option>
-           <ion-option value="clasificacion">Clasificacion</ion-option>           
-         </ion-select>
-     </ion-item>
+    <ion-item>
+      <ion-label>Tipo de evento:</ion-label>
+      <ion-select [(ngModel)]="evt.type">
+        <ion-option value="calendario">Calendario</ion-option>
+        <ion-option value="seleccion">Seleccion</ion-option>
+        <ion-option value="votacion">Votacion</ion-option>
+        <ion-option value="clasificacion">Clasificacion</ion-option>
+      </ion-select>
+    </ion-item>
     <ion-item>
       <ion-label floating>Nombre del evento</ion-label>
       <ion-input type="text" value="" [(ngModel)]="evt.name"></ion-input>
@@ -33,6 +33,32 @@
         <p style="margin-left:5px">Invitar</p>
       </button>
     </div>
+    <div class="grdSeleccion" *ngIf="evt.type == 'seleccion'">
+      <ion-item>
+        <ion-label floating>Pregunta de Seleccion</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="evt.question"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Tipo de respuesta:</ion-label>
+        <ion-select [(ngModel)]="evt.answerType">
+          <ion-option value="simple">Simple</ion-option>
+          <ion-option value="multiple">Multiple</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div class="grdVotacion" *ngIf="evt.type == 'votacion'">
+      <ion-item>
+        <ion-label floating>Pregunta de Votacion</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="evt.question"></ion-input>
+      </ion-item>
+    </div>
+    <div class="grdClasificacion" *ngIf="evt.type == 'clasificacion'">
+      <ion-item>
+        <ion-label floating>Pregunta de Clasificacion</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="evt.question"></ion-input>
+      </ion-item>
+    </div>
+
   </ion-list>
   <div style="text-align: center">
     <button ion-button (click)="save()" [disabled]="(evt.name === '')" style="width:50%">

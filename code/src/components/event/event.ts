@@ -14,7 +14,6 @@ import { FirebaseService } from '../../shared/services/firebase.service';
    templateUrl: 'event.html'
 })
 export class EventPage implements OnInit, OnDestroy {
-
    title: string = "Evento"
    evt: any
    membersFull: any
@@ -49,8 +48,10 @@ export class EventPage implements OnInit, OnDestroy {
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
       this.membersFull = this.navParams.get('membersFull')
-      this.totalMembers = Object.keys(this.evt.members).length
+
+      this.totalMembers = this.membersFull.length
       this.startWeek = moment(this.evt.creationDate).day(0)
+      this.evt.estimationDate = {}
       this.processDays()
    }
    closeModal() {

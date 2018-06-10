@@ -78,6 +78,7 @@ export class FirebaseService {
    saveEvent(evt) {
       evt.modificationDate = new Date().getTime()
       if (!evt.id){
+         evt.availability = {}
          evt.creationDate = new Date().getTime()
          this.afs.collection('events').add(evt)
       }

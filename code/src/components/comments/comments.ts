@@ -12,10 +12,8 @@ import * as moment from 'moment'
 })
 export class CommentsPage implements OnInit, OnDestroy {
    title:string
-   contacts:any[] = []
+   comments=[]
    searchText: string
-   sortField: string = 'creationDate'
-   direction:boolean = false
    confirmFlag:boolean=false
 
    constructor(
@@ -27,8 +25,6 @@ export class CommentsPage implements OnInit, OnDestroy {
    ) {
       console.log('CommentsPage constructor');
       this.title = this.navParams.get('title')
-      const origContacts = this.navParams.get('contacts')
-      Object.assign(this.contacts, origContacts)
    }
    ngOnDestroy() {
       console.warn('CommentsPage destroy');
@@ -40,28 +36,8 @@ export class CommentsPage implements OnInit, OnDestroy {
       this.confirmFlag = true
    }
    saveMembers(){
-      const data ={
-         members:this.contacts
-      }
-      this.view.dismiss(data)
-   }
-   getSortedContacts(sort, fab){
-      this.sortField = sort
-      this.direction = !this.direction
-      fab.close()
-   }   
-   getSortName(){
-      if (this.sortField === "displayName")
-         return "Persona"
-      else
-         return "Miembros"
-   }   
-   getIcon(){
-      if (this.direction === true)
-         return "arrow-dropdown"
-      else 
-         return "arrow-dropup"
-   }   
+      this.view.dismiss()
+   } 
    closeModal(){
       this.view.dismiss(null)
    }
