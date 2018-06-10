@@ -37,6 +37,7 @@ export class EditEventPage implements OnInit, OnDestroy {
       this.evt = this.navParams.get('evt')
       this.user = this.navParams.get('user')
       this.contactsFull = this.navParams.get('contactsFull')
+      this.setMembersToContacts()
    }
 
    adminMembers(){
@@ -89,6 +90,11 @@ export class EditEventPage implements OnInit, OnDestroy {
       // }).catch(() => {
       //    // Error!
       // });
+   }
+   private setMembersToContacts(){
+      this.contactsFull.forEach(item=>{
+         item.selected = (this.evt.members[item.uid] == true)
+      })
    }
    private getMembersFromContacts(){
       this.contactsFull.forEach(item=>{

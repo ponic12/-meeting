@@ -5,6 +5,7 @@ import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
 import { Observable } from '@firebase/util';
+import { Subscription } from 'rxjs';
 
 @IonicPage()
 @Component({
@@ -22,8 +23,8 @@ export class HomePage implements OnInit, OnDestroy {
    searchText: string
    sortField: string = 'creationDate'
    direction: boolean = false
-   private prEvents: any
-   private prCommunity: any
+   private subEvt: Subscription
+   private subCom: Subscription
 
    constructor(
       public navCtrl: NavController,
@@ -42,21 +43,21 @@ export class HomePage implements OnInit, OnDestroy {
    ngOnInit() {
       console.log('HomePage init')
       
-      this.prEvents = this.fs.getEventsByUid(this.user.uid)
-      this.prEvents.subscribe(data => {
+      this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data      
       })
+      console.log('subEvt: ', this.subEvt.closed)
       
-      this.prCommunity = this.fs.getCommunity()
-      this.prCommunity.subscribe(data =>{
+      this.subCom = this.fs.getCommunity().subscribe(data =>{
          this.community = data
          this.contactsFull = this.getContactsFull()
       })         
+      console.log('subCom: ', this.subCom.closed)      
    }
    ngOnDestroy() {
       console.log('HomePage destroy')
-      // this.prEvents.unsubscribe()
-      // this.prCommunity.unsubscribe()
+      this.subEvt.unsubscribe()
+      this.subCom.unsubscribe()
    }
    addEvent() {
       this.showEditEvent('Nuevo Evento', {members:[]})

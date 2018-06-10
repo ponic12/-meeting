@@ -5,6 +5,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../shared/core/auth.service';
 import { ApplicationService } from '../../shared/services/application.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
+import { Subscription } from 'rxjs';
 
 
 @IonicPage()
@@ -13,6 +14,7 @@ import { FirebaseService } from '../../shared/services/firebase.service';
    templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit, OnDestroy {
+   subUsr: Subscription
    loginMode: string = "signIn"
    username: string
    displayName: string
@@ -36,6 +38,7 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    ngOnDestroy() {
       console.warn('LoginPage destroy')
+      this.subUsr.unsubscribe()
       //this.obsAuth.unsubscribe()
    }
    ngOnInit() {
@@ -71,7 +74,7 @@ export class LoginPage implements OnInit, OnDestroy {
          if (data === undefined)
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
          else {
-            this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
+            this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
                this.navCtrl.setRoot('HomePage', { usr: usr })
             })
          }
