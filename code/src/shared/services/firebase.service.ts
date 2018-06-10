@@ -65,14 +65,15 @@ export class FirebaseService {
       let res = []
       const field: string = 'members.' + uid
       const ref = this.afs.collection('events', ref => ref.where(field, '==', true))
-      const obs = ref.snapshotChanges().subscribe(lst =>{
-         res = lst.map(item => {
+      const obs = ref.snapshotChanges().map(actions =>{
+         return actions.map(item => {
             const data = item.payload.doc.data()
             const id = item.payload.doc.id
             const  o = { id, ...data }
             return o
          })
       })
+      return obs
    }
    saveEvent(evt) {
       evt.modificationDate = new Date().getTime()

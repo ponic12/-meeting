@@ -16,16 +16,19 @@ export const onEvents = functions.firestore.document('events/{evtId}').onWrite((
       const uProm = admin.firestore().collection("users").doc(mkey).get()
       .then(dss => {
          const usr = dss.data()
-         const ctKeys = Object.keys(usr.contacts)
-         const mergeKeys = memKeys.concat(ctKeys.filter(function (item) {
-             return memKeys.indexOf(item) < 0;
+         let ctKeys: string[] = []
+         if (usr.contacts)
+            ctKeys = Object.keys(usr.contacts)
+
+         const mergeKeys = ctKeys.concat(memKeys.filter(function (item) {
+             return ctKeys.indexOf(item) < 0;
          }));
          const cts = {}
          mergeKeys.forEach(key => {
             cts[key] = true
          })
          usr.contacts = cts
-         return admin.firestore().collection("users").doc(mkey).set(usr)
+         return admin.firestore().collection("users").doc(mkey).set(usr)         
       }) 
       proms.push(uProm)     
    });
