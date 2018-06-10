@@ -47,14 +47,10 @@ export class EditEventPage implements OnInit, OnDestroy {
       this.evt.ownerPhotoURL = this.user.photoURL
       this.setMembersToContacts()
 
-      if (this.evt.type == 'calendario')
-         this.evt.availability = {}
-      else {
-         this.question = this.evt.question
-         if (this.evt.type == 'seleccion') {
-            this.selectionItems = this.evt.selectionItems
-            this.answerType = this.evt.answerType
-         }
+      this.question = (this.evt.question)?this.evt.question:""
+      if (this.evt.type == 'seleccion') {
+         this.selectionItems = this.evt.selectionItems
+         this.answerType = this.evt.answerType
       }
    }
 
@@ -70,14 +66,14 @@ export class EditEventPage implements OnInit, OnDestroy {
    }
    save() {
       this.getMembersFromContacts()
+      this.evt.question = this.question
       switch (this.evt.type) {
+         case 'calendario':
+            this.evt.availability = {}  
+            break;  
          case 'seleccion':
-            this.evt.question = this.question
             this.evt.selectionItems = this.selectionItems
             this.evt.answerType = this.answerType
-            break;
-         default:
-            this.evt.question = this.question
             break;
       }
       this.fs.saveEvent(this.evt)
@@ -130,6 +126,7 @@ export class EditEventPage implements OnInit, OnDestroy {
       })
    }
    private getMembersFromContacts() {
+      this.evt.members = {}
       this.contactsFull.forEach(item => {
          if (item.selected == true)
             this.evt.members[item.uid] = true

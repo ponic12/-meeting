@@ -44,10 +44,10 @@
           <ion-option value="multiple">Multiple</ion-option>
         </ion-select>
       </ion-item>
-      <ion-list>
-        <ion-list-header>
+      <ion-list padding>
+        <h4 style="text-align: center">
           Items seleccionables
-        </ion-list-header>
+        </h4>
         <ion-item-sliding *ngFor="let item of selectionItems">
           <ion-item>
             <ion-label>
@@ -82,11 +82,12 @@
         <ion-input placeholder="Ingrese pregunta" clearInput [(ngModel)]="question"></ion-input>
       </ion-item>
     </div>
+
+    <div style="text-align: center">
+      <button ion-button (click)="save()" [disabled]="(evt.name === '')&&(!evt.type)" style="width:50%">
+        <ion-icon name="cloud-upload"></ion-icon>
+        <p style="margin-left:5px">Guardar</p>
+      </button>
+    </div>
   </ion-list>
-  <div style="text-align: center">
-    <button ion-button (click)="save()" [disabled]="(evt.name === '')" style="width:50%">
-      <ion-icon name="cloud-upload"></ion-icon>
-      <p style="margin-left:5px">Guardar</p>
-    </button>
-  </div>
 </ion-content>
