@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events,ModalController, Modal, Platform } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, Events, ModalController, Modal, Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
 
@@ -12,10 +12,14 @@ import { FirebaseService } from '../../shared/services/firebase.service';
    templateUrl: 'editEvent.html'
 })
 export class EditEventPage implements OnInit, OnDestroy {
-   title:string
-   evt:any
-   user:any
-   contactsFull:any[]
+   title: string
+   evt: any
+   user: any
+   contactsFull: any[]
+   question: string
+   answerType: string
+   selectionItems: string[] = []
+   newItem: string
 
    constructor(
       private platform: Platform,
@@ -37,27 +41,49 @@ export class EditEventPage implements OnInit, OnDestroy {
       this.evt = this.navParams.get('evt')
       this.user = this.navParams.get('user')
       this.contactsFull = this.navParams.get('contactsFull')
-      this.setMembersToContacts()
-   }
 
-   adminMembers(){
-      const mod: Modal = this.modal.create('MembersPage', {
-         title:"Miembros",
-         contactsFull: this.contactsFull
-      }, {})
-      mod.present() 
-      mod.onDidDismiss(cf=>{
-      })
-   }
-   save(){
-      this.getMembersFromContacts()
       this.evt.owner = this.user.uid
       this.evt.ownerName = this.user.displayName
       this.evt.ownerPhotoURL = this.user.photoURL
-      this.fs.saveEvent(this.evt)      
+      this.setMembersToContacts()
+
+      if (this.evt.type == 'calendario')
+         this.evt.availability = {}
+      else {
+         this.question = this.evt.question
+         if (this.evt.type == 'seleccion') {
+            this.selectionItems = this.evt.selectionItems
+            this.answerType = this.evt.answerType
+         }
+      }
+   }
+
+   adminMembers() {
+      const mod: Modal = this.modal.create('MembersPage', {
+         title: "Miembros",
+         owner: this.evt.owner,
+         contactsFull: this.contactsFull
+      }, {})
+      mod.present()
+      mod.onDidDismiss(cf => {
+      })
+   }
+   save() {
+      this.getMembersFromContacts()
+      switch (this.evt.type) {
+         case 'seleccion':
+            this.evt.question = this.question
+            this.evt.selectionItems = this.selectionItems
+            this.evt.answerType = this.answerType
+            break;
+         default:
+            this.evt.question = this.question
+            break;
+      }
+      this.fs.saveEvent(this.evt)
       this.view.dismiss()
    }
-   closeModal(){
+   closeModal() {
       this.view.dismiss(null)
    }
    share() {
@@ -68,7 +94,7 @@ export class EditEventPage implements OnInit, OnDestroy {
             this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
          }).catch(() => {
             this.appSrv.message('Error', 'No posee Whatsapp')
-         })         
+         })
          // this.socialSharing.canShareVia('Whatsapp').then(() => {
          //    this.socialSharing.shareViaWhatsApp('Invitacion a evento!', 'http://www.clarin.com').then(() => {
          //       this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
@@ -91,13 +117,20 @@ export class EditEventPage implements OnInit, OnDestroy {
       //    // Error!
       // });
    }
-   private setMembersToContacts(){
-      this.contactsFull.forEach(item=>{
+   addItem() {
+      this.selectionItems.push(this.newItem)
+   }
+   removeItem(item) {
+      this.selectionItems.splice(item, 1)
+   }
+
+   private setMembersToContacts() {
+      this.contactsFull.forEach(item => {
          item.selected = (this.evt.members[item.uid] == true)
       })
    }
-   private getMembersFromContacts(){
-      this.contactsFull.forEach(item=>{
+   private getMembersFromContacts() {
+      this.contactsFull.forEach(item => {
          if (item.selected == true)
             this.evt.members[item.uid] = true
       })

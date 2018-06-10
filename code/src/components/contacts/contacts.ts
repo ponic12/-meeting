@@ -44,6 +44,8 @@ export class ContactsPage implements OnInit, OnDestroy {
       }
    }
    selChanged(ct){
+      if (ct.uid == this.user.uid)
+         ct.selected = true
       this.confirmFlag = true
    }
    saveToContacts(){

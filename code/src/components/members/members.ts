@@ -11,6 +11,7 @@ import * as moment from 'moment'
 })
 export class MembersPage implements OnInit, OnDestroy {
    title: string
+   owner: string
    contactsFull: any
    selectFlag: boolean = false
    searchText: string
@@ -31,12 +32,15 @@ export class MembersPage implements OnInit, OnDestroy {
    ngOnInit(): void {
       console.log('MembersPage init');
       this.title = this.navParams.get('title')
+      this.owner = this.navParams.get('owner')
       this.contactsFull = this.navParams.get('contactsFull');
    }
    selectAll() {
       this.selectFlag = !this.selectFlag
       this.contactsFull.forEach(item => {
          item.selected = this.selectFlag
+         if (item.uid == this.owner)
+            item.selected = true
       });
    }
    getSorted(sort, fab) {
