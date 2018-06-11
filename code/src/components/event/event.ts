@@ -47,12 +47,14 @@ export class EventPage implements OnInit, OnDestroy {
       console.log('EventPage init');
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
-      this.membersFull = this.navParams.get('membersFull')
 
-      this.totalMembers = this.membersFull.length
-      this.startWeek = moment(this.evt.creationDate).day(0)
-      this.evt.estimationDate = {}
-      this.processDays()
+      if (this.evt.type == 'calendario'){
+         this.membersFull = this.navParams.get('membersFull')
+         this.totalMembers = this.membersFull.length
+         this.startWeek = moment(this.evt.creationDate).day(0)
+         this.evt.estimationDate = {}
+         this.processDays()   
+      }
    }
    closeModal() {
       if (this.dirtyFlag == false) {

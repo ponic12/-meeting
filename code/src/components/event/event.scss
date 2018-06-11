@@ -8,11 +8,11 @@ page-event {
   }
   .grdEvento {
     display: grid;
-    grid-template-areas: "evento" "dias" "botonera"
+    grid-template-areas: "evento" "tipo" "botonera"
   }
   @media (min-width: 500px) {
     .grdEvento {
-      grid-template-areas: "evento evento" "dias dias" "botonera botonera"
+      grid-template-areas: "evento evento" "tipo tipo" "botonera botonera"
     }
   }
   #evento {
@@ -98,8 +98,8 @@ page-event {
   .selMember {
     width: 21px;
   }
-  #dias {
-    grid-area: dias;
+  #tipo {
+    grid-area: tipo;
     margin: 5px;
   }
   .grdDays {

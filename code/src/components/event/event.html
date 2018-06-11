@@ -1,7 +1,7 @@
 <ion-header class="grdToolbar">
   <div>
     <img class="logoTipo" src="assets/imgs/calendar.png">
-    <div class="fechaProgramada">
+    <div class="fechaProgramada" *ngIf="evt.type=='calendario'">
       <div class="dia">{{evt.estimationDate.day}}</div>
       <div class="mes">{{evt.estimationDate.month}}</div>
     </div>
@@ -14,7 +14,6 @@
   <div class="grdEvento">
     <div id="evento" class="grdInfo">
       <div class="info">
-        <!-- <div class="item evtName">Tipo: {{evt.type}}</div>  -->
         <div class="item evtName">{{evt.name}}</div>
         <div class="item evtDesc">
           {{evt.description}}
@@ -29,13 +28,7 @@
         </div>
       </div>
     </div>
-    <!-- <div id="participantes">
-      <button ion-button (click)="showMembers()">
-        <ion-icon name="person"></ion-icon>
-        <span style="margin-left:10px">Miembros ({{totalMembers}})</span>
-      </button>
-    </div> -->
-    <div id="dias">
+    <div id="tipo" *ngIf="evt.type == 'calendario'">
       <div class="grdDays">
         <div class="grdDaysNames">
           <div>
@@ -82,20 +75,55 @@
         </div>
       </div>
     </div>
+    <div id="tipo" *ngIf="evt.type == 'seleccion'">
+      <ion-list padding radio-group>
+        <h4 style="text-align: center">
+          {{evt.question}}
+        </h4>
+        <ion-item-sliding *ngFor="let item of evt.selectionItems">
+          <ion-item>
+            <ion-label>
+              {{item}}
+            </ion-label>
+            <ion-checkbox *ngIf="evt.answerType=='multiple'">{{item}}</ion-checkbox>
+            <ion-radio *ngIf="evt.answerType=='unica'">{{item}}</ion-radio>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button (click)="removeItem(item, i)" color="danger">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
+    <div id="tipo" *ngIf="evt.type == 'votacion'">
+      <ion-list padding>
+        <h4 style="text-align: center">
+          {{evt.question}}
+        </h4>
+      </ion-list>
+    </div>
+    <div id="tipo" *ngIf="evt.type == 'clasificacion'">
+      <ion-list padding>
+        <h4 style="text-align: center">
+          {{evt.question}}
+        </h4>
+      </ion-list>
+    </div>
     <div id="botonera">
-      <button ion-button (click)="prevWeek()" color="dark">
+      <button ion-button (click)="prevWeek()" color="dark" *ngIf="evt.type==='calendario'">
         <ion-icon name="rewind" class=""></ion-icon>
       </button>
       <button ion-button (click)="save()" color="primary">
         <ion-icon name="archive"></ion-icon>
         <span style="margin-left:10px">Guardar</span>
       </button>
-      <button ion-button (click)="nextWeek()" color="dark">
+      <button ion-button (click)="nextWeek()" color="dark" *ngIf="evt.type==='calendario'">
         <ion-icon name="fastforward" class=""></ion-icon>
       </button>
     </div>
   </div>
-  <ion-fab class="btnComments" >
+  <ion-fab class="btnComments">
     <button ion-fab mini (click)="showComments()">
       <ion-icon name="list-box"></ion-icon>
     </button>
