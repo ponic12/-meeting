@@ -69,6 +69,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.navCtrl.push('EventPage', {
          title: 'Evento',
          evt: ev,
+         user: this.user,
          membersFull: this.getMembersFull(ev)
       })
    }

@@ -16,6 +16,7 @@ import { FirebaseService } from '../../shared/services/firebase.service';
 export class EventPage implements OnInit, OnDestroy {
    title: string = "Evento"
    evt: any
+   user: any
    membersFull: any
    totalMembers: number = 0
    startWeek: any
@@ -25,6 +26,7 @@ export class EventPage implements OnInit, OnDestroy {
    editMode: boolean = true
    allDayFlag: boolean = false
    dirtyFlag: boolean = false
+   selectionItemsKeys: string[] = []
    private maxValue: number = 0
 
    constructor(
@@ -47,13 +49,17 @@ export class EventPage implements OnInit, OnDestroy {
       console.log('EventPage init');
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
-
+      this.user = this.navParams.get('user')
+      this.membersFull = this.navParams.get('membersFull')
+      this.totalMembers = this.membersFull.length
+      
       if (this.evt.type == 'calendario'){
-         this.membersFull = this.navParams.get('membersFull')
-         this.totalMembers = this.membersFull.length
          this.startWeek = moment(this.evt.creationDate).day(0)
          this.evt.estimationDate = {}
          this.processDays()   
+      }
+      else{
+         this.processSelections()
       }
    }
    closeModal() {
@@ -175,6 +181,21 @@ export class EventPage implements OnInit, OnDestroy {
       const res = (moment(d, 'YYMMDD').format('DD') == moment().format('DD'))
       return res
    }
+
+   onItemChange(val){
+      //const item = this.selectionItems[sel][this.user.uid]
+   }
+   showSelMembers(ev){
+      this.membersFull.forEach(m => {
+         let obj = this.evt.members.find(uid => uid === m.uid)
+         m.present = (obj != undefined)
+         m.pending = (this.evt.availability[m.uid] == undefined)
+      });
+      this.showMembers()
+   }
+   calculateOpacity(val){
+      return (val/this.totalMembers)
+   }
    save() {
       this.fs.saveEvent(this.evt)
       this.dirtyFlag = false
@@ -186,7 +207,7 @@ export class EventPage implements OnInit, OnDestroy {
          if (item.onoff === true)
             membersON.push(item)
       });
-      res = ((membersON.length == 1) && (membersON.filter(m => (m.uid === this.evt.owner)).length > 0))
+      res = ((membersON.length == 1) && (membersON.filter(m => (m.uid === this.user.uid)).length > 0))
       if (res == true) this.dirtyFlag = true
       return res
    }
@@ -217,7 +238,12 @@ export class EventPage implements OnInit, OnDestroy {
          }
       })
    }
-
+   private processSelections(){
+      this.updateSelectionKeys()
+   }
+   private updateSelectionKeys(){
+      this.selectionItemsKeys = Object.keys(this.evt.selectionItems)
+   }
    private resetDays(startDay) {
       let emptyWeek = {}
 

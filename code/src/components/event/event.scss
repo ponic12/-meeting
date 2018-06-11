@@ -175,6 +175,19 @@ page-event {
    top: 100px;
    left: -3px;
   }
+  .btnMembers{
+   top: 100px;
+   right: 3px;
+  } 
+
+  .grdSelectionItem{
+     display:grid;
+     grid-template-columns: 1fr 50px
+  }
+  .btnMembersInfo{
+     position: absolute;
+     z-index: 1000;
+  }
   #botonera {
    grid-area: botonera;
    display:grid;

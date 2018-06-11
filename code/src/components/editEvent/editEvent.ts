@@ -18,7 +18,8 @@ export class EditEventPage implements OnInit, OnDestroy {
    contactsFull: any[]
    question: string
    answerType: string
-   selectionItems: string[] = []
+   selectionItems: object
+   selectionItemsKeys: string[]
    newItem: string
 
    constructor(
@@ -49,7 +50,8 @@ export class EditEventPage implements OnInit, OnDestroy {
 
       this.question = (this.evt.question)?this.evt.question:""
       if (this.evt.type == 'seleccion') {
-         this.selectionItems = this.evt.selectionItems
+         this.selectionItems = (this.evt.selectionItems)?this.evt.selectionItems:{}
+         this.updateSelectionKeys()
          this.answerType = this.evt.answerType
       }
    }
@@ -114,12 +116,17 @@ export class EditEventPage implements OnInit, OnDestroy {
       // });
    }
    addItem() {
-      this.selectionItems.push(this.newItem)
+      this.selectionItems[this.newItem]={}
+      this.updateSelectionKeys()
    }
    removeItem(item) {
-      this.selectionItems.splice(item, 1)
+      delete this.selectionItems[item]
+      this.updateSelectionKeys()
    }
 
+   private updateSelectionKeys(){
+      this.selectionItemsKeys = Object.keys(this.selectionItems)
+   }
    private setMembersToContacts() {
       this.contactsFull.forEach(item => {
          item.selected = (this.evt.members[item.uid] == true)
