@@ -8,12 +8,14 @@
 * Agreagr icono create para ver que haya cargado algo
 * Cambio de flechas de semanas al lado de los dias
 * Seleccionar de otro color el dia actual
-Implementar comentarios
-Implementar sugerencias
-Tipo de eventos Implementacion (Calendario / Seleccion / Votacion / Clasificacion ) Tipo de respuesta SI/NO y Ranking
+* Implementar comentarios
+* Implementar sugerencias
+* Tipo de eventos Implementacion (Calendario / Seleccion / Votacion / Clasificacion ) Tipo de respuesta SI/NO y Ranking
+* Bug de Admin (owner.displayName) 
+* Modificar Cloud Function para que cuando se registre usuario, segun el UID se cargue en todos los miembros como contactos
 Si se presiona el icono create navega a la semana de la primer carga
 Bug de muestra de solo miembros en ShowEvent---> muestra todos los contactos
-Bug de Admin (owner.displayName) 
-Modificar Cloud Function para que cuando se registre usuario, segun el UID se cargue en todos los miembros como contactos
 Corregir modo mobile de Google y Facebook
+Bug de contador de selecciones
+Implementar Votacion con barra de resultados y Listado de miembros con su Votacion en nueva ventana
 

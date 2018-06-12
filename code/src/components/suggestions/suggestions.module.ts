@@ -25,7 +25,7 @@ import { PipesModule } from '../../shared/pipes/pipes.module';
    providers: [SocialSharing]
 })
 
-export class BitacoraPageModule {
+export class SuggestionsPageModule {
    constructor() {
       console.log('SuggestionsPageModule constructor');
    }

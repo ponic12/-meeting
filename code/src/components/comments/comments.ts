@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Events,ModalController, Modal } from 'ionic-angular';
-import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
 
 import * as moment from 'moment'
@@ -16,19 +15,17 @@ export class CommentsPage implements OnInit, OnDestroy {
    title:string
    user:any
    evt:any
-   subComments:Subscription
-   comments=[]
+   comments: any =[]
    searchText: string
-   confirmFlag:boolean=false
-   newComment:string
+   newComment:string = ""
+   subComments:Subscription 
 
    constructor(
       private navParams: NavParams,
       private view: ViewController,
       private appSrv: ApplicationService,
       private modal: ModalController,
-      private fs: FirebaseService,
-      private socialSharing: SocialSharing
+      private fs: FirebaseService
    ) {
       console.log('CommentsPage constructor');
       this.title = this.navParams.get('title')
@@ -45,10 +42,7 @@ export class CommentsPage implements OnInit, OnDestroy {
          this.comments = data      
       })
    }
-   selChanged(ct){
-      this.confirmFlag = true
-   }
-   addComment(){
+   add(){
       const cmt = {
          creationDate : new Date().getTime(),
          comment: this.newComment,
@@ -57,6 +51,7 @@ export class CommentsPage implements OnInit, OnDestroy {
          photoURL: this.user.photoURL
       }
       this.fs.saveComment(this.evt.id, cmt)
+      this.newComment = ""
    }
    closeModal(){
       this.view.dismiss(null)

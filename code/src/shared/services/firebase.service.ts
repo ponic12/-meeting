@@ -97,7 +97,7 @@ export class FirebaseService {
    // COMENTARIOS
    ///////////////////////////////////////////////
    getCommentsByEvtId(eid){
-      const ref = this.afs.collection('events').doc(eid).collection('comments')
+      const ref = this.afs.collection('events').doc(eid).collection('comments', ref => ref.orderBy('creationDate', 'asc') )
       const obs = ref.snapshotChanges().map(actions => {
          return actions.map(a => {
             const data = a.payload.doc.data()
@@ -120,7 +120,7 @@ export class FirebaseService {
    // SUGERENCIAS
    ///////////////////////////////////////////////
    getSuggestions(){
-      const ref = this.afs.collection('suggestions')
+      const ref = this.afs.collection('suggestions', ref => ref.orderBy('creationDate', 'asc') )
       const obs = ref.snapshotChanges().map(actions => {
          return actions.map(a => {
             const data = a.payload.doc.data()
@@ -130,7 +130,7 @@ export class FirebaseService {
       })
       return obs
    }
-   saveSuggestions(sug) {
+   saveSuggestion(sug) {
       if (!sug.id){
          this.afs.collection('suggestions').add(sug)
       }

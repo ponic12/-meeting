@@ -201,16 +201,22 @@ export class EventPage implements OnInit, OnDestroy {
       })
    }
    showComments() {
-      const mod: Modal = this.modal.create('CommentsPage', {
+      this.navCtrl.push('CommentsPage', {
          title: "Comentarios",
          evt: this.evt,
-         user: this.user
-         // members: this.membersFull,
-         // comments: this.evt.comments
-      }, {})
-      mod.present()
-      mod.onDidDismiss(data => {
+         user: this.user                
       })
+
+      // const mod: Modal = this.modal.create('CommentsPage', {
+      //    title: "Comentarios",
+      //    evt: this.evt,
+      //    user: this.user
+      //    // members: this.membersFull,
+      //    // comments: this.evt.comments
+      // }, {})
+      // mod.present()
+      // mod.onDidDismiss(data => {
+      // })
    }
    save() {
       this.fs.saveEvent(this.evt)

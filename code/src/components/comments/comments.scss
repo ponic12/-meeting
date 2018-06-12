@@ -1,5 +1,13 @@
 page-comments {
+   .grd{
+      display:grid;
+      grid-template-rows: 50px 1fr 50px;
+   }   
    .grdComments{
+      height: calc( 100vh - 166px );
+      overflow-y: auto;
+   }
+   .grdItem{
       display: grid;
       grid-template-rows: 20px 1fr 10px;
       grid-template-columns: 1fr 1fr;

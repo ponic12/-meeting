@@ -4,21 +4,27 @@
   <ion-icon class="btnClose" (click)="closeModal()" name="close-circle"></ion-icon>
 </ion-header>
 
-<ion-content class="backPage">
+<ion-content class="backPage grd">
   <ion-grid>
-    <ion-row>
+    <ion-row style="background:white">
       <ion-icon name="search" class="searchIcon"></ion-icon>
       <ion-input type="text" class="searchBar" placeholder="Buscar" [(ngModel)]="searchText"></ion-input>
     </ion-row>
   </ion-grid>
-
-  <div *ngFor="let bit of bitacora | searchInfo: searchText" class="grdContacts">
-    <ion-toggle class="mid midCenter" [(ngModel)]="ct.selected" (ionChange)="selChanged(ct)"></ion-toggle>
-    <ion-avatar class="mid midCenter">
-      <img class="avatar" [src]="ct.photoURL">
-    </ion-avatar>
-    <div class="mid">{{ct.displayName}}</div>
+  <div class="grdSuggestions">
+    <div *ngFor="let sg of suggestions | searchInfo: searchText" class="grdItem">
+      <div class="cmtHeaderName">{{sg.ownerName}}</div>
+      <ion-avatar class="cmtHeaderAvatar">
+        <img [src]="sg.photoURL">
+      </ion-avatar>
+      <div class="cmtBody">{{sg.suggestion}}</div>
+      <div class="cmtFooter">{{sg.creationDate | date:'dd/MM/yyyy HH:mm'}}</div>
+    </div>
   </div>
-
-  <button ion-button  (click)="saveMembers()" *ngIf="confirmFlag === true">Aceptar</button>
+  <ion-item>
+    <ion-input placeholder="Ingrese sugerencia o error" clearInput [(ngModel)]="newSuggestion"></ion-input>
+    <button ion-button outline item-end icon-left (click)="add()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </ion-item>
 </ion-content>

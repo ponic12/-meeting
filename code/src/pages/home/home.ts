@@ -97,7 +97,8 @@ export class HomePage implements OnInit, OnDestroy {
                handler: () => {
                   console.log('Suggestions');
                   this.navCtrl.push('SuggestionsPage', {
-                     title: 'Sugerencias'
+                     title: 'Sugerencias',
+                     user: this.user                     
                   })
                }
             },
