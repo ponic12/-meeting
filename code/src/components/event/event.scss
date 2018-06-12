@@ -180,13 +180,27 @@ page-event {
    right: 3px;
   } 
 
+  .value {
+   background: #003f52 !important;
+ }
+
+ .backCard{
+   position: absolute;
+   width: 100%;
+   height: 100%;
+ }
   .grdSelectionItem{
      display:grid;
-     grid-template-columns: 1fr 50px
+     border-radius: 20px;
+     grid-template-columns: 40px 1fr 50px 50px;
+     align-items: center;
+     padding-left: 20px;
+     opacity: 1 !important;
   }
   .btnMembersInfo{
-     position: absolute;
-     z-index: 1000;
+   border-radius: 50%;
+   width: 40px;
+   font-size: 18px;
   }
   #botonera {
    grid-area: botonera;

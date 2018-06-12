@@ -62,56 +62,10 @@ export class EventPage implements OnInit, OnDestroy {
          this.processSelections()
       }
    }
-   closeModal() {
-      if (this.dirtyFlag == false) {
-         this.navCtrl.pop()
-      }
-      else {
-         let alert = this.alertCtrl.create({
-            title: 'Aviso',
-            message: 'Cancela sin guardar cambios?',
-            buttons: [
-               {
-                  text: 'Cancelar',
-                  role: 'cancel',
-                  handler: () => {
-                     this.navCtrl.pop()
-                  }
-               },
-               {
-                  text: 'Guardar',
-                  handler: () => {
-                     this.fs.saveEvent(this.evt)
-                     this.dirtyFlag = false
-                  }
-               }
-            ]
-         });
-         alert.present();
-      }
-   }
-   showMembers() {
-      const mod: Modal = this.modal.create('MemberStatusPage', {
-         title: "Miembros",
-         evt: this.evt,
-         members: this.membersFull
-      }, {})
-      mod.present()
-      mod.onDidDismiss(data => {
-         this.membersFull = data
-         this.processDays()
-      })
-   }
-   showComments() {
-      const mod: Modal = this.modal.create('CommentsPage', {
-         title: "Comentarios",
-         members: this.membersFull,
-         comments: this.evt.comments
-      }, {})
-      mod.present()
-      mod.onDidDismiss(data => {
-      })
-   }
+
+   ///////////////////////////
+   // Calendario
+   //////////////////////////
    showAssistants(ev, d) {
       this.editMode = this.checkEditMode()
       if (this.editMode === true) {
@@ -182,24 +136,82 @@ export class EventPage implements OnInit, OnDestroy {
       return res
    }
 
+   /////////////////////
+   // Seleccion
+   /////////////////////
    onItemChange(val){
       //const item = this.selectionItems[sel][this.user.uid]
    }
-   showSelMembers(ev){
-      this.membersFull.forEach(m => {
-         let obj = this.evt.members.find(uid => uid === m.uid)
-         m.present = (obj != undefined)
-         m.pending = (this.evt.availability[m.uid] == undefined)
-      });
+   showSelMembers(item){
+      this.calcMemberStatus(item)
       this.showMembers()
    }
-   calculateOpacity(val){
+   calculateOpacity(sel){
+      let val = this.evt.selectionItems[sel].votes
       return (val/this.totalMembers)
+   }
+   ////////////////////////////////////////////////////
+   
+
+   /////////////////////
+   // Common methods
+   /////////////////////
+   closeModal() {
+      if (this.dirtyFlag == false) {
+         this.navCtrl.pop()
+      }
+      else {
+         let alert = this.alertCtrl.create({
+            title: 'Aviso',
+            message: 'Cancela sin guardar cambios?',
+            buttons: [
+               {
+                  text: 'Cancelar',
+                  role: 'cancel',
+                  handler: () => {
+                     this.navCtrl.pop()
+                  }
+               },
+               {
+                  text: 'Guardar',
+                  handler: () => {
+                     this.fs.saveEvent(this.evt)
+                     this.dirtyFlag = false
+                  }
+               }
+            ]
+         });
+         alert.present();
+      }
+   }
+   showMembers() {
+      const mod: Modal = this.modal.create('MemberStatusPage', {
+         title: "Miembros",
+         evt: this.evt,
+         members: this.membersFull
+      }, {})
+      mod.present()
+      mod.onDidDismiss(data => {
+         this.membersFull = data
+         this.processDays()
+      })
+   }
+   showComments() {
+      const mod: Modal = this.modal.create('CommentsPage', {
+         title: "Comentarios",
+         members: this.membersFull,
+         comments: this.evt.comments
+      }, {})
+      mod.present()
+      mod.onDidDismiss(data => {
+      })
    }
    save() {
       this.fs.saveEvent(this.evt)
       this.dirtyFlag = false
    }
+
+
    private checkEditMode() {
       let res = false
       const membersON = []
@@ -238,12 +250,6 @@ export class EventPage implements OnInit, OnDestroy {
          }
       })
    }
-   private processSelections(){
-      this.updateSelectionKeys()
-   }
-   private updateSelectionKeys(){
-      this.selectionItemsKeys = Object.keys(this.evt.selectionItems)
-   }
    private resetDays(startDay) {
       let emptyWeek = {}
 
@@ -260,6 +266,29 @@ export class EventPage implements OnInit, OnDestroy {
          }
       }
       return emptyWeek
+   }
+   private calcMemberStatus(item){
+      this.selectionItemsKeys.forEach(sel => {
+         let elem = this.evt.selectionItems[sel]
+         elem.votes = Object.keys(elem).length
+         this.membersFull.forEach(m => {
+            const mok = elem[m.uid]
+            if (mok == true){
+               m.present = (sel==item)
+               m.voted = true
+            }
+         })
+         this.membersFull.forEach(m => {
+            m.pending = (m.voted != true)
+         })         
+      })
+   }
+   private processSelections(){
+      this.selectionItemsKeys = Object.keys(this.evt.selectionItems)
+      this.selectionItemsKeys.forEach(sel => {
+         let elem = this.evt.selectionItems[sel]
+         elem.votes = Object.keys(elem).length
+      })
    }
 }
 

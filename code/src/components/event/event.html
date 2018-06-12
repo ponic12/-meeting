@@ -77,24 +77,26 @@
     </div>
     <div id="tipo" *ngIf="evt.type == 'seleccion'">
       <ion-list padding radio-group>
-        <h4 style="text-align: center">
+        <h4 style="text-align: center;margin-bottom: 30px">
           {{evt.question}}
         </h4>
-        <ion-item-sliding *ngFor="let item of selectionItemsKeys" [ngStyle]="{'opacity':calculateOpacity(item)}" class="grdSelectionItem">          
-         <ion-item>
-              {{item}}
+        <ion-card *ngFor="let item of selectionItemsKeys" >
+           <div class="backCard" [ngClass]="{'value': (evt.selectionItems[item].votes > 0)}" [ngStyle]="{'opacity':calculateOpacity(item)}">
+
+           </div>
+          <div class="grdSelectionItem">
             <ion-checkbox *ngIf="evt.answerType=='multiple'" [(ngModel)]="evt.selectionItems[item][user.uid]" (ionChange)="onItemChange()"></ion-checkbox>
-            <ion-radio *ngIf="evt.answerType=='unica'" [(ngModel)]="evt.selectionItems[item][user.uid]">{{item}}</ion-radio>           
-            <button (click)="showSelMembers(item)" class="btnMembersInfo">
-                  <ion-icon name="person"></ion-icon>HOLA
-            </button> 
-          </ion-item>
-          <ion-item-options side="right">
-            <button ion-button (click)="removeItem(item, i)" color="danger">
+            <ion-radio *ngIf="evt.answerType=='unica'" [(ngModel)]="evt.selectionItems[item][user.uid]">{{item}}</ion-radio>
+            <ion-label>{{item}}</ion-label>
+
+            <button ion-button (click)="showSelMembers(item)" class="btnMembersInfo">
+              <ion-icon name="contacts"></ion-icon>
+            </button>
+            <button ion-button (click)="removeItem(item, i)" color="danger" class="btnMembersInfo">
               <ion-icon name="trash"></ion-icon>
             </button>
-          </ion-item-options>
-        </ion-item-sliding>
+          </div>
+        </ion-card>
       </ion-list>
     </div>
     <div id="tipo" *ngIf="evt.type == 'votacion'">
@@ -133,9 +135,4 @@
       <ion-icon name="list-box"></ion-icon>
     </button>
   </ion-fab>
-  <ion-fab class="btnMembers">
-      <button ion-fab mini (click)="showSelMembers()">
-        <ion-icon name="person"></ion-icon>
-      </button>
-    </ion-fab>  
 </ion-content>
