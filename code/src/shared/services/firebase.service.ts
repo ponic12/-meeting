@@ -107,12 +107,12 @@ export class FirebaseService {
       })
       return obs
    }
-   saveComment(evt, comment) {
+   saveComment(eid, comment) {
       if (!comment.id){
-         this.afs.collection('events').doc(evt.id).collection('comments').add(evt)
+         this.afs.collection('events').doc(eid).collection('comments').add(comment)
       }
       else
-         this.afs.collection('events').doc(evt.id).collection('comments').doc(comment.id).set(comment)
+         this.afs.collection('events').doc(eid).collection('comments').doc(comment.id).set(comment)
    }
 
 

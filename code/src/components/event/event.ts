@@ -146,6 +146,10 @@ export class EventPage implements OnInit, OnDestroy {
       this.calcMemberStatus(item)
       this.showMembers()
    }
+   calcCounter(item){
+      const res = Object.keys(this.evt.selectionItems[item]).length
+      return res
+   }
    calculateOpacity(sel){
       let val = this.evt.selectionItems[sel].votes
       return (val/this.totalMembers)
@@ -199,8 +203,10 @@ export class EventPage implements OnInit, OnDestroy {
    showComments() {
       const mod: Modal = this.modal.create('CommentsPage', {
          title: "Comentarios",
-         members: this.membersFull,
-         comments: this.evt.comments
+         evt: this.evt,
+         user: this.user
+         // members: this.membersFull,
+         // comments: this.evt.comments
       }, {})
       mod.present()
       mod.onDidDismiss(data => {

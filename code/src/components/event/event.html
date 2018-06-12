@@ -80,23 +80,22 @@
         <h4 style="text-align: center;margin-bottom: 30px">
           {{evt.question}}
         </h4>
-        <ion-card *ngFor="let item of selectionItemsKeys" >
-           <div class="backCard" [ngClass]="{'value': (evt.selectionItems[item].votes > 0)}" [ngStyle]="{'opacity':calculateOpacity(item)}">
-
-           </div>
+        <div *ngFor="let item of selectionItemsKeys" style="position: sticky;margin:10px">
+          <!-- <div class="backCard" [ngClass]="{'value': (evt.selectionItems[item].votes > 0)}" [ngStyle]="{'opacity':calculateOpacity(item)}"></div> -->
+          <div class="backCard"></div>
           <div class="grdSelectionItem">
             <ion-checkbox *ngIf="evt.answerType=='multiple'" [(ngModel)]="evt.selectionItems[item][user.uid]" (ionChange)="onItemChange()"></ion-checkbox>
             <ion-radio *ngIf="evt.answerType=='unica'" [(ngModel)]="evt.selectionItems[item][user.uid]">{{item}}</ion-radio>
-            <ion-label>{{item}}</ion-label>
+            <ion-label style="z-index: 10">{{item}}</ion-label>
 
             <button ion-button (click)="showSelMembers(item)" class="btnMembersInfo">
-              <ion-icon name="contacts"></ion-icon>
+               <div>{{calcCounter(item)}}</div>
             </button>
             <button ion-button (click)="removeItem(item, i)" color="danger" class="btnMembersInfo">
               <ion-icon name="trash"></ion-icon>
             </button>
           </div>
-        </ion-card>
+        </div>
       </ion-list>
     </div>
     <div id="tipo" *ngIf="evt.type == 'votacion'">

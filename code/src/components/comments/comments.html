@@ -6,19 +6,27 @@
 
 <ion-content class="backPage">
   <ion-grid>
-    <ion-row>
+    <ion-row style="background:white">
       <ion-icon name="search" class="searchIcon"></ion-icon>
       <ion-input type="text" class="searchBar" placeholder="Buscar" [(ngModel)]="searchText"></ion-input>
     </ion-row>
   </ion-grid>
 
-  <div *ngFor="let ct of comments | searchInfo: searchText" class="grdContacts">
-    <ion-toggle class="mid midCenter" [(ngModel)]="ct.selected" (ionChange)="selChanged(ct)"></ion-toggle>
-    <ion-avatar class="mid midCenter">
-      <img class="avatar" [src]="ct.photoURL">
+  <div *ngFor="let ct of comments | searchInfo: searchText" class="grdComments">
+    <div class="cmtHeaderName">{{ct.ownerName}}</div>
+    <ion-avatar class="cmtHeaderAvatar">
+      <img [src]="ct.photoURL">
     </ion-avatar>
-    <div class="mid">{{ct.displayName}}</div>
-  </div>
 
-  <button ion-button  (click)="save()" *ngIf="confirmFlag === true">Guardar</button>
+    <div class="cmtBody">{{ct.comment}}</div>
+
+    <div class="cmtFooter">{{ct.creationDate | date:'dd/MM/yyyy HH:mm'}}</div>
+  </div>
+  <ion-item>
+    <ion-input placeholder="Ingrese comentario" clearInput [(ngModel)]="newComment"></ion-input>
+    <button ion-button outline item-end icon-left (click)="addComment()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </ion-item>
+  <button ion-button (click)="save()" *ngIf="confirmFlag === true">Guardar</button>
 </ion-content>

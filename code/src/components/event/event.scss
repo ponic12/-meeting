@@ -185,13 +185,16 @@ page-event {
  }
 
  .backCard{
+   background: white !important;
+   box-shadow: 1px 1px 3px #555;    
+   border-radius: 20px;
    position: absolute;
    width: 100%;
    height: 100%;
  }
   .grdSelectionItem{
+     background: transparent;
      display:grid;
-     border-radius: 20px;
      grid-template-columns: 40px 1fr 50px 50px;
      align-items: center;
      padding-left: 20px;
