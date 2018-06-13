@@ -27,6 +27,7 @@ export class EventPage implements OnInit, OnDestroy {
    allDayFlag: boolean = false
    dirtyFlag: boolean = false
    selectionItemsKeys: string[] = []
+   status:string = 'checked'
    private maxValue: number = 0
 
    constructor(
@@ -52,13 +53,13 @@ export class EventPage implements OnInit, OnDestroy {
       this.user = this.navParams.get('user')
       this.membersFull = this.navParams.get('membersFull')
       this.totalMembers = this.membersFull.length
-      
-      if (this.evt.type == 'calendario'){
+
+      if (this.evt.type == 'calendario') {
          this.startWeek = moment(this.evt.creationDate).day(0)
          this.evt.estimationDate = {}
-         this.processDays()   
+         this.processDays()
       }
-      else{
+      else {
          this.processSelections()
       }
    }
@@ -139,23 +140,35 @@ export class EventPage implements OnInit, OnDestroy {
    /////////////////////
    // Seleccion
    /////////////////////
-   onItemChange(val){
-      //const item = this.selectionItems[sel][this.user.uid]
+   onSelChange(ev, item){
+      this.evt.selectionItems[item][this.user.uid] = ev.checked
    }
-   showSelMembers(item){
+   showSelMembers(item) {
       this.calcMemberStatus(item)
       this.showMembers()
    }
-   calcCounter(item){
+   calcCounter(item) {
       const res = Object.keys(this.evt.selectionItems[item]).length
       return res
    }
-   calculateOpacity(sel){
-      let val = this.evt.selectionItems[sel].votes
-      return (val/this.totalMembers)
+   getVote(vote) {
+      const res = this.evt.selectionItems[vote][this.user.uid]
+      return (res == true)
+   }
+   calcPercent(vote) {
+      const opYes = this.calcCounter(vote) * 100 / (this.calcCounter('yes') + this.calcCounter('no'))
+      return opYes
+   }
+   vote(vote) {
+      if (vote == 'yes')
+         delete this.evt.selectionItems['no'][this.user.uid]
+      else
+         delete this.evt.selectionItems['yes'][this.user.uid]
+
+      this.evt.selectionItems[vote][this.user.uid] = true
    }
    ////////////////////////////////////////////////////
-   
+
 
    /////////////////////
    // Common methods
@@ -204,7 +217,7 @@ export class EventPage implements OnInit, OnDestroy {
       this.navCtrl.push('CommentsPage', {
          title: "Comentarios",
          evt: this.evt,
-         user: this.user                
+         user: this.user
       })
 
       // const mod: Modal = this.modal.create('CommentsPage', {
@@ -279,28 +292,27 @@ export class EventPage implements OnInit, OnDestroy {
       }
       return emptyWeek
    }
-   private calcMemberStatus(item){
+   private calcMemberStatus(item) {
       this.selectionItemsKeys.forEach(sel => {
          let elem = this.evt.selectionItems[sel]
-         elem.votes = Object.keys(elem).length
          this.membersFull.forEach(m => {
             const mok = elem[m.uid]
-            if (mok == true){
-               m.present = (sel==item)
+            if (mok == true) {
+               m.present = (sel == item)
                m.voted = true
             }
          })
          this.membersFull.forEach(m => {
             m.pending = (m.voted != true)
-         })         
+         })
       })
    }
-   private processSelections(){
+   private processSelections() {
       this.selectionItemsKeys = Object.keys(this.evt.selectionItems)
-      this.selectionItemsKeys.forEach(sel => {
-         let elem = this.evt.selectionItems[sel]
-         elem.votes = Object.keys(elem).length
-      })
+      // this.selectionItemsKeys.forEach(sel => {
+      //    let elem = this.evt.selectionItems[sel]
+      //    elem.votes = Object.keys(elem).length
+      // })
    }
 }
 

@@ -71,8 +71,7 @@ page-event {
   }
   #participantes {
     grid-area: participantes;
-    display: grid;
-   //  grid-template-columns: 1fr 40px 1fr 40px 40px;
+    display: grid; //  grid-template-columns: 1fr 40px 1fr 40px 40px;
     grid-template-columns: 1fr;
     align-items: center;
     justify-self: center;
@@ -170,45 +169,120 @@ page-event {
     font-size: 10px;
     margin-top: -7px;
   }
-
-  .btnComments{
-   top: 100px;
-   left: -3px;
+  .btnComments {
+    top: 100px;
+    left: -3px;
   }
-  .btnMembers{
-   top: 100px;
-   right: 3px;
-  } 
-
+  .btnMembers {
+    top: 100px;
+    right: 3px;
+  }
   .value {
-   background: #003f52 !important;
- }
-
- .backCard{
-   background: white !important;
-   box-shadow: 1px 1px 3px #555;    
-   border-radius: 20px;
-   position: absolute;
-   width: 100%;
-   height: 100%;
- }
-  .grdSelectionItem{
-     background: transparent;
-     display:grid;
-     grid-template-columns: 40px 1fr 50px;
-     align-items: center;
-     padding-left: 20px;
-     opacity: 1 !important;
+    background: #003f52 !important;
   }
-  .btnMembersInfo{
-   border-radius: 50%;
-   width: 40px;
-   font-size: 18px;
+  .backCard {
+    background: white !important;
+    box-shadow: 1px 1px 3px #555;
+    border-radius: 20px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
+  .grdSelectionItem {
+    background: transparent;
+    display: grid;
+    grid-template-columns: 40px 1fr 50px;
+    align-items: center;
+    padding-left: 20px;
+    opacity: 1 !important;
+  }
+  .btnMembersInfo {
+    border-radius: 50%;
+    width: 40px;
+    font-size: 18px;
+  } ////////////////////////////////////////////////
+  // Votacion
+  ////////////////////////////////////////////////
+  .grdVotacion {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+  .grdVoteOps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .btnYesNo {
+    margin: 5px;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: rgb(170, 170, 170);
+    opacity: .5;
+    box-shadow: 4px 4px 10px #444;
+    filter: blur(2px);
+  }
+  .voteYes {
+    justify-self: right;
+  }
+  .imgYes {
+    width: 50px;
+    height: 50px;
+  }
+  .selYes {
+    background: #74ce74;
+    opacity: 1;
+    filter: blur(0px);
+    box-shadow: 1px 1px 2px #444;
+  }
+  .selNo {
+    background: #f74d4d;
+    opacity: 1;
+    filter: blur(0px);
+    box-shadow: 1px 1px 2px #444;
+  }
+  .voteNo {
+    justify-self: left;
+  }
+  .imgNo {
+    width: 73%;
+    height: 78%;
+  }
+  .grdVoteResult {
+    display: grid;
+    grid-template-columns: 70px 1fr 70px;
+    align-content: center;
+    align-items: center;
+  }
+  .resYes {
+    justify-self: right;
+    color: darkgreen;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px black;
+  }
+  .yesBar {
+    width: 30px;
+    height: 40px;
+    border-radius: 10px 0px 0px 10px;
+    border-right: 1px solid black;
+    background: rgb(15, 156, 15);
+  }
+  .resultBar {
+    margin: 10px;
+    border-radius: 10px;
+    height: 40px;
+    background: red;
+    box-shadow: 2px 2px 5px gray;
+  }
+  .resNo {
+    justify-self: left;
+    color: darkred;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px black;
+  } /////////////////////////////////////////
   #botonera {
-   grid-area: botonera;
-   display:grid;
-   grid-template-columns: 40px 1fr 40px;
-   margin: 5px;
- }
+    grid-area: botonera;
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    margin: 5px;
+  }
 }

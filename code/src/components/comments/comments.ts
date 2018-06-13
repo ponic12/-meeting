@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events,ModalController, Modal } from 'ionic-angular';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { IonicPage, ViewController, NavParams, Events, ModalController, Modal, Content } from 'ionic-angular';
 import { ApplicationService } from '../../shared/services/application.service';
 
 import * as moment from 'moment'
@@ -12,13 +12,15 @@ import { Subscription } from 'rxjs';
    templateUrl: 'comments.html'
 })
 export class CommentsPage implements OnInit, OnDestroy {
-   title:string
-   user:any
-   evt:any
-   comments: any =[]
+   @ViewChild('commentLst') content: any;
+
+   title: string
+   user: any
+   evt: any
+   comments: any = []
    searchText: string
-   newComment:string = ""
-   subComments:Subscription 
+   newComment: string = ""
+   subComments: Subscription
 
    constructor(
       private navParams: NavParams,
@@ -30,7 +32,7 @@ export class CommentsPage implements OnInit, OnDestroy {
       console.log('CommentsPage constructor');
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
-      this.user =  this.navParams.get('user')
+      this.user = this.navParams.get('user')
    }
    ngOnDestroy() {
       console.warn('CommentsPage destroy');
@@ -39,21 +41,33 @@ export class CommentsPage implements OnInit, OnDestroy {
    ngOnInit(): void {
       console.log('CommentsPage init');
       this.subComments = this.fs.getCommentsByEvtId(this.evt.id).subscribe(data => {
-         this.comments = data      
+         this.comments = data
       })
    }
-   add(){
-      const cmt = {
-         creationDate : new Date().getTime(),
-         comment: this.newComment,
-         owner: this.user.uid,
-         ownerName: this.user.displayName,
-         photoURL: this.user.photoURL
-      }
-      this.fs.saveComment(this.evt.id, cmt)
-      this.newComment = ""
+   ionViewDidEnter() {
+      this.scrollDown()
    }
-   closeModal(){
+   add() {
+      if (this.newComment != "") {
+         const cmt = {
+            creationDate: new Date().getTime(),
+            comment: this.newComment,
+            owner: this.user.uid,
+            ownerName: this.user.displayName,
+            photoURL: this.user.photoURL
+         }
+         this.fs.saveComment(this.evt.id, cmt)
+         this.newComment = ""
+      }
+      this.scrollDown()
+   }
+   closeModal() {
       this.view.dismiss(null)
+   }
+
+   private scrollDown(){
+      setTimeout(() => {
+         this.content.scrollToBottom(300);
+      }, 1000);
    }
 }

@@ -81,26 +81,44 @@
           {{evt.question}}
         </h4>
         <div *ngFor="let item of selectionItemsKeys" style="position: sticky;margin:10px">
-          <!-- <div class="backCard" [ngClass]="{'value': (evt.selectionItems[item].votes > 0)}" [ngStyle]="{'opacity':calculateOpacity(item)}"></div> -->
-          <div class="backCard"></div>
+           <div class="backCard"></div>
           <div class="grdSelectionItem">
-            <ion-checkbox *ngIf="evt.answerType=='multiple'" [(ngModel)]="evt.selectionItems[item][user.uid]" (ionChange)="onItemChange()"></ion-checkbox>
-            <ion-radio *ngIf="evt.answerType=='unica'" [(ngModel)]="evt.selectionItems[item][user.uid]">{{item}}</ion-radio>
+            <ion-checkbox *ngIf="evt.answerType=='multiple'"  (ionChange)="onSelChange($event, item)"></ion-checkbox>
+            <ion-radio *ngIf="evt.answerType=='unica'" (ionChange)="onSelChange($event, item)"></ion-radio>
             <ion-label style="z-index: 10">{{item}}</ion-label>
 
             <button ion-button (click)="showSelMembers(item)" class="btnMembersInfo">
-               <div>{{calcCounter(item)}}</div>
+              <div>{{calcCounter(item)}}</div>
             </button>
           </div>
         </div>
       </ion-list>
     </div>
     <div id="tipo" *ngIf="evt.type == 'votacion'">
-      <ion-list padding>
+      <div padding class="grdVotacion">
         <h4 style="text-align: center">
           {{evt.question}}
         </h4>
-      </ion-list>
+        <div class="grdVoteOps">
+          <div class="voteYes">
+            <button class="btnYesNo" [ngClass]="{'selYes':getVote('yes')}" (click)="vote('yes')">
+              <img src="assets/imgs/like.png" class="imgYes">
+            </button>
+          </div>
+          <div class="voteNo">
+            <button class="btnYesNo" [ngClass]="{'selNo':getVote('no')}" (click)="vote('no')">
+              <img src="assets/imgs/nolike.png" class="imgNo">
+            </button>
+          </div>
+        </div>
+        <div class="grdVoteResult">
+          <div class="resYes">{{calcCounter('yes')}} [{{calcPercent('yes')}}%]</div>
+          <div class="resultBar">
+             <div class="yesBar" [ngStyle]="{'width':calcPercent('yes')+'%'}"></div>
+          </div>
+          <div class="resNo">{{calcCounter('no')}} [{{calcPercent('no')}}%]</div>
+        </div>
+      </div>
     </div>
     <div id="tipo" *ngIf="evt.type == 'clasificacion'">
       <ion-list padding>

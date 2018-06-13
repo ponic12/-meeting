@@ -12,20 +12,18 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
 .modal-wrapper {
-   position: absolute;
-   top: 50px;
-   left: 3%;
-   right: 3%;
-   height: 90%;
-   }
-   
-   ion-modal {
-   padding: 30px;
-   background: rgba(0,0,0,0.7)
-   }
+  position: absolute;
+  top: 50px;
+  left: 3%;
+  right: 3%;
+  height: 90%;
+}
 
+ion-modal {
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.7)
+}
 
 .headApp {
   position: fixed;
@@ -44,6 +42,7 @@
 }
 
 .eventCard {
+  border-radius: 10px;
   margin: 10px;
   box-shadow: 1px 1px 3px #555;
   width: auto;
@@ -60,27 +59,28 @@
   top: 5px;
   width: 45px;
 }
-.adminName{
-   //  position: absolute;
-   // font-size: 10px;
-   // right: 0px;
-   // top: 50px;
-   // width: 50px;
-   // overflow-wrap: break-word;
 
-   position:absolute;
-   right:10px;
-   top:10px;
-   width: 120px;
-   font-size:10px;
-   background: lightgreen;
-   overflow-wrap: break-word;   
+.adminName {
+  //  position: absolute;
+  // font-size: 10px;
+  // right: 0px;
+  // top: 50px;
+  // width: 50px;
+  // overflow-wrap: break-word;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 120px;
+  font-size: 10px;
+  background: lightgreen;
+  overflow-wrap: break-word;
 }
-.eventType{
-   position: absolute;
-   right: 8px;
-   bottom: 2px;
-   width: 30px;
+
+.eventType {
+  position: absolute;
+  right: 8px;
+  bottom: 2px;
+  width: 30px;
 }
 
 /*** TOOLBAR ***/
@@ -100,8 +100,6 @@
   box-shadow: 0px 4px 5px #666;
 }
 
-
-
 .grdContacts {
   margin: 10px;
   height: 55px;
@@ -112,45 +110,38 @@
 }
 
 .top-to-bottom {
-   border-width: 3px;
-   border-style: solid;
-   border-image:
-     linear-gradient(to bottom, black, rgba(0, 0, 0, 0)) 1 100%;
+  border-width: 3px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0)) 1 100%;
 }
 
 .bottom-to-top {
-   border-width: 3px;
-   border-style: solid;
-   border-image:
-     linear-gradient(to top, white, rgba(0, 0, 0, 0)) 1 100%;
+  border-width: 3px;
+  border-style: solid;
+  border-image: linear-gradient(to top, white, rgba(0, 0, 0, 0)) 1 100%;
 }
 
 .left-to-right {
-   border-width: 3px 0 3px 3px;
-   border-style: solid;
-   border-image:
-     linear-gradient(to right, black, rgba(0, 0, 0, 0)) 1 100%; 
+  border-width: 3px 0 3px 3px;
+  border-style: solid;
+  border-image: linear-gradient(to right, black, rgba(0, 0, 0, 0)) 1 100%;
 }
 
 .right-to-left {
-   border-width: 3px 3px 3px 0;
-   border-style: solid;
-   border-image:
-     linear-gradient(to left, white, rgba(0, 0, 0, 0)) 1 100%;     
+  border-width: 3px 3px 3px 0;
+  border-style: solid;
+  border-image: linear-gradient(to left, white, rgba(0, 0, 0, 0)) 1 100%;
 }
 
-
-
-
 .grdMember {
-   margin: 5px;
-   height: 55px;
-   background: #eee;
-   box-shadow: 1px 1px 1px #555;
-   display: grid;
-   grid-row-gap: 5px;
-   grid-template-columns: 60px 1fr 40px;
- }
+  margin: 5px;
+  height: 55px;
+  background: #eee;
+  box-shadow: 1px 1px 1px #555;
+  display: grid;
+  grid-row-gap: 5px;
+  grid-template-columns: 60px 1fr 40px;
+}
 
 .avatar {
   width: 40px;
