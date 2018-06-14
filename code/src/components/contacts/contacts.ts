@@ -5,6 +5,8 @@ import { ApplicationService } from '../../shared/services/application.service';
 
 import * as moment from 'moment'
 import { FirebaseService } from '../../shared/services/firebase.service';
+import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs/Observable'
 
 @IonicPage()
 @Component({
@@ -14,11 +16,12 @@ import { FirebaseService } from '../../shared/services/firebase.service';
 export class ContactsPage implements OnInit, OnDestroy {
    title:string
    user:any
-   community:any
+   userObs:Observable<any>
+   community:Observable<any[]>
    searchText: string
    sortField: string = 'creationDate'
    direction:boolean = false
-   confirmFlag:boolean=false
+   private uid:string
 
    constructor(
       private navParams: NavParams,
@@ -29,35 +32,31 @@ export class ContactsPage implements OnInit, OnDestroy {
    ) {
       console.log('ContactsPage constructor')
       this.title = this.navParams.get('title')
-      this.user = this.navParams.get('user')
-      this.community = this.navParams.get('community')
+      this.uid = this.navParams.get('uid')
    }
    ngOnDestroy() {
       console.warn('ContactsPage destroy');
    }
    ngOnInit(): void {
       console.log('ContactsPage init');
-      if (this.user.contacts){
-         this.community.forEach(p => {
-            p.selected = (this.user.contacts[p.uid]==true)
-         });   
+      this.community = this.fs.getCommunity()
+      this.userObs = this.fs.getUserById(this.uid)
+      this.userObs.subscribe(o=>{
+         this.user = o
+      })
+   }
+   selChanged(ev, ct){
+      if (ev.checked == true){
+         this.user.contacts[ct.uid] = true
       }
-   }
-   selChanged(ct){
-      if (ct.uid == this.user.uid)
-         ct.selected = true
-      this.confirmFlag = true
-   }
-   saveToContacts(){
-      const friends = {}
-      this.community.forEach(p => {
-         if (p.selected == true){         
-            friends[p.uid] = true
-         }
-      });
-      this.user.contacts = friends
+      else{
+         delete this.user.contacts[ct.uid]
+      }
       this.fs.updateUser(this.user)
-      this.view.dismiss()
+   }
+   initContacts(ct){
+      const res = this.user.contacts[ct.uid] == true
+      return res
    }
    getSortedContacts(sort, fab){
       this.sortField = sort

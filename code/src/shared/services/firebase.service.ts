@@ -14,17 +14,17 @@ import { FirebaseApp } from 'angularfire2';
 @Injectable()
 export class FirebaseService {
 
-   communityRef:AngularFirestoreCollection<any>
-   community$: Observable<any[]>
+   usersRef: AngularFirestoreCollection<any>
+   // userRef: AngularFirestoreDocument<any>
+   // user$: Observable<any[]>
 
-   userRef: AngularFirestoreDocument<any>
-   user$: Observable<any[]>
 
    constructor(
       private afs: AngularFirestore
    ) {
       console.log('FirebaseService constructor');
       afs.firestore.settings({timestampsInSnapshots:true})
+      this.usersRef = this.afs.collection('users')
       //this.afs.firestore.enablePersistence();
    }
 
@@ -32,29 +32,23 @@ export class FirebaseService {
    ///////////////////////////////////////////////
    // USUARIOS
    ///////////////////////////////////////////////
-   getCommunity(){
-      this.communityRef = this.afs.collection('users')
-      this.community$ = this.communityRef.valueChanges()
-      // const obs = ref.snapshotChanges().map(actions => {
-      //    return actions.map(a => {
-      //       const data = a.payload.doc.data()
-      //       const id = a.payload.doc.id
-      //       return { id, ...data }
-      //    })
-      // })
-      return this.community$
+   getCommunity():Observable<any[]>{
+      this.usersRef = this.afs.collection('users')
+      return this.usersRef.valueChanges()
    }
    getUserById(uid){
-      const ref = this.afs.collection('users').doc(uid)
-      const obs = ref.valueChanges()
+      const uref = this.usersRef.doc(uid)
+      const obs = uref.valueChanges()
       return obs
    }
    addUser(usr) {
-      const ref = this.afs.collection('users').doc(usr.uid).set(usr)
+      const ref = this.usersRef.doc(usr.uid).set(usr)
       return ref;
    }
-   updateUser(usr) {
-      const ref = this.afs.collection('users').doc(usr.uid).set(usr, { merge: true })
+   updateUser(usr):Promise<void> {
+      // const ref = this.afs.collection('users').doc(usr.uid).set(usr, { merge: true })
+      const ref = this.usersRef.doc(usr.uid).set(usr)
+      return ref
    }
 
 
@@ -62,7 +56,6 @@ export class FirebaseService {
    // EVENTOS
    ///////////////////////////////////////////////   
    getEventsByUid(uid) {
-      let res = []
       const field: string = 'members.' + uid
       const ref = this.afs.collection('events', ref => ref.where(field, '==', true))
       const obs = ref.snapshotChanges().map(actions =>{
@@ -98,14 +91,7 @@ export class FirebaseService {
    ///////////////////////////////////////////////
    getCommentsByEvtId(eid){
       const ref = this.afs.collection('events').doc(eid).collection('comments', ref => ref.orderBy('creationDate', 'asc') )
-      const obs = ref.snapshotChanges().map(actions => {
-         return actions.map(a => {
-            const data = a.payload.doc.data()
-            const id = a.payload.doc.id
-            return { id, ...data }
-         })
-      })
-      return obs
+      return ref.valueChanges()
    }
    saveComment(eid, comment) {
       if (!comment.id){
@@ -121,14 +107,7 @@ export class FirebaseService {
    ///////////////////////////////////////////////
    getSuggestions(){
       const ref = this.afs.collection('suggestions', ref => ref.orderBy('creationDate', 'asc') )
-      const obs = ref.snapshotChanges().map(actions => {
-         return actions.map(a => {
-            const data = a.payload.doc.data()
-            const id = a.payload.doc.id
-            return { id, ...data }
-         })
-      })
-      return obs
+      return ref.valueChanges()
    }
    saveSuggestion(sug) {
       if (!sug.id){

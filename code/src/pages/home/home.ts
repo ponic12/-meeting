@@ -87,8 +87,7 @@ export class HomePage implements OnInit, OnDestroy {
                   console.log('Contacts Admin');
                   this.navCtrl.push('ContactsPage', {
                      title: 'Contactos',
-                     user: this.user,
-                     community: this.community 
+                     uid: this.user.uid
                   })
                }
             },            

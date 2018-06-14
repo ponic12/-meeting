@@ -3,6 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'searchInfo' })
 export class SearchInfoPipe implements PipeTransform {
   transform(arr: any[], searchText: string) {
+     if (!arr) return []
      var x = arr
      var res = x.filter(item => {
       if (!searchText) searchText = ""

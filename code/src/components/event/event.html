@@ -76,15 +76,14 @@
       </div>
     </div>
     <div id="tipo" *ngIf="evt.type == 'seleccion'">
-      <ion-list padding radio-group>
+      <div padding radio-group>
         <h4 style="text-align: center;margin-bottom: 30px">
           {{evt.question}}
         </h4>
         <div *ngFor="let item of selectionItemsKeys" style="position: sticky;margin:10px">
-           <div class="backCard"></div>
           <div class="grdSelectionItem">
-            <ion-checkbox *ngIf="evt.answerType=='multiple'"  (ionChange)="onSelChange($event, item)"></ion-checkbox>
-            <ion-radio *ngIf="evt.answerType=='unica'" (ionChange)="onSelChange($event, item)"></ion-radio>
+            <ion-checkbox *ngIf="evt.answerType=='multiple'" checked="evt.selectedItems[item][user.uid]" (ionChange)="onSelChange($event, item)"></ion-checkbox>
+            <ion-radio *ngIf="evt.answerType=='unica'" checked="" (ionChange)="onSelChange($event, item)"></ion-radio>
             <ion-label style="z-index: 10">{{item}}</ion-label>
 
             <button ion-button (click)="showSelMembers(item)" class="btnMembersInfo">
@@ -92,7 +91,7 @@
             </button>
           </div>
         </div>
-      </ion-list>
+      </div>
     </div>
     <div id="tipo" *ngIf="evt.type == 'votacion'">
       <div padding class="grdVotacion">
@@ -114,7 +113,7 @@
         <div class="grdVoteResult">
           <div class="resYes">{{calcCounter('yes')}} [{{calcPercent('yes')}}%]</div>
           <div class="resultBar">
-             <div class="yesBar" [ngStyle]="{'width':calcPercent('yes')+'%'}"></div>
+            <div class="yesBar" [ngStyle]="{'width':calcPercent('yes')+'%'}"></div>
           </div>
           <div class="resNo">{{calcCounter('no')}} [{{calcPercent('no')}}%]</div>
         </div>
