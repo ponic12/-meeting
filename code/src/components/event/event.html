@@ -77,9 +77,9 @@
     </div>
     <div id="tipo" *ngIf="evt.type == 'seleccion'">
       <div padding radio-group>
-        <h4 style="text-align: center;margin-bottom: 30px">
+        <div class="titleSeleccion">
           {{evt.question}}
-        </h4>
+        </div>
         <div *ngFor="let item of selectionItemsKeys" style="position: sticky;margin:10px">
           <div class="grdSelectionItem">
             <ion-checkbox *ngIf="evt.answerType=='multiple'" checked="evt.selectedItems[item][user.uid]" (ionChange)="onSelChange($event, item)"></ion-checkbox>

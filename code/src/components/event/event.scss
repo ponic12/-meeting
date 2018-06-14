@@ -37,32 +37,27 @@ page-event {
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
-    /* border-bottom: 1px solid #929292; */
-    -webkit-box-shadow: 0px 1px 7px #4a4a4a;
-    box-shadow: 0px 1px 7px #4a4a4a;
+    -webkit-box-shadow: 0px 1px 3px #4a4a4a;
+    box-shadow: 0px 1px 3px #4a4a4a;
     padding-top: 5px;
     padding-bottom: 5px;
-    color: #737373;
   }
   .evtDesc {
     grid-column: 1 / 3;
     font-size: 15px;
-    color: #6f6f6f;
     padding-top: 3px;
-    box-shadow: 0px 1px 7px #4a4a4a;
+    box-shadow: 0px 1px 3px #4a4a4a;
   }
   .evtAdmin {
     font-size: 13px;
-    color: #888;
-    -webkit-box-shadow: 0px 1px 7px #4a4a4a;
+    -webkit-box-shadow: 0px 1px 3px #4a4a4a;
     /* box-shadow: 0px 1px 7px #4a4a4a; */
     padding-top: 2px;
     align-self: center;
   }
   .evtUltMod {
     font-size: 13px;
-    color: #888;
-    -webkit-box-shadow: 0px 1px 7px #4a4a4a;
+    -webkit-box-shadow: 0px 1px 3px #4a4a4a;
     /* box-shadow: 0px 1px 7px #4a4a4a; */
     padding-top: 2px;
     align-self: center;
@@ -112,7 +107,7 @@ page-event {
   .grdScheduler {
     display: grid;
     grid-template-columns: 30px 1fr;
-    height: calc(100vh - 285px);
+    height: calc(100vh - 300px);
     overflow: auto;
   }
   .hoursNum {
@@ -204,9 +199,21 @@ page-event {
     border-radius: 50%;
     width: 40px;
     font-size: 18px;
-  } ////////////////////////////////////////////////
+  } 
+  
+  
+  
+  
+  
+  ////////////////////////////////////////////////
   // Votacion
   ////////////////////////////////////////////////
+  .titleSeleccion {
+     font-size: 20px;
+     text-align: center;
+     padding:0px 30px;
+     margin-bottom: 30px;
+  }
   .grdVotacion {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
@@ -287,6 +294,7 @@ page-event {
     grid-area: botonera;
     display: grid;
     grid-template-columns: 40px 1fr 40px;
-    margin: 5px;
+    margin-left: 5px;
+    margin-right: 10px;
   }
 }

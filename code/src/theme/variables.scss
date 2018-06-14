@@ -97,13 +97,23 @@ $colors: (
 //  $font-family-md-base: "Comic Sans MS";
 //  $font-family-wp-base: "Comic Sans MS";
 
+// @font-face {
+//    font-family: "stylu";
+//    src: url('../assets/fonts/stylu.TTF') format("truetype");
+//  }
+ 
+//  $font-family-base: 'stylu';
+//  $font-family-ios-base: 'stylu';
+//  $font-family-md-base: 'stylu';
+//  $font-family-wp-base: 'stylu';
+
+
 @font-face {
-   font-family: "stylu";
-   src: url('../assets/fonts/stylu.TTF') format("truetype");
+   font-family: "verdana.ttf";
+   src: url('../assets/fonts/verdana.TTF') format("truetype");
  }
  
- $font-family-base: 'stylu';
- $font-family-ios-base: 'stylu';
- $font-family-md-base: 'stylu';
- $font-family-wp-base: 'stylu';
- 
+ $font-family-base: 'verdana.ttf';
+ $font-family-ios-base: 'verdana.ttf';
+ $font-family-md-base: 'verdana.ttf';
+ $font-family-wp-base: 'verdana.ttf';
