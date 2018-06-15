@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Events,ModalController, Modal } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
-import { ApplicationService } from '../../shared/services/application.service';
-
+import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import * as moment from 'moment'
-import { FirebaseService } from '../../shared/services/firebase.service';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/Observable'
+
+import { ApplicationService } from '../../shared/services/application.service';
+import { FirebaseService } from '../../shared/services/firebase.service';
+
 
 @IonicPage()
 @Component({
@@ -21,6 +23,7 @@ export class ContactsPage implements OnInit, OnDestroy {
    searchText: string
    sortField: string = 'creationDate'
    direction:boolean = false
+   phoneContacts:any[] = []
    private uid:string
 
    constructor(
@@ -28,9 +31,13 @@ export class ContactsPage implements OnInit, OnDestroy {
       private view: ViewController,
       private fs: FirebaseService,
       private appSrv: ApplicationService,
-      private modal: ModalController
+      private modal: ModalController,
+      private contacts: Contacts
    ) {
       console.log('ContactsPage constructor')
+      this.contacts.find(["*"],{multiple: true}).then(cts=>{
+         this.phoneContacts = cts
+      })
       this.title = this.navParams.get('title')
       this.uid = this.navParams.get('uid')
    }

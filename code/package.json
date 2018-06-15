@@ -22,6 +22,7 @@
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
     "@firebase/app": "0.1.10",
+    "@ionic-native/contacts": "^4.7.0",
     "@ionic-native/core": "4.7.0",
     "@ionic-native/facebook": "^4.7.0",
     "@ionic-native/social-sharing": "4.7.0",
@@ -33,6 +34,7 @@
     "cordova-plugin-browsertab": "^0.2.0",
     "cordova-plugin-buildinfo": "^2.0.1",
     "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-contacts": "^3.0.1",
     "cordova-plugin-customurlscheme": "^4.3.0",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-facebook4": "^2.1.0",
@@ -81,7 +83,8 @@
         "APP_ID": "2253076011385978",
         "APP_NAME": "MM",
         "ANDROID_SDK_VERSION": "4.+"
-      }
+      },
+      "cordova-plugin-contacts": {}
     },
     "platforms": [
       "android"

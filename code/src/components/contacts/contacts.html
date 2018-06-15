@@ -14,13 +14,28 @@
     </ion-row>
   </ion-grid>
 
-  <div *ngFor="let ct of community | async | searchInfo: searchText | orderBy:sortField:direction" class="grdContacts">
+  <!-- <div *ngFor="let ct of community | async | searchInfo: searchText | orderBy:sortField:direction" class="grdContacts">
     <ion-toggle class="mid midCenter"  [checked]="initContacts(ct)" (ionChange)="selChanged($event, ct)"></ion-toggle>
     <ion-avatar class="mid midCenter">
       <img class="avatar" [src]="ct.photoURL">
     </ion-avatar>
     <div class="mid">{{ct.displayName}}</div>
-  </div>
+  </div> -->
+  <div *ngFor="let ct of phoneContacts | searchInfo: searchText | orderBy:sortField:direction" class="grdContacts">
+      <!-- <ion-toggle class="mid midCenter" ></ion-toggle> -->
+      <!-- <ion-avatar class="mid midCenter">
+        <img class="avatar" [src]="ct.photoURL">
+      </ion-avatar> -->
+      <div class="mid">{{ct.name}}</div>
+      <div class="mid">{{ct.familyName}}</div>
+      <div class="mid">{{ct.nickName}}</div>
+      <div class="mid">{{ct.displayName}}</div>
+      <div class="mid">{{ct.givenName}}</div>
+      <div class="mid">{{ct.nameFormatted}}</div>            
+      <div class="mid">{{ct.phoneNumbers | json}}</div>
+      <div class="mid">{{ct.photos | json}}</div>
+    </div>
+
 
   <button ion-button  (click)="saveToContacts()" *ngIf="confirmFlag === true">Aceptar</button>
   

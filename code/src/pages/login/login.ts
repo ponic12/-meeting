@@ -43,13 +43,13 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    ngOnInit() {
       console.log('LoginPage init');
-      // this.obsAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
-      //    if (data) {
-      //       this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
-      //          this.navCtrl.setRoot('HomePage', { usr: usr });               
-      //       })
-      //    }
-      // });
+      this.obsAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
+         if (data) {
+            this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
+               this.navCtrl.setRoot('HomePage', { usr: usr })            
+            })
+         }
+      });
    }
    register(): void {
       this.authSrv.registerUser(this.email, this.password).then((res) => {
