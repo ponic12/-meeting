@@ -6,6 +6,7 @@ page-suggestions {
    .grdSuggestions{
       height: calc( 100vh - 166px );
       overflow-y: auto;
+      background: -webkit-radial-gradient(#eee 28%, #d6d5d5 75%) !important;
    }
   .grdItem {
     display: grid;

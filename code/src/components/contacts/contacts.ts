@@ -39,11 +39,11 @@ export class ContactsPage implements OnInit, OnDestroy {
       private sanitizer: DomSanitizer
    ) {
       console.log('ContactsPage constructor')
-      platform.ready().then(() => {
+      if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
          this.contacts.find(["*"],{multiple: true, hasPhoneNumber: true}).then(cts=>{
             this.phoneContacts = cts
          })
-      });
+      }
 
       this.title = this.navParams.get('title')
       this.uid = this.navParams.get('uid')

@@ -1,8 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events, ModalController, Modal, Content } from 'ionic-angular';
-import { ApplicationService } from '../../shared/services/application.service';
-
-import * as moment from 'moment'
+import { IonicPage, ViewController, NavParams} from 'ionic-angular'
 import { FirebaseService } from '../../shared/services/firebase.service';
 import { Subscription } from 'rxjs';
 
@@ -12,7 +9,7 @@ import { Subscription } from 'rxjs';
    templateUrl: 'comments.html'
 })
 export class CommentsPage implements OnInit, OnDestroy {
-   @ViewChild('commentLst') content: any;
+   @ViewChild('comLst') content: any;
 
    title: string
    user: any
@@ -25,8 +22,6 @@ export class CommentsPage implements OnInit, OnDestroy {
    constructor(
       private navParams: NavParams,
       private view: ViewController,
-      private appSrv: ApplicationService,
-      private modal: ModalController,
       private fs: FirebaseService
    ) {
       console.log('CommentsPage constructor');
@@ -68,6 +63,6 @@ export class CommentsPage implements OnInit, OnDestroy {
    private scrollDown(){
       setTimeout(() => {
          this.content.scrollToBottom(300);
-      }, 1000);
+      }, 500);
    }
 }

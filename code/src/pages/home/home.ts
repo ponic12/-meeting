@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage, NavParams, ActionSheetController, ModalController, Modal } from 'ionic-angular'
+import { NavController, IonicPage, NavParams, ActionSheetController, ModalController, Modal, Platform } from 'ionic-angular'
 import { ApplicationService } from '../../shared/services/application.service'
 import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
-import { Observable } from '@firebase/util';
 import { Subscription } from 'rxjs';
 
 @IonicPage()
@@ -34,6 +33,7 @@ export class HomePage implements OnInit, OnDestroy {
       private globalSrv: GlobalService,
       private authSrv: AuthService,
       private modal: ModalController,
+      private platform: Platform,
       private fs: FirebaseService
    ) {
       console.log('HomePage contructor')
@@ -45,7 +45,9 @@ export class HomePage implements OnInit, OnDestroy {
 
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
-         this.initFCM()
+         if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
+            this.initFCM()
+         }
       })
       console.log('subEvt: ', this.subEvt.closed)
 
@@ -165,7 +167,8 @@ export class HomePage implements OnInit, OnDestroy {
    }
    private initFCM() {
       this.events.forEach(ev => {
-         FCMPlugin.subscribeToTopic(ev.id)
+         if (ev.owner == this.user.uid)
+            FCMPlugin.subscribeToTopic(ev.id)
       });
       FCMPlugin.subscribeToTopic('config')
       FCMPlugin.subscribeToTopic(this.user.uid)
@@ -218,9 +221,14 @@ export class HomePage implements OnInit, OnDestroy {
       return lst
    }
    private logout() {
-      this.events.forEach(ev => {
-         FCMPlugin.unsubscribeFromTopic(ev.id)
-      })
+      if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
+         this.events.forEach(ev => {
+            if (ev.owner == this.user.uid)
+               FCMPlugin.unsubscribeFromTopic(ev.id)
+         })
+         FCMPlugin.unsubscribeToTopic('config')
+         FCMPlugin.unsubscribeToTopic(this.user.uid)
+      }
       this.appSrv.message('Aviso', 'Saliendo...');
       this.authSrv.signOutUser();
       this.navCtrl.setRoot('LoginPage');
