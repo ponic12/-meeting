@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from "@angular/router"
 
 import { AuthService } from '../../shared/core/auth.service';
 import { ApplicationService } from '../../shared/services/application.service';
@@ -14,6 +15,8 @@ import { Subscription } from 'rxjs';
    templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit, OnDestroy {
+   idevt: string;
+
    subUsr: Subscription
    loginMode: string = "signIn"
    username: string
@@ -24,6 +27,7 @@ export class LoginPage implements OnInit, OnDestroy {
    obsAuth:any
 
    constructor(
+      private route: ActivatedRoute,
       private appSrv: ApplicationService,
       private navCtrl: NavController,
       private authSrv: AuthService,
@@ -43,6 +47,7 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    ngOnInit() {
       console.log('LoginPage init');
+      this.getQueryString()
       this.obsAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
          if (data) {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
@@ -75,6 +80,7 @@ export class LoginPage implements OnInit, OnDestroy {
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
          else {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
+               // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
                this.navCtrl.setRoot('HomePage', { usr: usr })
             })
          }
@@ -98,6 +104,12 @@ export class LoginPage implements OnInit, OnDestroy {
       this.fs.download('MeetingMaster.apk')
    }
 
+   private getQueryString(){
+      //Example: "/app?param1=hallo&param2=123"
+      this.route.queryParams.subscribe(params => {
+         this.idevt = params['idevt'];
+     })
+   }
    private redirectHome(data){
       console.log('login provider: ' + data)
       const usr = {
