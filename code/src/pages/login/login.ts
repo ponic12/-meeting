@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from "@angular/router"
 
 import { AuthService } from '../../shared/core/auth.service';
 import { ApplicationService } from '../../shared/services/application.service';
@@ -24,10 +23,9 @@ export class LoginPage implements OnInit, OnDestroy {
    email: string;
    password: string;
    todo: FormGroup;
-   obsAuth:any
+   obsAuth: any
 
    constructor(
-      private route: ActivatedRoute,
       private appSrv: ApplicationService,
       private navCtrl: NavController,
       private authSrv: AuthService,
@@ -47,11 +45,10 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    ngOnInit() {
       console.log('LoginPage init');
-      this.getQueryString()
       this.obsAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
          if (data) {
-            this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
-               this.navCtrl.setRoot('HomePage', { usr: usr })            
+            this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
+               this.navCtrl.setRoot('HomePage', { usr: usr })
             })
          }
       });
@@ -79,8 +76,11 @@ export class LoginPage implements OnInit, OnDestroy {
          if (data === undefined)
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
          else {
-            this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr=>{
-               // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
+            this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
+               this.idevt = this.getParameterByName('idevt');
+               if (this.idevt){
+                                 // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
+               }
                this.navCtrl.setRoot('HomePage', { usr: usr })
             })
          }
@@ -91,7 +91,7 @@ export class LoginPage implements OnInit, OnDestroy {
    loginGoogle() {
       this.authSrv.loginGoogle().then((data) => {
          this.redirectHome(data)
-      }).catch((err)=>{
+      }).catch((err) => {
          console.log('Error: ', err.message)
       })
    }
@@ -104,21 +104,24 @@ export class LoginPage implements OnInit, OnDestroy {
       this.fs.download('MeetingMaster.apk')
    }
 
-   private getQueryString(){
-      //Example: "/app?param1=hallo&param2=123"
-      this.route.queryParams.subscribe(params => {
-         this.idevt = params['idevt'];
-     })
+   private getParameterByName(name) {
+      const url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+         results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
    }
-   private redirectHome(data){
+   private redirectHome(data) {
       console.log('login provider: ' + data)
       const usr = {
-         displayName : data.displayName,
-         email : data.email,
-         photoURL : data.photoURL
+         displayName: data.displayName,
+         email: data.email,
+         photoURL: data.photoURL
       }
       this.fs.updateUser(usr)
-      this.navCtrl.setRoot('HomePage', {usr : usr})
+      this.navCtrl.setRoot('HomePage', { usr: usr })
    }
    private getUid(str) {
       const res = str.replace(/\./gi, '')
