@@ -48,9 +48,9 @@ export class EditEventPage implements OnInit, OnDestroy {
       this.evt.ownerPhotoURL = this.user.photoURL
       this.setMembersToContacts()
 
-      this.question = (this.evt.question)?this.evt.question:""
+      this.question = (this.evt.question) ? this.evt.question : ""
       if (this.evt.type == 'seleccion') {
-         this.selectionItems = (this.evt.selectionItems)?this.evt.selectionItems:{}
+         this.selectionItems = (this.evt.selectionItems) ? this.evt.selectionItems : {}
          this.updateSelectionKeys()
          this.answerType = this.evt.answerType
       }
@@ -71,8 +71,8 @@ export class EditEventPage implements OnInit, OnDestroy {
       this.evt.question = this.question
       switch (this.evt.type) {
          case 'calendario':
-            this.evt.availability = {}  
-            break;  
+            this.evt.availability = {}
+            break;
          case 'seleccion':
             this.evt.selectionItems = this.selectionItems
             this.evt.answerType = this.answerType
@@ -87,7 +87,7 @@ export class EditEventPage implements OnInit, OnDestroy {
    share() {
       if (this.platform.is('cordova')) {
          //const url = "https://firebasestorage.googleapis.com/v0/b/events-12be3.appspot.com/o/MeetingMaster.apk?alt=media&token=66af8eb0-463c-44ed-a596-5a7b21ff5d8a"
-         const url = 'https://events-12be3.firebaseapp.com?idevt='+this.evt.id
+         const url = 'https://events-12be3.firebaseapp.com?idevt=' + this.evt.id
          this.socialSharing.shareViaWhatsApp('Invitacion a evento!', '', url).then(() => {
             this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
          }).catch(() => {
@@ -116,7 +116,7 @@ export class EditEventPage implements OnInit, OnDestroy {
       // });
    }
    addItem() {
-      this.selectionItems[this.newItem]={}
+      this.selectionItems[this.newItem] = {}
       this.updateSelectionKeys()
    }
    removeItem(item) {
@@ -124,7 +124,20 @@ export class EditEventPage implements OnInit, OnDestroy {
       this.updateSelectionKeys()
    }
 
-   private updateSelectionKeys(){
+   evalDisable() {
+      let res = (this.evt.name === '') && (!this.evt.type)
+      switch (this.evt.type) {
+         case 'calendario':
+            res = (this.evt.availability != undefined)
+            break;
+         case 'seleccion':
+            res = (this.selectionItems != undefined)
+            break;
+      }
+      return res
+   }
+
+   private updateSelectionKeys() {
       this.selectionItemsKeys = Object.keys(this.selectionItems)
    }
    private setMembersToContacts() {
