@@ -21,24 +21,25 @@
     </ion-avatar>
     <div class="mid">{{ct.displayName}}</div>
   </div> -->
-  <div *ngFor="let ct of phoneContacts | searchInfo: searchText | orderBy:sortField:direction" class="grdContacts">
-      <!-- <ion-toggle class="mid midCenter" ></ion-toggle> -->
-      <!-- <ion-avatar class="mid midCenter">
-        <img class="avatar" [src]="ct.photoURL">
-      </ion-avatar> -->
-      <div class="mid">{{ct.name}}</div>
-      <div class="mid">{{ct.familyName}}</div>
-      <div class="mid">{{ct.nickName}}</div>
-      <div class="mid">{{ct.displayName}}</div>
-      <div class="mid">{{ct.givenName}}</div>
-      <div class="mid">{{ct.nameFormatted}}</div>            
-      <div class="mid">{{ct.phoneNumbers | json}}</div>
-      <div class="mid">{{ct.photos | json}}</div>
-    </div>
+  <div>TOTAL contactos: {{phoneContacts.length}}</div>
+  <div *ngFor="let ct of phoneContacts | searchInfo: searchText | orderBy:sortField:direction" class="grdPhoneContacts">
+    <ion-toggle class="mid midCenter"></ion-toggle>
+    <ion-avatar class="mid midCenter" (click)="showSelPhoto(ct)">
+      <img class="avatar" [src]="getPhoto(ct)">
+    </ion-avatar>
+
+    <div class="mid">{{ct.displayName}}</div>
+    <div class="mid">{{getPhone(ct)}}</div>
+    <!-- <div class="mid">{{ct.name}}</div> -->
+    <!-- <div class="mid">{{ct.nameFormatted}}</div>             -->
+    <!-- <div class="mid">{{ct.nickName}}</div> -->
+    <!-- <div class="mid">{{ct.familyName}}</div> -->
+    <!-- <div class="mid">{{ct.givenName}}</div> -->
+  </div>
 
 
-  <button ion-button  (click)="saveToContacts()" *ngIf="confirmFlag === true">Aceptar</button>
-  
+  <button ion-button (click)="saveToContacts()" *ngIf="confirmFlag === true">Aceptar</button>
+
   <ion-fab class="btnSort" top right #fab>
     <button ion-fab mini>
       <ion-icon name="funnel"></ion-icon>

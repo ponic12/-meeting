@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events,ModalController, Modal } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, Events,ModalController, Modal, Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import * as moment from 'moment'
 import { Subscription } from 'rxjs';
@@ -24,20 +25,26 @@ export class ContactsPage implements OnInit, OnDestroy {
    sortField: string = 'creationDate'
    direction:boolean = false
    phoneContacts:any[] = []
+   selPhotoUrl:SafeUrl
    private uid:string
 
    constructor(
+      private platform: Platform,
       private navParams: NavParams,
       private view: ViewController,
       private fs: FirebaseService,
       private appSrv: ApplicationService,
       private modal: ModalController,
-      private contacts: Contacts
+      private contacts: Contacts,
+      private sanitizer: DomSanitizer
    ) {
       console.log('ContactsPage constructor')
-      this.contacts.find(["*"],{multiple: true}).then(cts=>{
-         this.phoneContacts = cts
-      })
+      platform.ready().then(() => {
+         this.contacts.find(["*"],{multiple: true, hasPhoneNumber: true}).then(cts=>{
+            this.phoneContacts = cts
+         })
+      });
+
       this.title = this.navParams.get('title')
       this.uid = this.navParams.get('uid')
    }
@@ -82,6 +89,27 @@ export class ContactsPage implements OnInit, OnDestroy {
       else 
          return "arrow-dropup"
    }   
+   showSelPhoto(ct){
+      this.selPhotoUrl = this.getPhoto(ct)
+   }
+   getPhoto(ct){
+      let res:SafeUrl = ""
+      
+      if(ct.photos != null) {
+         console.log(ct.photos);
+         res = this.sanitizer.bypassSecurityTrustUrl(ct.photos[0].value);
+         console.log(ct);
+       } else {
+         res = "assets/imgs/person.png";
+       }
+      return res
+   }
+   getPhone(ct){
+      let res:string = ""
+      if (ct.phoneNumbers)
+         res = ct.phoneNumbers[0].value
+      return res
+   }
    closeModal(){
       this.view.dismiss(null)
    }

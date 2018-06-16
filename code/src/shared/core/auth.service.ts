@@ -106,6 +106,7 @@ export class AuthService {
    private oAuthLogin(provider) {
       return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
          .then((cred) => {
+            console.log('cred: ', cred)
             return this.afAuth.auth.getRedirectResult()
          })
    }
