@@ -42,17 +42,18 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      
+
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
-         this.events = data      
+         this.events = data
+         this.initFCM()
       })
       console.log('subEvt: ', this.subEvt.closed)
-      
-      this.subCom = this.fs.getCommunity().subscribe(data =>{
+
+      this.subCom = this.fs.getCommunity().subscribe(data => {
          this.community = data
          this.contactsFull = this.getContactsFull()
-      })         
-      console.log('subCom: ', this.subCom.closed)      
+      })
+      console.log('subCom: ', this.subCom.closed)
    }
    ngOnDestroy() {
       console.log('HomePage destroy')
@@ -60,7 +61,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.subCom.unsubscribe()
    }
    addEvent() {
-      this.showEditEvent('Nuevo Evento', {members:[]})
+      this.showEditEvent('Nuevo Evento', { members: [] })
    }
    editEvent(ev, i) {
       this.showEditEvent('Editar Evento', ev)
@@ -90,14 +91,14 @@ export class HomePage implements OnInit, OnDestroy {
                      uid: this.user.uid
                   })
                }
-            },            
+            },
             {
                text: 'Sugerencias',
                handler: () => {
                   console.log('Suggestions');
                   this.navCtrl.push('SuggestionsPage', {
                      title: 'Sugerencias',
-                     user: this.user                     
+                     user: this.user
                   })
                }
             },
@@ -162,8 +163,26 @@ export class HomePage implements OnInit, OnDestroy {
       else
          return "arrow-dropup"
    }
-
-   private showEditEvent(tit, ev){
+   private initFCM() {
+      this.events.forEach(ev => {
+         FCMPlugin.subscribeToTopic(ev.id)
+      });
+      FCMPlugin.subscribeToTopic('config')
+      FCMPlugin.subscribeToTopic(this.user.uid)
+      //var self = this;
+      // FCMPlugin.onNotification(
+      //    function (data) {
+      //       self.evalNotification(data);
+      //    },
+      //    function (msg) {
+      //       console.log('onNotification: ' + msg);
+      //    },
+      //    function (err) {
+      //       console.log('Error onNotification: ' + err);
+      //    }
+      // );
+   }
+   private showEditEvent(tit, ev) {
       const mod: Modal = this.modal.create('EditEventPage', {
          title: tit,
          evt: ev,
@@ -176,10 +195,10 @@ export class HomePage implements OnInit, OnDestroy {
    }
    private getContactsFull() {
       const lst: any = []
-      if (this.user.contacts){
+      if (this.user.contacts) {
          this.community.forEach(p => {
             const sel = (this.user.contacts[p.uid])
-            if (sel == true){
+            if (sel == true) {
                lst.push(p)
             }
          });
@@ -188,17 +207,20 @@ export class HomePage implements OnInit, OnDestroy {
    }
    private getMembersFull(ev) {
       const lst: any = []
-      if (ev.members){
+      if (ev.members) {
          this.contactsFull.forEach(p => {
             const sel = (ev.members[p.uid])
-            if (sel == true){
+            if (sel == true) {
                lst.push(p)
             }
          });
       }
       return lst
-   }   
+   }
    private logout() {
+      this.events.forEach(ev => {
+         FCMPlugin.unsubscribeFromTopic(ev.id)
+      })
       this.appSrv.message('Aviso', 'Saliendo...');
       this.authSrv.signOutUser();
       this.navCtrl.setRoot('LoginPage');

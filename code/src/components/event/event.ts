@@ -33,13 +33,9 @@ export class EventPage implements OnInit, OnDestroy {
    constructor(
       private navParams: NavParams,
       private navCtrl: NavController,
-      private view: ViewController,
-      private appSrv: ApplicationService,
-      private evtSrv: EventService,
       private modal: ModalController,
       private fs: FirebaseService,
-      private alertCtrl: AlertController,
-      private socialSharing: SocialSharing
+      private alertCtrl: AlertController
    ) {
       console.log('EventPage constructor');
    }
@@ -57,6 +53,7 @@ export class EventPage implements OnInit, OnDestroy {
       if (this.evt.type == 'calendario') {
          this.startWeek = moment(this.evt.creationDate).day(0)
          this.evt.estimationDate = {}
+         this.selectAllMembers()
          this.processDays()
       }
       else {
@@ -237,6 +234,12 @@ export class EventPage implements OnInit, OnDestroy {
    }
 
 
+
+   private selectAllMembers(){
+      this.membersFull.forEach(m => {
+         m.selected = true
+      });
+   }
    private checkEditMode() {
       let res = false
       const membersON = []
