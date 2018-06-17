@@ -1,7 +1,7 @@
 <ion-header class="grdToolbar">
   <img class="logoTipo" src="assets/imgs/events.png">
   <div class="title">Meeting Master
-      <!-- <ion-icon name="close" *ngIf="!subEvt.closed"></ion-icon>
+    <!-- <ion-icon name="close" *ngIf="!subEvt.closed"></ion-icon>
       <ion-icon name="close" *ngIf="!subEvt.closed"></ion-icon> -->
   </div>
   <ion-avatar item-start (click)="openMenuSheet()">
@@ -20,46 +20,55 @@
     </ion-row>
   </ion-grid>
 
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown"
+    pullingText="Pull to refresh"
+    refreshingSpinner="circles"
+    refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list *ngIf="events">
-    <ion-item-sliding class="eventCard" *ngFor="let evt of events | searchInfo: searchText | orderBy:sortField:direction ">
-      <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }" (click)="showEvent(evt, i)">
-        <div>
-          <strong>{{evt.name}}</strong> 
-        </div>
-        <div>
-          {{evt.description}}
-        </div>
-        <div>
-          <strong>Creacion:</strong> {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
-        </div>
-        <div>
-          <strong>Ult.mod.:</strong> {{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}
-        </div>
-        <div class="adminFlag" *ngIf="evt.owner === user.uid">
-          <img src="assets/imgs/crown.png">
-        </div>
-        <div class="adminFlag" *ngIf="evt.owner != user.uid">
+      <ion-item-sliding class="eventCard" *ngFor="let evt of events | searchInfo: searchText | orderBy:sortField:direction ">
+        <ion-item class="grdEvent" [ngClass]="{'evtClosed' : evt.estimatedDate < today }" (click)="showEvent(evt, i)">
+          <div>
+            <strong>{{evt.name}}</strong>
+          </div>
+          <div>
+            {{evt.description}}
+          </div>
+          <div>
+            <strong>Creacion:</strong> {{evt.creationDate | date:'dd/MM/yyyy HH:mm'}}
+          </div>
+          <div>
+            <strong>Ult.mod.:</strong> {{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}
+          </div>
+          <div class="adminFlag" *ngIf="evt.owner === user.uid">
+            <img src="assets/imgs/crown.png">
+          </div>
+          <div class="adminFlag" *ngIf="evt.owner != user.uid">
             <img src="{{evt.ownerPhotoURL}}">
-        </div>   
-        <div class="eventType">
-          <img src="{{evalTypeIcon(evt.type)}}">
-        </div>
-      </ion-item>
-      <ion-item-options side="right">
-        <button ion-button (click)="removeEvent(evt, i)" *ngIf="evt.owner === user.uid" color="danger">
-          <ion-icon name="trash"></ion-icon> Eliminar
-        </button>
-      </ion-item-options>
-      <ion-item-options side="left">
-        <button ion-button (click)="showEvent(evt, i)" color="primary">
-          <ion-icon name="calendar"></ion-icon> Entrar
-        </button>
-        <button ion-button (click)="editEvent(evt, i)" *ngIf="evt.owner === user.uid" color="secondary">
-          <ion-icon name="create"></ion-icon> Editar
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+          </div>
+          <div class="eventType">
+            <img src="{{evalTypeIcon(evt.type)}}">
+          </div>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button (click)="removeEvent(evt, i)" *ngIf="evt.owner === user.uid" color="danger">
+            <ion-icon name="trash"></ion-icon> Eliminar
+          </button>
+        </ion-item-options>
+        <ion-item-options side="left">
+          <button ion-button (click)="showEvent(evt, i)" color="primary">
+            <ion-icon name="calendar"></ion-icon> Entrar
+          </button>
+          <button ion-button (click)="editEvent(evt, i)" *ngIf="evt.owner === user.uid" color="secondary">
+            <ion-icon name="create"></ion-icon> Editar
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list> 
+
+
   <ion-fab class="btnAddEvent" bottom right>
     <button ion-fab mini (click)="addEvent()">
       <ion-icon name="add"></ion-icon>

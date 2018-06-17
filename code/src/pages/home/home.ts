@@ -62,6 +62,14 @@ export class HomePage implements OnInit, OnDestroy {
       this.subEvt.unsubscribe()
       this.subCom.unsubscribe()
    }
+   doRefresh(refresher){
+      console.log('Begin async operation', refresher);
+      
+      setTimeout(() => {
+        console.log('Async operation has ended');
+        refresher.complete();
+      }, 2000);
+   }
    addEvent() {
       this.showEditEvent('Nuevo Evento', { members: [] })
    }

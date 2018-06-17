@@ -18,7 +18,7 @@ export class EditEventPage implements OnInit, OnDestroy {
    contactsFull: any[]
    question: string
    answerType: string
-   selectionItems: object
+   selectionItems: object = {}
    selectionItemsKeys: string[]
    newItem: string
 
@@ -55,7 +55,6 @@ export class EditEventPage implements OnInit, OnDestroy {
          this.answerType = this.evt.answerType
       }
    }
-
    adminMembers() {
       const mod: Modal = this.modal.create('MembersPage', {
          title: "Miembros",
@@ -65,24 +64,6 @@ export class EditEventPage implements OnInit, OnDestroy {
       mod.present()
       mod.onDidDismiss(cf => {
       })
-   }
-   save() {
-      this.getMembersFromContacts()
-      this.evt.question = this.question
-      switch (this.evt.type) {
-         case 'calendario':
-            this.evt.availability = {}
-            break;
-         case 'seleccion':
-            this.evt.selectionItems = this.selectionItems
-            this.evt.answerType = this.answerType
-            break;
-      }
-      this.fs.saveEvent(this.evt)
-      this.view.dismiss()
-   }
-   closeModal() {
-      this.view.dismiss(null)
    }
    share() {
       if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
@@ -115,7 +96,6 @@ export class EditEventPage implements OnInit, OnDestroy {
       delete this.selectionItems[item]
       this.updateSelectionKeys()
    }
-
    evalDisable() {
       let res = (this.evt.name === '') && (!this.evt.type)
       switch (this.evt.type) {
@@ -123,11 +103,29 @@ export class EditEventPage implements OnInit, OnDestroy {
             res = (this.evt.availability != undefined)
             break;
          case 'seleccion':
-            res = (this.selectionItems != undefined)
+            res = (this.evt.selectionItems != undefined)
             break;
       }
       return res
    }
+   save() {
+      this.getMembersFromContacts()
+      this.evt.question = this.question
+      switch (this.evt.type) {
+         case 'calendario':
+            this.evt.availability = {}
+            break;
+         case 'seleccion':
+            this.evt.selectionItems = this.selectionItems
+            this.evt.answerType = this.answerType
+            break;
+      }
+      this.fs.saveEvent(this.evt)
+      this.view.dismiss()
+   }
+   closeModal() {
+      this.view.dismiss(null)
+   }   
 
    private updateSelectionKeys() {
       this.selectionItemsKeys = Object.keys(this.selectionItems)

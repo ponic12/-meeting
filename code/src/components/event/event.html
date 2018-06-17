@@ -82,14 +82,19 @@
         </div>
         <div *ngFor="let item of selectionItemsKeys" style="position: sticky;margin:10px">
           <div class="grdSelectionItem">
-            <ion-checkbox *ngIf="evt.answerType=='multiple'" checked="evt.selectedItems[item][user.uid]" (ionChange)="onSelChange($event, item)"></ion-checkbox>
-            <ion-radio *ngIf="evt.answerType=='unica'" checked="" (ionChange)="onSelChange($event, item)"></ion-radio>
-            <rating *ngIf="evt.answerType=='clasificacion'" [(ngModel)]="evt.selectedItems[item][user.uid]" readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star"
-              nullable="true" (ngModelChange)="onRatingChange($event)">
-              {{item}}
-            </rating>
+            <ion-checkbox *ngIf="evt.answerType =='multiple'" checked="evt.selectionItems[item][user.uid]" (ionChange)="onSelChange($event, item)"></ion-checkbox>
+            <ion-radio *ngIf="evt.answerType =='unica'" checked="" (ionChange)="onSelChange($event, item)"></ion-radio>
+            <ion-label *ngIf="evt.answerType !='clasificacion'" style="z-index: 10">{{item}}</ion-label>
 
-            <ion-label style="z-index: 10">{{item}}</ion-label>
+            <div *ngIf="evt.answerType=='clasificacion'"></div>
+            <div *ngIf="evt.answerType=='clasificacion'">
+              <ion-label style="z-index: 10">{{item}}</ion-label>
+              <rating [(ngModel)]="evt.selectionItems[item][user.uid]" readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
+                starIconName="star" nullable="true" (ngModelChange)="onRatingChange($event)">
+                {{item}}
+              </rating>
+            </div>
+
             <button ion-button (click)="showSelMembers(item)" class="btnMembersInfo">
               <div>{{calcCounter(item)}}</div>
             </button>
