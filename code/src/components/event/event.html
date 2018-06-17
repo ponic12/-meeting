@@ -84,8 +84,12 @@
           <div class="grdSelectionItem">
             <ion-checkbox *ngIf="evt.answerType=='multiple'" checked="evt.selectedItems[item][user.uid]" (ionChange)="onSelChange($event, item)"></ion-checkbox>
             <ion-radio *ngIf="evt.answerType=='unica'" checked="" (ionChange)="onSelChange($event, item)"></ion-radio>
-            <ion-label style="z-index: 10">{{item}}</ion-label>
+            <rating *ngIf="evt.answerType=='clasificacion'" [(ngModel)]="evt.selectedItems[item][user.uid]" readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star"
+              nullable="true" (ngModelChange)="onRatingChange($event)">
+              {{item}}
+            </rating>
 
+            <ion-label style="z-index: 10">{{item}}</ion-label>
             <button ion-button (click)="showSelMembers(item)" class="btnMembersInfo">
               <div>{{calcCounter(item)}}</div>
             </button>
@@ -118,13 +122,6 @@
           <div class="resNo">{{calcCounter('no')}} [{{calcPercent('no')}}%]</div>
         </div>
       </div>
-    </div>
-    <div id="tipo" *ngIf="evt.type == 'clasificacion'">
-      <ion-list padding>
-        <h4 style="text-align: center">
-          {{evt.question}}
-        </h4>
-      </ion-list>
     </div>
     <div id="botonera">
       <div>

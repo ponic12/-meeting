@@ -85,7 +85,7 @@ export class EditEventPage implements OnInit, OnDestroy {
       this.view.dismiss(null)
    }
    share() {
-      if (this.platform.is('cordova')) {
+      if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
          //const url = "https://firebasestorage.googleapis.com/v0/b/events-12be3.appspot.com/o/MeetingMaster.apk?alt=media&token=66af8eb0-463c-44ed-a596-5a7b21ff5d8a"
          const url = 'https://events-12be3.firebaseapp.com?idevt=' + this.evt.id
          this.socialSharing.shareViaWhatsApp('Invitacion a evento!', '', url).then(() => {
@@ -93,15 +93,7 @@ export class EditEventPage implements OnInit, OnDestroy {
          }).catch(() => {
             this.appSrv.message('Error', 'No posee Whatsapp')
          })
-         // this.socialSharing.canShareVia('Whatsapp').then(() => {
-         //    this.socialSharing.shareViaWhatsApp('Invitacion a evento!', 'http://www.clarin.com').then(() => {
-         //       this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
-         //    }).catch(() => {
-         //       this.appSrv.message('Error', 'No posee Whatsapp')
-         //    })
-         // })
       }
-
       // this.socialSharing.canShareViaEmail().then(() => {
       //    // Sharing via email is possible
       // }).catch(() => {

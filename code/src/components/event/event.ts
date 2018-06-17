@@ -140,6 +140,9 @@ export class EventPage implements OnInit, OnDestroy {
    onSelChange(ev, item){
       this.evt.selectionItems[item][this.user.uid] = ev.checked
    }
+   onRatingChange(ev){
+      console.log('rating... ')
+   }
    showSelMembers(item) {
       this.calcMemberStatus(item)
       this.showMembers()

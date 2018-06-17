@@ -84,16 +84,16 @@ export class HomePage implements OnInit, OnDestroy {
          title: 'OPCIONES:',
          cssClass: 'action-sheets-basic-page',
          buttons: [
-            {
-               text: 'Contactos',
-               handler: () => {
-                  console.log('Contacts Admin');
-                  this.navCtrl.push('ContactsPage', {
-                     title: 'Contactos',
-                     uid: this.user.uid
-                  })
-               }
-            },
+            // {
+            //    text: 'Contactos',
+            //    handler: () => {
+            //       console.log('Contacts Admin');
+            //       this.navCtrl.push('ContactsPage', {
+            //          title: 'Contactos',
+            //          uid: this.user.uid
+            //       })
+            //    }
+            // },
             {
                text: 'Sugerencias',
                handler: () => {
@@ -139,9 +139,6 @@ export class HomePage implements OnInit, OnDestroy {
             break;
          case "votacion":
             src = "assets/imgs/votacion.png"
-            break;
-         case "clasificacion":
-            src = "assets/imgs/clasificacion.png"
             break;
          default:
             break;

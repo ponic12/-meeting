@@ -45,7 +45,7 @@ export class AuthService {
       return this.oAuthLogin(provider);
    }
    loginFacebook() {
-      if (this.platform.is('cordova')) {
+      if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
          return this.facebook.login(['public_profile', 'email']).then(res => {
             const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
             return firebase.auth().signInWithCredential(facebookCredential)

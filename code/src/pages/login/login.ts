@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { NavController, IonicPage } from 'ionic-angular'
+import { Validators, FormBuilder, FormGroup } from '@angular/forms'
+import { HttpClient } from '@angular/common/http'
 
-import { AuthService } from '../../shared/core/auth.service';
-import { ApplicationService } from '../../shared/services/application.service';
-import { FirebaseService } from '../../shared/services/firebase.service';
-import { Subscription } from 'rxjs';
+import { AuthService } from '../../shared/core/auth.service'
+import { ApplicationService } from '../../shared/services/application.service'
+import { FirebaseService } from '../../shared/services/firebase.service'
+import { Subscription } from 'rxjs'
 
 
 @IonicPage()
@@ -30,7 +31,8 @@ export class LoginPage implements OnInit, OnDestroy {
       private navCtrl: NavController,
       private authSrv: AuthService,
       private formBuilder: FormBuilder,
-      private fs: FirebaseService
+      private fs: FirebaseService,
+      public http: HttpClient
    ) {
       console.log('LoginPage constructor');
       this.todo = this.formBuilder.group({
@@ -76,11 +78,9 @@ export class LoginPage implements OnInit, OnDestroy {
          if (data === undefined)
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
          else {
-            this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
-               this.idevt = this.getParameterByName('idevt');
-               if (this.idevt){
-                                 // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
-               }
+            const uid = this.getUid(data.email)
+            this.subUsr = this.fs.getUserById(uid).subscribe(usr => {
+               this.notifyMemberInEvent(uid)
                this.navCtrl.setRoot('HomePage', { usr: usr })
             })
          }
@@ -104,14 +104,15 @@ export class LoginPage implements OnInit, OnDestroy {
       this.fs.download('MeetingMaster.apk')
    }
 
-   private getParameterByName(name) {
-      const url = window.location.href;
-      name = name.replace(/[\[\]]/g, "\\$&");
-      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-         results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, " "));
+   private notifyMemberInEvent(uid){
+      this.idevt = idEvtParam
+      if (this.idevt){
+         this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/?idevt='+ this.idevt + '&idusr=' + uid)
+         .catch((error, caught) => {
+             console.log('Error HTTPS: ', error)
+             return caught //Observable.throw(error);
+         }) as any;         // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
+      }
    }
    private redirectHome(data) {
       console.log('login provider: ' + data)
