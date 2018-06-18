@@ -148,7 +148,19 @@ export class EventPage implements OnInit, OnDestroy {
       this.showMembers()
    }
    calcCounter(item) {
-      const res = Object.keys(this.evt.selectionItems[item]).length
+      const uids = this.evt.selectionItems[item]
+      const keys = Object.keys(uids)
+      const total = keys.length
+      let res:number = 0
+      if (this.evt.type == 'clasificacion'){
+         let sum = 0
+         keys.forEach(k=>{
+            sum = sum + uids[k]
+         })
+         res = sum/total
+      }
+      else
+         res = total
       return res
    }
    getVote(vote) {

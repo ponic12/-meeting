@@ -107,11 +107,14 @@ export class LoginPage implements OnInit, OnDestroy {
    private notifyMemberInEvent(uid){
       this.idevt = idEvtParam
       if (this.idevt){
-         this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/?idevt='+ this.idevt + '&idusr=' + uid)
-         .catch((error, caught) => {
-             console.log('Error HTTPS: ', error)
-             return caught //Observable.throw(error);
-         }) as any;         // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
+         this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/'+ this.idevt + '/' + uid)
+         .subscribe(o=>{
+            console.log('Notify ok: ', o)
+         })
+         // .catch((error, caught) => {
+         //     console.log('Error HTTPS: ', error)
+         //     return caught //Observable.throw(error);
+         // }) as any;         // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
       }
    }
    private redirectHome(data) {

@@ -4,11 +4,9 @@ import { AngularFirestoreDocument } from 'angularfire2/firestore'
 import { storage, initializeApp } from 'firebase'
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/map'
-import * as firebaseStorge from 'firebase/storage';
-
 import * as firebase from 'firebase/app'; // for typings
 import { FirebaseApp } from 'angularfire2';
-
+import * as firebaseStorge from 'firebase/storage';
 
 
 @Injectable()

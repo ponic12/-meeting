@@ -35,16 +35,24 @@ admin.initializeApp(functions.config().firebase)
 //    return Promise.all(proms)
 // })
 
+
 export const notifyMember = functions.https.onRequest((request, response) => {
-   const idEvt = request.params('idevt')
-   const idUsr = request.params('idusr')
+   const arr = request.params[0].split('/')
+   const idEvt = arr[1]
+   const idUsr = arr[2]
+
+   console.log('arr: ', arr)
 
    admin.firestore().collection("events").doc(idEvt).get()
       .then(dsse => {
          const evt = dsse.data()
+         console.log('idevt: ', idEvt)
+
          admin.firestore().collection("users").doc(idUsr).get()
             .then(dssu => {
                const usr = dssu.data()
+               console.log('uid: ', usr.uid)
+               console.log('idUser: ', idUsr)
 
                // Agrega el nuevo user a los miembros del evento
                evt.members[usr.uid] = true
@@ -53,14 +61,16 @@ export const notifyMember = functions.https.onRequest((request, response) => {
                      // Notifica a Owner del nuevo miembro registrado
                      const payload = {
                         notification: {
-                           title: 'Miembro Registrado: ' + usr.displayName,
-                           body: 'Evento: ' + evt.name
+                           title: usr.displayName + ', has sido agregado al evento:',
+                           body: evt.name
                         },
                         data: {
                         }
                      };
+                     console.log('Push: ', payload)
                      admin.messaging().sendToTopic(idEvt, payload)
                         .then(m => {
+                           console.log('Pushing OK')
                            response.send(true)
                         })
                         .catch(err => {
