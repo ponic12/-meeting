@@ -46,12 +46,9 @@ exports.notifyMember = functions.https.onRequest((request, response) => {
             .then(dssu => {
             const usr = dssu.data();
             console.log('uid: ', usr.uid);
-            console.log('idUser: ', idUsr);
-            // Agrega el nuevo user a los miembros del evento
             evt.members[usr.uid] = true;
             admin.firestore().collection('events').doc(idEvt).set(evt)
                 .then(dssm => {
-                // Notifica a Owner del nuevo miembro registrado
                 const payload = {
                     notification: {
                         title: usr.displayName + ', has sido agregado al evento:',
