@@ -58,7 +58,7 @@ export const notifyMember = functions.https.onRequest((request, response) => {
                   .then(dssm => {
                      const payload = {
                         notification: {
-                           title: usr.displayName + ', has sido agregado al evento:',
+                           title: usr.displayName + ', se ha agregado al evento:',
                            body: evt.name
                         },
                         data: {

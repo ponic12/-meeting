@@ -1,10 +1,23 @@
 <ion-content class="login_back">
+  <div class="grdLogin">
+    <div></div>
+    <div>
+      <img src="assets/imgs/calendarIcon.png" style="width:80%; max-width:250px;">
+    </div>
+    <div>
+      <ion-avatar item-start (click)="openMenuSheet()" *ngIf="isLogged">
+        <img class="avatar" [src]="user.photoURL">
+      </ion-avatar>
+    </div>
+  </div>
   <ion-row class="logoKM">
     <ion-col col-3></ion-col>
     <ion-col style="text-align:center">
       <img src="assets/imgs/calendarIcon.png" style="width:80%; max-width:250px;">
     </ion-col>
-    <ion-col col-3></ion-col>
+    <ion-col col-3>
+
+    </ion-col>
   </ion-row>
 
   <ng-template #content>content here...</ng-template>
@@ -40,8 +53,13 @@
 
         </ion-col>
         <ion-col style="text-align: center">
-          <button (click)="loginGoogle()" class="btnGoogle" type="submit">
+          <button (click)="loginGoogle()" class="btnGoogle" *ngIf="!isLogged">
             <img src="assets/imgs/google.png">
+          </button>
+        </ion-col>
+        <ion-col style="text-align: center">
+          <button (click)="googleLogin()" class="btnGoogle" *ngIf="!isLogged">
+            <img src="assets/imgs/googlesignin.png">
           </button>
         </ion-col>
         <ion-col style="text-align: center">
@@ -54,7 +72,7 @@
         </ion-col>
       </ion-row>
     </form>
-    <div class="frameDownload" >
+    <div class="frameDownload">
       <button (click)="download()" class="btnDownload" type="submit">
         <img src="assets/imgs/playstore.png">
       </button>

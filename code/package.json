@@ -26,6 +26,7 @@
     "@ionic-native/core": "4.7.0",
     "@ionic-native/facebook": "4.7.0",
     "@ionic-native/fcm": "4.7.0",
+    "@ionic-native/google-plus": "^4.7.0",
     "@ionic-native/social-sharing": "4.7.0",
     "@ionic-native/splash-screen": "4.7.0",
     "@ionic-native/status-bar": "4.7.0",
@@ -40,6 +41,7 @@
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-facebook4": "2.1.0",
     "cordova-plugin-fcm": "2.1.2",
+    "cordova-plugin-googleplus": "^5.3.0",
     "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-ionic-keyboard": "2.0.5",
     "cordova-plugin-ionic-webview": "1.1.19",
@@ -88,7 +90,8 @@
         "ANDROID_SDK_VERSION": "4.+"
       },
       "cordova-plugin-contacts": {},
-      "cordova-plugin-fcm": {}
+      "cordova-plugin-fcm": {},
+      "cordova-plugin-googleplus": {}
     },
     "platforms": [
       "android"

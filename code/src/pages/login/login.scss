@@ -18,6 +18,13 @@ page-login {
     border-radius: 20px;
     box-shadow: 2px 2px 5px #000;
   }
+  .grdLogin{
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr;
+     
+  }
+
+
   .loginBtn {
     box-shadow: 2px 2px 5px #000;
     width: 80%;
@@ -41,10 +48,12 @@ page-login {
      margin-top: -6px;
   }
   .frameDownload{
-   position: fixed;
-   bottom: 5px;
+   position: absolute;
+   /* bottom: 5px; */
    width: 100%;
+   /* height: 100%; */
    text-align: center;
+   /* max-height: 90px; */
   }
   .grdDownload{
      margin-top:100px;

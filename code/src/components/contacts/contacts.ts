@@ -33,13 +33,11 @@ export class ContactsPage implements OnInit, OnDestroy {
       private navParams: NavParams,
       private view: ViewController,
       private fs: FirebaseService,
-      private appSrv: ApplicationService,
-      private modal: ModalController,
       private contacts: Contacts,
       private sanitizer: DomSanitizer
    ) {
       console.log('ContactsPage constructor')
-      if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
+      if (this.platform.is('cordova')) {   
          this.contacts.find(["*"],{multiple: true, hasPhoneNumber: true}).then(cts=>{
             this.phoneContacts = cts
          })

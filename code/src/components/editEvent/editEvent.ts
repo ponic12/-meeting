@@ -66,7 +66,7 @@ export class EditEventPage implements OnInit, OnDestroy {
       })
    }
    share() {
-      if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
+      if (this.platform.is('cordova')) {         
          //const url = "https://firebasestorage.googleapis.com/v0/b/events-12be3.appspot.com/o/MeetingMaster.apk?alt=media&token=66af8eb0-463c-44ed-a596-5a7b21ff5d8a"
          const url = 'https://events-12be3.firebaseapp.com?idevt=' + this.evt.id
          this.socialSharing.shareViaWhatsApp('Invitacion a evento!', '', url).then(() => {

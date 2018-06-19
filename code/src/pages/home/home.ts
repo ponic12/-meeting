@@ -45,7 +45,7 @@ export class HomePage implements OnInit, OnDestroy {
 
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
-         if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
+         if (this.platform.is('cordova')) {   
             this.initFCM()
          }
       })
@@ -226,7 +226,7 @@ export class HomePage implements OnInit, OnDestroy {
       return lst
    }
    private logout() {
-      if (((this.platform.is('mobileweb') == true) || (this.platform.is('core') == true)) == false) {
+      if (this.platform.is('cordova')) {   
          this.events.forEach(ev => {
             if (ev.owner == this.user.uid)
                FCMPlugin.unsubscribeFromTopic(ev.id)

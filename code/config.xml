@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.pp.meetingmaster" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.pp.meetingmaster" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Meeting Master</name>
-    <description>An awesome Ionic/Cordova app.</description>
+    <description>Meeting Master App</description>
     <author email="pablo.a.massad@gmail.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <universal-links>
     </universal-links>
@@ -103,4 +103,5 @@
     <allow-navigation href="http://192.168.1.105:8100" />
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
     <engine name="android" spec="6.4.0" />
+    <plugin name="cordova-plugin-googleplus" spec="^5.3.0" />
 </widget>

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage } from 'ionic-angular'
+import { NavController, IonicPage, ActionSheetController } from 'ionic-angular'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
 import { HttpClient } from '@angular/common/http'
 
@@ -18,15 +18,19 @@ export class LoginPage implements OnInit, OnDestroy {
    idevt: string;
 
    subUsr: Subscription
+   subNotify: Subscription
+   subAuth: Subscription
+
+   isLogged:boolean = false
    loginMode: string = "signIn"
    username: string
    displayName: string
-   email: string;
-   password: string;
-   todo: FormGroup;
-   obsAuth: any
+   email: string
+   password: string
+   todo: FormGroup
 
    constructor(
+      private actionCtrl: ActionSheetController,
       private appSrv: ApplicationService,
       private navCtrl: NavController,
       private authSrv: AuthService,
@@ -43,17 +47,22 @@ export class LoginPage implements OnInit, OnDestroy {
    ngOnDestroy() {
       console.warn('LoginPage destroy')
       this.subUsr.unsubscribe()
-      //this.obsAuth.unsubscribe()
+      this.subAuth.unsubscribe()
+      this.subNotify.unsubscribe()
    }
    ngOnInit() {
       console.log('LoginPage init');
-      this.obsAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
+      this.subAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
          if (data) {
+            this.isLogged = true
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
-               this.navCtrl.setRoot('HomePage', { usr: usr })
+               if (usr != null)
+                  this.navCtrl.setRoot('HomePage', { usr: usr })
+               else
+                  this.appSrv.message('Error', 'El usuario no esta registrado')
             })
          }
-      });
+      })
    }
    register(): void {
       this.authSrv.registerUser(this.email, this.password).then((res) => {
@@ -95,10 +104,42 @@ export class LoginPage implements OnInit, OnDestroy {
          console.log('Error: ', err.message)
       })
    }
+   googleLogin() {
+      this.authSrv.googleLogin().then(data=>{
+         this.redirectHome(data)
+      }).catch((err) => {
+         console.log('Error: ', err.message)
+      })
+   }
    loginFacebook() {
       this.authSrv.loginFacebook().then((data) => {
          this.redirectHome(data)
       })
+   }
+   openMenuSheet() {
+      let actionSheet = this.actionCtrl.create({
+         title: 'OPCIONES:',
+         cssClass: 'action-sheets-basic-page',
+         buttons: [
+            {
+               text: 'Salir',
+               handler: () => {
+                  console.log('Logout!!!');
+                  this.logout();
+               }
+            }, {
+               text: 'Cancelar',
+               role: 'cancel',
+               handler: () => {
+                  console.log('Cancel clicked');
+               }
+            }
+         ]
+      });
+      actionSheet.present();
+   }
+   logout(){
+      this.authSrv.signOutUser()
    }
    download() {
       this.fs.download('MeetingMaster.apk')
@@ -107,7 +148,7 @@ export class LoginPage implements OnInit, OnDestroy {
    private notifyMemberInEvent(uid){
       this.idevt = idEvtParam
       if (this.idevt){
-         this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/'+ this.idevt + '/' + uid)
+         this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/'+ this.idevt + '/' + uid)
          .subscribe(o=>{
             console.log('Notify ok: ', o)
          })

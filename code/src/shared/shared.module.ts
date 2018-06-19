@@ -4,6 +4,7 @@ import { IonicStorageModule } from '@ionic/storage'
 import { CommonModule } from '@angular/common'
 import { CoreModule } from '../shared/core/core.module'
 
+
 import { HoursComponent } from './components/hours/hours.component'
 import { ToolsBarComponent } from './components/tools-bar/tools-bar.component'
 
@@ -41,7 +42,7 @@ export class SharedModule {
          providers: [
             GlobalService,
             ApplicationService,
-            FirebaseService,
+            FirebaseService
             //   AngularFireAuth,
             //   AngularFireDatabase
          ]
