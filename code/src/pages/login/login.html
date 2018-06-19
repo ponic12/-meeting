@@ -1,24 +1,23 @@
 <ion-content class="login_back">
   <div class="grdLogin">
     <div></div>
-    <div>
-      <img src="assets/imgs/calendarIcon.png" style="width:80%; max-width:250px;">
+    <div style="justify-self: center">
+      <img src="assets/imgs/calendarIcon.png" style="max-width:200px;">
     </div>
-    <div>
-      <ion-avatar item-start (click)="openMenuSheet()" *ngIf="isLogged">
-        <img class="avatar" [src]="user.photoURL">
+    <div style="justify-self: right">
+      <ion-avatar item-start (click)="openMenuSheet()" *ngIf="isLogged" >
+        <img class="avatar" [src]="usr.photoURL">
       </ion-avatar>
     </div>
   </div>
-  <ion-row class="logoKM">
+  <!-- <ion-row class="logoKM">
     <ion-col col-3></ion-col>
     <ion-col style="text-align:center">
       <img src="assets/imgs/calendarIcon.png" style="width:80%; max-width:250px;">
     </ion-col>
     <ion-col col-3>
-
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
   <ng-template #content>content here...</ng-template>
   <!-- <user-profile></user-profile> -->

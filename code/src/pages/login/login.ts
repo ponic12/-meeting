@@ -15,13 +15,14 @@ import { Subscription } from 'rxjs'
    templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit, OnDestroy {
-   idevt: string;
+   idevt: string
+   isLogged:boolean = false
+   usr:any
 
    subUsr: Subscription
    subNotify: Subscription
    subAuth: Subscription
 
-   isLogged:boolean = false
    loginMode: string = "signIn"
    username: string
    displayName: string
@@ -53,8 +54,9 @@ export class LoginPage implements OnInit, OnDestroy {
    ngOnInit() {
       console.log('LoginPage init');
       this.subAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
+         this.isLogged = (data != undefined)
+         this.usr = data
          if (data) {
-            this.isLogged = true
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
                if (usr != null)
                   this.navCtrl.setRoot('HomePage', { usr: usr })

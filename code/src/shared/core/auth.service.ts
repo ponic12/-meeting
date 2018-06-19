@@ -8,7 +8,8 @@ import * as firebase from 'firebase/app'; // ANDROID
 
 import { AngularFireAuth } from 'angularfire2/auth'
 
-import { Observable } from 'rxjs/Rx';
+// import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable'
 import 'rxjs/operator/switchMap';
 
 import { User } from './user';
@@ -31,12 +32,16 @@ export class AuthService {
 
    verifyLoggedIn() {
       const res = this.afAuth.authState
-         .switchMap(user => {
-            if (user)
-               return Observable.of(user) // this.afs.doc(`users/${user.uid}`).valueChanges();
-            else
-               return Observable.of(null);
-         });
+         // .switchMap(d => {
+         //    if (d)
+         //       return Observable.of({
+         //          displayName:d.displayName,
+         //          email: d.email,
+         //          photoURL: d.photoURL
+         //       })// this.afs.doc(`users/${user.uid}`).valueChanges();
+         //    else
+         //       return Observable.of("")
+         // })
       return res
    }
    loginFacebook() {
