@@ -96,7 +96,6 @@
     </plugin>
     <plugin name="cordova-plugin-contacts" spec="3.0.1" />
     <plugin name="cordova-plugin-fcm" spec="2.1.2" />
-    <engine name="android" spec="6.4.0" />
     <plugin name="cordova-plugin-buildinfo" spec="2.0.1" />
     <plugin name="cordova-universal-links-plugin" spec="1.2.1" />
     <plugin name="cordova-plugin-browsertab" spec="0.2.0" />
@@ -107,4 +106,5 @@
         <variable name="ANDROID_HOST" value=" " />
         <variable name="ANDROID_PATHPREFIX" value="/" />
     </plugin>
+    <engine name="android" spec="6.4.0" />
 </widget>

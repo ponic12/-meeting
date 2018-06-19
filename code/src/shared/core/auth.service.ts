@@ -21,6 +21,7 @@ export class AuthService {
    //user: Observable<firebase.User>
 
    authState: any = null;
+   public userProfile: any = null;
 
 
    constructor(
@@ -31,7 +32,16 @@ export class AuthService {
       console.log('AuthService constructor')
       this.afAuth.authState.subscribe((auth) => {
          this.authState = auth
-      });
+      })
+
+      firebase.auth().onAuthStateChanged(user => {
+         if (user) {
+            console.log(user);
+            this.userProfile = user;
+         } else {
+            console.log("There's no user here");
+         }
+      })
    }
 
    verifyLoggedIn() {
@@ -91,7 +101,7 @@ export class AuthService {
       // });
    }
 
-   async signInUser(email, pass):Promise<any> {
+   async signInUser(email, pass): Promise<any> {
       try {
          const res = await this.afAuth.auth.signInWithEmailAndPassword(email, pass)
          console.log('Login x email')
@@ -101,19 +111,53 @@ export class AuthService {
          console.error(err)
       }
    }
-   async registerUser(email, pass):Promise<any> {
+   async registerUser(email, pass): Promise<any> {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, pass)
       console.log('Registration')
       return res
    }
 
-   loginGoogle():Promise<void> {
+   loginGooglePlus():Promise<any> {
+      console.log('Login x googlePlus')
       const provider = new firebase.auth.GoogleAuthProvider();
+      const p = firebase.auth().signInWithRedirect(provider)
+      .then(() => {
+         const q = firebase.auth().getRedirectResult()
+            .then(result => {
+               var token = result.credential.accessToken
+               var user = result.user
+               console.log(token, user)
+            }).catch(function (error) {
+               console.log(error.message)
+            });
+         return q
+      });
+      return p
+   }
+   loginGoogle(): Promise<void> {
       console.log('Login x google')
-      return this.socialSignIn(provider);
+      const provider = new firebase.auth.GoogleAuthProvider();
+      return this.socialSignIn(provider)
+
+
+      // firebase.auth().getRedirectResult()
+      //   .then(function(result) {
+      //     if (result.credential) {
+      //       var token = result.credential.accessToken;
+      //       var user = result.user;
+      //       console.log(token, user);
+      //     }
+      //   })
+      //   .catch(function(error) {
+      //     // Handle Errors here.
+      //     var errorMessage = error.message;
+      //     console.log(errorMessage);
+      //   });
+
+
    }
 
-   private socialSignIn(provider):Promise<any> {
+   private socialSignIn(provider): Promise<any> {
       // return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
       //    .then((credential) => {
       //       console.log('cred: ', credential)

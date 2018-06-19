@@ -97,7 +97,7 @@ export class LoginPage implements OnInit, OnDestroy {
       });
    }
    loginGoogle() {
-      this.authSrv.loginGoogle().then((data) => {
+      this.authSrv.loginGooglePlus().then((data) => {
          this.redirectHome(data)
       }).catch((err) => {
          console.log('Error: ', err.message)
