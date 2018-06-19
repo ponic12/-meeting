@@ -4,6 +4,7 @@
     <description>Meeting Master App</description>
     <author email="pablo.a.massad@gmail.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <universal-links>
+        <host name="zw8s9.app.goo.gl" scheme="https" />
         <host name="events-12be3.firebaseapp.com" scheme="https">
             <path url="/__/auth/callback" />
         </host>
@@ -104,6 +105,6 @@
     <plugin name="cordova-plugin-contacts" spec="^3.0.1" />
     <allow-navigation href="http://192.168.1.105:8100" />
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
-    <engine name="android" spec="6.4.0" />
     <plugin name="cordova-universal-links-plugin" spec="1.2.1" />
+    <engine name="android" spec="6.4.0" />
 </widget>
