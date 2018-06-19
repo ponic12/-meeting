@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 import { Platform } from 'ionic-angular'
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook'
 
-import { GooglePlus } from '@ionic-native/google-plus'
 import * as firebase from 'firebase/app'; // ANDROID
 //import firebase from 'firebase'   // WEB
 
@@ -24,7 +23,6 @@ export class AuthService {
    constructor(
       private platform: Platform,
       private afAuth: AngularFireAuth,
-      private gplus: GooglePlus,
       private facebook: Facebook
    ) {
       console.log('AuthService constructor')
@@ -86,13 +84,6 @@ export class AuthService {
       //     }
       // });
    }
-   signout(){
-      this.afAuth.auth.signOut()
-      if (this.platform.is('cordova')){
-         this.gplus.logout()
-      }
-   }
-
 
    async signInUser(email, pass) {
       try {
@@ -114,43 +105,15 @@ export class AuthService {
       const provider = new firebase.auth.GoogleAuthProvider();
       return this.oAuthLogin(provider);
    }
-   googleLogin(){
-      if (this.platform.is('cordova'))
-         return this.nativeGoogleLogin()
-      else
-         return this.webGoogleLogin()
-   }
-   async nativeGoogleLogin():Promise<any> {
-      try{
-         const gPlusUser = await this.gplus.login({
-             'webClientId':'Your web client id',
-             'offline':true,
-             'scopes':'profile email'
-         })
-         return await this.afAuth.auth.signInWithCredential(
-            firebase.auth.GoogleAuthProvider.credential(gPlusUser.idToken)
-         )
-      }
-      catch(err){
-         console.log('err', err) 
-      }
-   }
-   async webGoogleLogin():Promise<any> {
-      try {
-         const provider = new firebase.auth.GoogleAuthProvider()   
-         const credential = await this.afAuth.auth.signInWithPopup(provider)
-         return credential
-      } 
-      catch (error) {
-         console.log('err:', error)
-      }
-   }
 
    private oAuthLogin(provider) {
       return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
          .then((cred) => {
             console.log('cred: ', cred)
             return this.afAuth.auth.getRedirectResult()
+         })
+         .catch(err =>{
+            console.log('Error: ', err)
          })
    }
 }

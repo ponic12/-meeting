@@ -1,24 +1,11 @@
 <ion-content class="login_back">
   <div class="grdLogin">
     <div></div>
-    <div style="justify-self: center">
-      <img src="assets/imgs/calendarIcon.png" style="max-width:200px;">
+    <div style="justify-self: end">
+      <img src="assets/imgs/calendarIcon.png" style="max-width:150px;">
     </div>
-    <div style="justify-self: right">
-      <ion-avatar item-start (click)="openMenuSheet()" *ngIf="isLogged" >
-        <img class="avatar" [src]="usr.photoURL">
-      </ion-avatar>
-    </div>
+    <div></div>
   </div>
-  <!-- <ion-row class="logoKM">
-    <ion-col col-3></ion-col>
-    <ion-col style="text-align:center">
-      <img src="assets/imgs/calendarIcon.png" style="width:80%; max-width:250px;">
-    </ion-col>
-    <ion-col col-3>
-    </ion-col>
-  </ion-row> -->
-
   <ng-template #content>content here...</ng-template>
   <!-- <user-profile></user-profile> -->
   <div *ngIf="loginMode === 'signIn'">
@@ -49,7 +36,6 @@
       </ion-row>
       <ion-row>
         <ion-col>
-
         </ion-col>
         <ion-col style="text-align: center">
           <button (click)="loginGoogle()" class="btnGoogle" *ngIf="!isLogged">
@@ -57,9 +43,6 @@
           </button>
         </ion-col>
         <ion-col style="text-align: center">
-          <button (click)="googleLogin()" class="btnGoogle" *ngIf="!isLogged">
-            <img src="assets/imgs/googlesignin.png">
-          </button>
         </ion-col>
         <ion-col style="text-align: center">
           <button (click)="loginFacebook()" class="btnFacebook" type="submit">

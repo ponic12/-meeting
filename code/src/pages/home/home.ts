@@ -231,8 +231,8 @@ export class HomePage implements OnInit, OnDestroy {
             if (ev.owner == this.user.uid)
                FCMPlugin.unsubscribeFromTopic(ev.id)
          })
-         FCMPlugin.unsubscribeToTopic('config')
-         FCMPlugin.unsubscribeToTopic(this.user.uid)
+         FCMPlugin.unsubscribeFromTopic('config')
+         FCMPlugin.unsubscribeFromTopic(this.user.uid)
       }
       this.appSrv.message('Aviso', 'Saliendo...');
       this.authSrv.signOutUser();

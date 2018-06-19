@@ -19,11 +19,17 @@ page-login {
     box-shadow: 2px 2px 5px #000;
   }
   .grdLogin{
-     margin-top:40px;
-     display: grid;
-     grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 250px;
+    align-items: end;
   }
-
+  .userLogged{
+   justify-self: right;
+   align-self: start;
+   margin-top: 10px;
+   margin-right: 10px;
+  }
 
   .loginBtn {
     box-shadow: 2px 2px 5px #000;

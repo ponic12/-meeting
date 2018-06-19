@@ -16,9 +16,6 @@ import { Subscription } from 'rxjs'
 })
 export class LoginPage implements OnInit, OnDestroy {
    idevt: string
-   isLogged:boolean = false
-   usr:any
-
    subUsr: Subscription
    subNotify: Subscription
    subAuth: Subscription
@@ -49,19 +46,19 @@ export class LoginPage implements OnInit, OnDestroy {
       console.warn('LoginPage destroy')
       this.subUsr.unsubscribe()
       this.subAuth.unsubscribe()
-      this.subNotify.unsubscribe()
+      if (this.subNotify) this.subNotify.unsubscribe()
    }
    ngOnInit() {
       console.log('LoginPage init');
       this.subAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
-         this.isLogged = (data != undefined)
-         this.usr = data
          if (data) {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
                if (usr != null)
                   this.navCtrl.setRoot('HomePage', { usr: usr })
-               else
+               else{
+                  this.logout();
                   this.appSrv.message('Error', 'El usuario no esta registrado')
+               }
             })
          }
       })
@@ -106,39 +103,10 @@ export class LoginPage implements OnInit, OnDestroy {
          console.log('Error: ', err.message)
       })
    }
-   googleLogin() {
-      this.authSrv.googleLogin().then(data=>{
-         this.redirectHome(data)
-      }).catch((err) => {
-         console.log('Error: ', err.message)
-      })
-   }
    loginFacebook() {
       this.authSrv.loginFacebook().then((data) => {
          this.redirectHome(data)
       })
-   }
-   openMenuSheet() {
-      let actionSheet = this.actionCtrl.create({
-         title: 'OPCIONES:',
-         cssClass: 'action-sheets-basic-page',
-         buttons: [
-            {
-               text: 'Salir',
-               handler: () => {
-                  console.log('Logout!!!');
-                  this.logout();
-               }
-            }, {
-               text: 'Cancelar',
-               role: 'cancel',
-               handler: () => {
-                  console.log('Cancel clicked');
-               }
-            }
-         ]
-      });
-      actionSheet.present();
    }
    logout(){
       this.authSrv.signOutUser()
