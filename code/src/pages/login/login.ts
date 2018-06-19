@@ -131,6 +131,7 @@ export class LoginPage implements OnInit, OnDestroy {
    private redirectHome(data) {
       console.log('login provider: ' + data)
       const usr = {
+         uid: this.getUid(data.email),
          displayName: data.displayName,
          email: data.email,
          photoURL: data.photoURL

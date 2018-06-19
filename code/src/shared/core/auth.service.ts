@@ -20,30 +20,36 @@ export class AuthService {
    user: Observable<firebase.User>
    //user: Observable<firebase.User>
 
+   authState: any = null;
+
+
    constructor(
       private platform: Platform,
       private afAuth: AngularFireAuth,
       private facebook: Facebook
    ) {
       console.log('AuthService constructor')
+      this.afAuth.authState.subscribe((auth) => {
+         this.authState = auth
+      });
    }
 
    verifyLoggedIn() {
       const res = this.afAuth.authState
-         // .switchMap(d => {
-         //    if (d)
-         //       return Observable.of({
-         //          displayName:d.displayName,
-         //          email: d.email,
-         //          photoURL: d.photoURL
-         //       })// this.afs.doc(`users/${user.uid}`).valueChanges();
-         //    else
-         //       return Observable.of("")
-         // })
+      // .switchMap(d => {
+      //    if (d)
+      //       return Observable.of({
+      //          displayName:d.displayName,
+      //          email: d.email,
+      //          photoURL: d.photoURL
+      //       })// this.afs.doc(`users/${user.uid}`).valueChanges();
+      //    else
+      //       return Observable.of("")
+      // })
       return res
    }
    loginFacebook() {
-      if (this.platform.is('cordova')) {   
+      if (this.platform.is('cordova')) {
          return this.facebook.login(['public_profile', 'email']).then(res => {
             const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
             return firebase.auth().signInWithCredential(facebookCredential)
@@ -85,35 +91,42 @@ export class AuthService {
       // });
    }
 
-   async signInUser(email, pass) {
+   async signInUser(email, pass):Promise<any> {
       try {
          const res = await this.afAuth.auth.signInWithEmailAndPassword(email, pass)
-         console.log('Login x email: ' + res)
+         console.log('Login x email')
          return res
       }
       catch (err) {
          console.error(err)
       }
    }
-   async registerUser(email, pass) {
+   async registerUser(email, pass):Promise<any> {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, pass)
-      console.log(res)
+      console.log('Registration')
       return res
    }
 
-   loginGoogle() {
+   loginGoogle():Promise<void> {
       const provider = new firebase.auth.GoogleAuthProvider();
-      return this.oAuthLogin(provider);
+      console.log('Login x google')
+      return this.socialSignIn(provider);
    }
 
-   private oAuthLogin(provider) {
-      return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
-         .then((cred) => {
-            console.log('cred: ', cred)
-            return this.afAuth.auth.getRedirectResult()
+   private socialSignIn(provider):Promise<any> {
+      // return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
+      //    .then((credential) => {
+      //       console.log('cred: ', credential)
+      //       return this.afAuth.auth.getRedirectResult()
+      //    })
+      //    .catch(error => console.log(error));
+
+      return this.afAuth.auth.signInWithPopup(provider)
+         .then((credential) => {
+            console.log('Cred: ', credential)
+            this.authState = credential.user
+            return this.authState
          })
-         .catch(err =>{
-            console.log('Error: ', err)
-         })
+         .catch(error => console.log(error));
    }
 }
