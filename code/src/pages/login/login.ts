@@ -55,7 +55,7 @@ export class LoginPage implements OnInit, OnDestroy {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
                if (usr != null)
                   this.navCtrl.setRoot('HomePage', { usr: usr })
-               else{
+               else {
                   this.logout();
                   this.appSrv.message('Error', 'El usuario no esta registrado')
                }
@@ -98,44 +98,53 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    loginGoogle() {
       this.authSrv.loginGooglePlus().then((data) => {
-         this.redirectHome(data)
+         var token = data.credential.accessToken
+         const usr = {
+            uid: this.getUid(data.user.email),
+            displayName: data.user.displayName,
+            email: data.user.email,
+            photoURL: data.user.photoURL
+         }
+         console.log(token, data.user)
+         this.redirectHome(usr)
       }).catch((err) => {
          console.log('Error: ', err.message)
       })
    }
    loginFacebook() {
       this.authSrv.loginFacebook().then((data) => {
-         this.redirectHome(data)
+         const info = data.additionalUserInfo.profile
+         const usr = {
+            uid: this.getUid(info.email),
+            displayName: info.name,
+            email: info.email,
+            photoURL: info.picture.data.url
+         }
+         this.redirectHome(usr)
       })
    }
-   logout(){
+   logout() {
       this.authSrv.signOutUser()
    }
    download() {
       this.fs.download('MeetingMaster.apk')
    }
 
-   private notifyMemberInEvent(uid){
+   private notifyMemberInEvent(uid) {
       this.idevt = idEvtParam
-      if (this.idevt){
-         this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/'+ this.idevt + '/' + uid)
-         .subscribe(o=>{
-            console.log('Notify ok: ', o)
-         })
+      if (this.idevt) {
+         this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/' + this.idevt + '/' + uid)
+            .subscribe(o => {
+               console.log('Notify ok: ', o)
+            })
          // .catch((error, caught) => {
          //     console.log('Error HTTPS: ', error)
          //     return caught //Observable.throw(error);
          // }) as any;         // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
       }
    }
-   private redirectHome(data) {
-      console.log('login provider: ' + data)
-      const usr = {
-         uid: this.getUid(data.email),
-         displayName: data.displayName,
-         email: data.email,
-         photoURL: data.photoURL
-      }
+   private redirectHome(usr) {
+      console.log('login provider: ' + usr)
       this.fs.updateUser(usr)
       this.navCtrl.setRoot('HomePage', { usr: usr })
    }

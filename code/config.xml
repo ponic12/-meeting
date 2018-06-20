@@ -5,7 +5,7 @@
     <author email="pablo.a.massad@gmail.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <universal-links>
         <host name="zw8s9.app.goo.gl" scheme="https" />
-        <host name="events-12be3.firebaseio.com" scheme="https">
+        <host name="events-12be3.firebaseapp.com" scheme="https">
             <path url="/__/auth/callback" />
         </host>
     </universal-links>

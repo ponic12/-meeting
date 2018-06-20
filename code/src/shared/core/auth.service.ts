@@ -44,7 +44,7 @@ export class AuthService {
       })
    }
 
-   verifyLoggedIn() {
+   verifyLoggedIn():Observable<any> {
       const res = this.afAuth.authState
       // .switchMap(d => {
       //    if (d)
@@ -117,44 +117,21 @@ export class AuthService {
       return res
    }
 
-   loginGooglePlus():Promise<any> {
-      console.log('Login x googlePlus')
-      const provider = new firebase.auth.GoogleAuthProvider();
-      const p = firebase.auth().signInWithRedirect(provider)
-      .then(() => {
-         const q = firebase.auth().getRedirectResult()
-            .then(result => {
-               var token = result.credential.accessToken
-               var user = result.user
-               console.log(token, user)
-            }).catch(function (error) {
-               console.log(error.message)
-            });
-         return q
-      });
-      return p
+   async loginGooglePlus(): Promise<any> {
+      try {
+         console.log('Login x googlePlus')
+         const provider = new firebase.auth.GoogleAuthProvider();
+         await firebase.auth().signInWithRedirect(provider)
+         return firebase.auth().getRedirectResult()
+      }
+      catch (err) {
+         console.log(err.message)
+      }
    }
    loginGoogle(): Promise<void> {
       console.log('Login x google')
       const provider = new firebase.auth.GoogleAuthProvider();
       return this.socialSignIn(provider)
-
-
-      // firebase.auth().getRedirectResult()
-      //   .then(function(result) {
-      //     if (result.credential) {
-      //       var token = result.credential.accessToken;
-      //       var user = result.user;
-      //       console.log(token, user);
-      //     }
-      //   })
-      //   .catch(function(error) {
-      //     // Handle Errors here.
-      //     var errorMessage = error.message;
-      //     console.log(errorMessage);
-      //   });
-
-
    }
 
    private socialSignIn(provider): Promise<any> {
