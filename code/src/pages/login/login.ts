@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage, ActionSheetController } from 'ionic-angular'
+import { NavController, IonicPage } from 'ionic-angular'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
-import { HttpClient } from '@angular/common/http'
 
 import { AuthService } from '../../shared/core/auth.service'
 import { ApplicationService } from '../../shared/services/application.service'
@@ -15,9 +14,7 @@ import { Subscription } from 'rxjs'
    templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit, OnDestroy {
-   idevt: string
    subUsr: Subscription
-   subNotify: Subscription
    subAuth: Subscription
 
    loginMode: string = "signIn"
@@ -28,13 +25,11 @@ export class LoginPage implements OnInit, OnDestroy {
    todo: FormGroup
 
    constructor(
-      private actionCtrl: ActionSheetController,
       private appSrv: ApplicationService,
       private navCtrl: NavController,
       private authSrv: AuthService,
       private formBuilder: FormBuilder,
-      private fs: FirebaseService,
-      public http: HttpClient
+      private fs: FirebaseService
    ) {
       console.log('LoginPage constructor');
       this.todo = this.formBuilder.group({
@@ -46,7 +41,6 @@ export class LoginPage implements OnInit, OnDestroy {
       console.warn('LoginPage destroy')
       this.subUsr.unsubscribe()
       this.subAuth.unsubscribe()
-      if (this.subNotify) this.subNotify.unsubscribe()
    }
    ngOnInit() {
       console.log('LoginPage init');
@@ -89,7 +83,6 @@ export class LoginPage implements OnInit, OnDestroy {
          else {
             const uid = this.getUid(data.email)
             this.subUsr = this.fs.getUserById(uid).subscribe(usr => {
-               this.notifyMemberInEvent(uid)
                this.navCtrl.setRoot('HomePage', { usr: usr })
             })
          }
@@ -131,19 +124,6 @@ export class LoginPage implements OnInit, OnDestroy {
       this.fs.download('MeetingMaster.apk')
    }
 
-   private notifyMemberInEvent(uid) {
-      this.idevt = idEvtParam
-      if (this.idevt) {
-         this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/' + this.idevt + '/' + uid)
-            .subscribe(o => {
-               console.log('Notify ok: ', o)
-            })
-         // .catch((error, caught) => {
-         //     console.log('Error HTTPS: ', error)
-         //     return caught //Observable.throw(error);
-         // }) as any;         // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
-      }
-   }
    private redirectHome(usr) {
       console.log('login provider: ' + usr)
       this.fs.updateUser(usr)

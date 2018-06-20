@@ -4,6 +4,7 @@ import { ApplicationService } from '../../shared/services/application.service'
 import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
+import { HttpClient } from '@angular/common/http'
 
 import { Subscription } from 'rxjs';
 
@@ -13,7 +14,7 @@ import { Subscription } from 'rxjs';
    templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {
-   message:any
+   idevt: string
    title: string = "Meeting Master"
    user: any
    community: any[]
@@ -24,6 +25,7 @@ export class HomePage implements OnInit, OnDestroy {
    searchText: string
    sortField: string = 'creationDate'
    direction: boolean = false
+   private subNotify: Subscription
    private subEvt: Subscription
    private subCom: Subscription
 
@@ -36,6 +38,7 @@ export class HomePage implements OnInit, OnDestroy {
       private authSrv: AuthService,
       private modal: ModalController,
       private platform: Platform,
+      private http: HttpClient,
       private fs: FirebaseService
    ) {
       console.log('HomePage contructor')
@@ -44,7 +47,7 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      
+      this.notifyMemberInEvent(this.user.uid)
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
          if (this.platform.is('cordova')) {   
@@ -63,6 +66,10 @@ export class HomePage implements OnInit, OnDestroy {
       console.log('HomePage destroy')
       this.subEvt.unsubscribe()
       this.subCom.unsubscribe()
+      if (this.subNotify) this.subNotify.unsubscribe()
+   }
+   showUserInfo(){
+      this.appSrv.message('Usuario logueado: ', this.user.displayName )
    }
    doRefresh(refresher){
       console.log('Begin async operation', refresher);
@@ -171,6 +178,21 @@ export class HomePage implements OnInit, OnDestroy {
          return "arrow-dropdown"
       else
          return "arrow-dropup"
+   }
+
+
+   private notifyMemberInEvent(uid) {
+      this.idevt = idEvtParam
+      if (this.idevt) {
+         this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/' + this.idevt + '/' + uid)
+            .subscribe(o => {
+               console.log('Notify ok: ', o)
+            })
+         // .catch((error, caught) => {
+         //     console.log('Error HTTPS: ', error)
+         //     return caught //Observable.throw(error);
+         // }) as any;         // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
+      }
    }
    private initFCM() {
       this.events.forEach(ev => {
