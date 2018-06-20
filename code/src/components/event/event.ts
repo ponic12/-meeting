@@ -20,7 +20,7 @@ export class EventPage implements OnInit, OnDestroy {
    weekData: any
    weekDataKeys: any = []
    assistants: any
-   editMode: boolean = true
+   editMode: boolean = false
    allDayFlag: boolean = false
    dirtyFlag: boolean = false
    selectionItemsKeys: string[] = []
@@ -61,9 +61,10 @@ export class EventPage implements OnInit, OnDestroy {
    ///////////////////////////
    // Calendario
    //////////////////////////
-   showAssistants(ev, d) {
-      this.editMode = this.checkEditMode()
-      if (this.editMode === true) {
+   editCell(ev, d) {
+      //this.editMode = this.checkEditMode()
+      if ((this.editMode == true)&&(moment(d, 'YYMMDD').toDate() > moment().toDate())) {
+         this.dirtyFlag = true
          let idx = -1;
          let hours = []
 
@@ -88,7 +89,7 @@ export class EventPage implements OnInit, OnDestroy {
          }
       }
 
-      if (this.editMode === false) {
+      if (this.editMode == false){
          this.membersFull.forEach(m => {
             let obj = ev.members.find(uid => uid === m.uid)
             m.present = (obj != undefined)
@@ -98,8 +99,10 @@ export class EventPage implements OnInit, OnDestroy {
       }
    }
    toggleAllDay(d) {
-      this.editMode = this.checkEditMode()
+      //this.editMode = this.checkEditMode()
       if (this.editMode === true) {
+         this.dirtyFlag = true
+
          if (!this.evt.availability[this.user.uid])
             this.evt.availability[this.user.uid] = {}
 
@@ -250,7 +253,9 @@ export class EventPage implements OnInit, OnDestroy {
       this.fs.saveEvent(this.evt)
       this.dirtyFlag = false
    }
-
+   toggleEditMode(){
+      this.editMode = !this.editMode
+   }
 
 
    private selectAllMembers() {

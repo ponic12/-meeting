@@ -47,8 +47,7 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      if (idEvtParam != null)
-         this.notifyMemberInEvent(this.user.uid)
+      this.notifyMemberInEvent(this.user.uid)
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
          if (this.platform.is('cordova')) {   
@@ -65,8 +64,8 @@ export class HomePage implements OnInit, OnDestroy {
    }
    ngOnDestroy() {
       console.log('HomePage destroy')
-      this.subEvt.unsubscribe()
-      this.subCom.unsubscribe()
+      if (this.subCom) this.subCom.unsubscribe()
+      if (this.subEvt) this.subEvt.unsubscribe()
       if (this.subNotify) this.subNotify.unsubscribe()
    }
    showUserInfo(){
@@ -183,10 +182,15 @@ export class HomePage implements OnInit, OnDestroy {
 
 
    private notifyMemberInEvent(uid) {
-      this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/' + idEvtParam + '/' + uid)
-      .subscribe(o => {
-         console.log('Notify ok: ', o)
-      })
+      try {
+         if (!idEvtParam) return
+         this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/' + idEvtParam + '/' + uid)
+         .subscribe(o => {
+            console.log('Notify ok: ', o)
+         })
+      } catch (error) {
+         console.log(error)
+      }
    }
    private initFCM() {
       this.events.forEach(ev => {

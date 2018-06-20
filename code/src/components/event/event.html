@@ -23,7 +23,7 @@
           {{evt.ownerName}}
         </div>
         <div class="item evtUltMod">
-          <strong>Ult.mod: </strong>
+          <strong>Fecha:</strong>
           {{evt.modificationDate | date:'dd/MM/yyyy HH:mm'}}
         </div>
       </div>
@@ -68,7 +68,7 @@
             </div>
             <div class="grdCalendar">
               <div *ngFor="let d of weekDataKeys">
-                <hours [dictionary]="weekData[d].info" [max]="totalMembers" (selectedCell)="showAssistants($event, d)"></hours>
+                <hours [dictionary]="weekData[d].info" [max]="totalMembers" (selectedCell)="editCell($event, d)"></hours>
               </div>
             </div>
           </div>
@@ -134,10 +134,22 @@
           <ion-icon name="rewind" class=""></ion-icon>
         </button>
       </div>
-      <button ion-button (click)="save()" color="primary">
-        <ion-icon name="archive"></ion-icon>
-        <span style="margin-left:10px">Guardar</span>
-      </button>
+      <div>
+        <button class="btnRound" (click)="showComments()">
+          <ion-icon name="list-box"></ion-icon>
+        </button>
+      </div>
+      <div>
+        <button ion-button (click)="save()" color="primary" [disabled]="!dirtyFlag">
+          <ion-icon name="archive"></ion-icon>
+          <span style="margin-left:10px">Guardar</span>
+        </button>
+      </div>
+      <div>
+        <button class="btnRound" (click)="toggleEditMode()" [ngClass]="{'btnRoundON':(this.editMode === true)}">
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </div>
       <div>
         <button ion-button (click)="nextWeek()" color="dark" *ngIf="evt.type==='calendario'">
           <ion-icon name="fastforward" class=""></ion-icon>
@@ -145,9 +157,4 @@
       </div>
     </div>
   </div>
-  <ion-fab class="btnComments">
-    <button ion-fab mini (click)="showComments()">
-      <ion-icon name="list-box"></ion-icon>
-    </button>
-  </ion-fab>
 </ion-content>

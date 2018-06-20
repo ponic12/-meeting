@@ -92,6 +92,7 @@ export class EditEventPage implements OnInit, OnDestroy {
    addItem() {
       this.selectionItems[this.newItem] = {}
       this.updateSelectionKeys()
+      this.newItem = ""
    }
    removeItem(item) {
       delete this.selectionItems[item]
