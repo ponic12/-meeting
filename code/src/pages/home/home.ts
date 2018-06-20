@@ -47,7 +47,8 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-      this.notifyMemberInEvent(this.user.uid)
+      if (idEvtParam != null)
+         this.notifyMemberInEvent(this.user.uid)
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
          if (this.platform.is('cordova')) {   
@@ -182,17 +183,10 @@ export class HomePage implements OnInit, OnDestroy {
 
 
    private notifyMemberInEvent(uid) {
-      this.idevt = idEvtParam
-      if (this.idevt) {
-         this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/' + this.idevt + '/' + uid)
-            .subscribe(o => {
-               console.log('Notify ok: ', o)
-            })
-         // .catch((error, caught) => {
-         //     console.log('Error HTTPS: ', error)
-         //     return caught //Observable.throw(error);
-         // }) as any;         // Call HttpRequest to communicate new User to Event's Owner (this.idevt)
-      }
+      this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/' + idEvtParam + '/' + uid)
+      .subscribe(o => {
+         console.log('Notify ok: ', o)
+      })
    }
    private initFCM() {
       this.events.forEach(ev => {
@@ -240,12 +234,17 @@ export class HomePage implements OnInit, OnDestroy {
    private getMembersFull(ev) {
       const lst: any = []
       if (ev.members) {
-         this.contactsFull.forEach(p => {
-            const sel = (ev.members[p.uid])
-            if (sel == true) {
-               lst.push(p)
-            }
-         });
+         Object.keys(ev.members).forEach(m =>{
+            const mem = this.community.find(c => c.uid == m)
+            if (mem)
+               lst.push(mem)
+         })
+         // this.community.forEach(p => {
+         //    const sel = (ev.members[p.uid])
+         //    if (sel == true) {
+         //       lst.push(p)
+         //    }
+         // });
       }
       return lst
    }

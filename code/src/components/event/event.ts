@@ -24,7 +24,7 @@ export class EventPage implements OnInit, OnDestroy {
    allDayFlag: boolean = false
    dirtyFlag: boolean = false
    selectionItemsKeys: string[] = []
-   status:string = 'checked'
+   status: string = 'checked'
    private maxValue: number = 0
 
    constructor(
@@ -67,25 +67,28 @@ export class EventPage implements OnInit, OnDestroy {
          let idx = -1;
          let hours = []
 
-         hours = this.evt.availability[this.evt.owner][d]
+         if (!this.evt.availability[this.user.uid]) 
+            this.evt.availability[this.user.uid] = {}
+         hours = this.evt.availability[this.user.uid][d]
          if (!hours) {
-            this.evt.availability[this.evt.owner][d] = []
-            hours = this.evt.availability[this.evt.owner][d]
+            this.evt.availability[this.user.uid][d] = []
+            hours = this.evt.availability[this.user.uid][d]
          }
          idx = hours.indexOf(ev.hour.toString())
          if (idx == -1) {
             hours.push(ev.hour.toString())
             ev.value = ev.value + 1
-            ev.members.push(this.evt.owner)
+            ev.members.push(this.user.uid)
          }
          else {
             hours.splice(idx, 1)
             ev.value = ev.value - 1
-            const idm = ev.members.indexOf(this.evt.owner)
+            const idm = ev.members.indexOf(this.user.uid)
             ev.members.splice(idm, 1)
          }
       }
-      else {
+
+      if (this.editMode === false) {
          this.membersFull.forEach(m => {
             let obj = ev.members.find(uid => uid === m.uid)
             m.present = (obj != undefined)
@@ -97,21 +100,24 @@ export class EventPage implements OnInit, OnDestroy {
    toggleAllDay(d) {
       this.editMode = this.checkEditMode()
       if (this.editMode === true) {
+         if (!this.evt.availability[this.user.uid])
+            this.evt.availability[this.user.uid] = {}
+
          this.allDayFlag = !this.allDayFlag
          if (this.allDayFlag == true) {
+            if (!this.evt.availability[this.user.uid][d])
+               this.evt.availability[this.user.uid][d] = []
+
             for (let i = 0; i < 24; i++) {
-               if (!this.evt.availability[this.evt.owner][d]) {
-                  this.evt.availability[this.evt.owner][d] = []
-               }
-               if (this.allDayFlag == true) {
-                  this.evt.availability[this.evt.owner][d].push(i.toString())
-                  this.weekData[d].info[i].value = 1
-                  this.weekData[d].info[i].members.push(this.evt.owner.uid)
-               }
+               this.evt.availability[this.user.uid][d].push(i.toString())
+               this.weekData[d].info[i].hour = i
+               this.weekData[d].info[i].value = 1
+               this.weekData[d].info[i].members.push(this.user.uid)
             }
          }
-         else {
-            this.evt.availability[this.evt.owner][d] = []
+         if (this.allDayFlag == false) {
+            if (this.evt.availability[this.user.uid][d])
+               delete this.evt.availability[this.user.uid][d]
             for (let i = 0; i < 24; i++) {
                this.weekData[d].info[i] = { hour: i, value: 0, members: [] }
             }
@@ -134,10 +140,10 @@ export class EventPage implements OnInit, OnDestroy {
    /////////////////////
    // Seleccion
    /////////////////////
-   onSelChange(ev, item){
+   onSelChange(ev, item) {
       this.evt.selectionItems[item][this.user.uid] = ev.checked
    }
-   onRatingChange(ev){
+   onRatingChange(ev) {
       console.log('rating... ')
    }
    showSelMembers(item) {
@@ -148,13 +154,13 @@ export class EventPage implements OnInit, OnDestroy {
       const uids = this.evt.selectionItems[item]
       const keys = Object.keys(uids)
       const total = keys.length
-      let res:number = 0
-      if (this.evt.type == 'clasificacion'){
+      let res: number = 0
+      if (this.evt.type == 'clasificacion') {
          let sum = 0
-         keys.forEach(k=>{
+         keys.forEach(k => {
             sum = sum + uids[k]
          })
-         res = sum/total
+         res = sum / total
       }
       else
          res = total
@@ -247,7 +253,7 @@ export class EventPage implements OnInit, OnDestroy {
 
 
 
-   private selectAllMembers(){
+   private selectAllMembers() {
       this.membersFull.forEach(m => {
          m.selected = true
       });

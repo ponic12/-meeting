@@ -40,7 +40,9 @@
         hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
       return hash
     }
-    idEvtParam = getHash();
+    var res = getHash();
+    if ((res)&&(res.length > 7))
+      idEvtParam = res;
 
   </script>
   <!-- Ionic's root component and where the app will load -->
