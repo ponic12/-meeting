@@ -4,6 +4,8 @@ import { ApplicationService } from '../../shared/services/application.service'
 import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
+import { MessagingService } from '../../shared/services/messaging.service';
+
 import { Subscription } from 'rxjs';
 
 @IonicPage()
@@ -12,6 +14,7 @@ import { Subscription } from 'rxjs';
    templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {
+   message:any
    title: string = "Meeting Master"
    user: any
    community: any[]
@@ -32,6 +35,7 @@ export class HomePage implements OnInit, OnDestroy {
       private appSrv: ApplicationService,
       private globalSrv: GlobalService,
       private authSrv: AuthService,
+      private msgSrv: MessagingService,
       private modal: ModalController,
       private platform: Platform,
       private fs: FirebaseService
@@ -42,7 +46,10 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
-
+      this.msgSrv.getPermission()
+      this.msgSrv.receiveMessage()
+      this.message = this.msgSrv.currentMessage
+      
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
          if (this.platform.is('cordova')) {   

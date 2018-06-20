@@ -55,9 +55,10 @@ export class LoginPage implements OnInit, OnDestroy {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
                if (usr != null)
                   this.navCtrl.setRoot('HomePage', { usr: usr })
-               else {
-                  this.logout();
-                  this.appSrv.message('Error', 'El usuario no esta registrado')
+               else { // New User
+                  this.fs.addUser(usr).then(x => {
+                     this.appSrv.message('Atencion', 'Usuario registrado OK!')
+                  })
                }
             })
          }
@@ -97,7 +98,7 @@ export class LoginPage implements OnInit, OnDestroy {
       });
    }
    loginGoogle() {
-      this.authSrv.loginGooglePlus().then((data) => {
+      this.authSrv.loginGoogle().then((data) => {
          var token = data.credential.accessToken
          const usr = {
             uid: this.getUid(data.user.email),

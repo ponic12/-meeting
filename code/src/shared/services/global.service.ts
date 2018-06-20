@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Injectable } from '@angular/core'
+import { Storage } from '@ionic/storage'
+import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
 @Injectable()
 export class GlobalService {

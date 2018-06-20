@@ -6,23 +6,13 @@ import * as firebase from 'firebase/app'; // ANDROID
 //import firebase from 'firebase'   // WEB
 
 import { AngularFireAuth } from 'angularfire2/auth'
-
-// import { Observable } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/operator/switchMap';
-
-import { User } from './user';
-import { FirebaseApp } from 'angularfire2';
 
 
 @Injectable()
 export class AuthService {
-   user: Observable<firebase.User>
-   //user: Observable<firebase.User>
-
    authState: any = null;
-   public userProfile: any = null;
-
 
    constructor(
       private platform: Platform,
@@ -33,36 +23,17 @@ export class AuthService {
       this.afAuth.authState.subscribe((auth) => {
          this.authState = auth
       })
-
-      firebase.auth().onAuthStateChanged(user => {
-         if (user) {
-            console.log(user);
-            this.userProfile = user;
-         } else {
-            console.log("There's no user here");
-         }
-      })
    }
 
    verifyLoggedIn():Observable<any> {
       const res = this.afAuth.authState
-      // .switchMap(d => {
-      //    if (d)
-      //       return Observable.of({
-      //          displayName:d.displayName,
-      //          email: d.email,
-      //          photoURL: d.photoURL
-      //       })// this.afs.doc(`users/${user.uid}`).valueChanges();
-      //    else
-      //       return Observable.of("")
-      // })
       return res
    }
    loginFacebook() {
       if (this.platform.is('cordova')) {
          return this.facebook.login(['public_profile', 'email']).then(res => {
             const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
-            return firebase.auth().signInWithCredential(facebookCredential)
+            return this.afAuth.auth.signInWithCredential(facebookCredential)
          })
       }
       else {
@@ -117,37 +88,15 @@ export class AuthService {
       return res
    }
 
-   async loginGooglePlus(): Promise<any> {
+   async loginGoogle(): Promise<any> {
       try {
          console.log('Login x googlePlus')
          const provider = new firebase.auth.GoogleAuthProvider();
-         await firebase.auth().signInWithRedirect(provider)
-         return firebase.auth().getRedirectResult()
+         await this.afAuth.auth.signInWithRedirect(provider)
+         return this.afAuth.auth.getRedirectResult()
       }
       catch (err) {
          console.log(err.message)
       }
-   }
-   loginGoogle(): Promise<void> {
-      console.log('Login x google')
-      const provider = new firebase.auth.GoogleAuthProvider();
-      return this.socialSignIn(provider)
-   }
-
-   private socialSignIn(provider): Promise<any> {
-      // return this.afAuth.auth.signInWithRedirect(provider)// signInwithPopup para Browser
-      //    .then((credential) => {
-      //       console.log('cred: ', credential)
-      //       return this.afAuth.auth.getRedirectResult()
-      //    })
-      //    .catch(error => console.log(error));
-
-      return this.afAuth.auth.signInWithPopup(provider)
-         .then((credential) => {
-            console.log('Cred: ', credential)
-            this.authState = credential.user
-            return this.authState
-         })
-         .catch(error => console.log(error));
    }
 }
