@@ -3,7 +3,6 @@ import { IonicPageModule } from 'ionic-angular'
 import { CommonModule } from '@angular/common'
 import { OrderModule } from 'ngx-order-pipe'
 
-import { SocialSharing } from '@ionic-native/social-sharing'
 import { CommentsPage } from './comments'
 import { SharedModule} from '../../shared/shared.module'
 import { PipesModule } from '../../shared/pipes/pipes.module';
@@ -22,7 +21,7 @@ import { PipesModule } from '../../shared/pipes/pipes.module';
       IonicPageModule.forChild(CommentsPage)
    ],
    exports: [CommentsPage],
-   providers: [SocialSharing]
+   providers: []
 })
 
 export class CommentsPageModule {

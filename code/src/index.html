@@ -34,16 +34,14 @@
 
 <body>
   <script>
-    function getParameterByName(name) {
-      const url = window.location.href;
-      name = name.replace(/[\[\]]/g, "\\$&");
-      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    function getHash() {
+      var hash
+      if (window.location.hash)
+        hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+      return hash
     }
-    idEvtParam = getParameterByName('idevt')
+    idEvtParam = getHash();
+
   </script>
   <!-- Ionic's root component and where the app will load -->
   <ion-app></ion-app>

@@ -1,13 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events,ModalController, Modal, Platform } from 'ionic-angular';
-import { SocialSharing } from '@ionic-native/social-sharing'
+import { IonicPage, ViewController, NavParams, Platform } from 'ionic-angular'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
-import * as moment from 'moment'
-import { Subscription } from 'rxjs';
+import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts'
 import { Observable } from 'rxjs/Observable'
 
-import { ApplicationService } from '../../shared/services/application.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
 
 
