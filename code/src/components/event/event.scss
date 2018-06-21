@@ -235,8 +235,8 @@ page-event {
     border-radius: 50%;
     background: rgb(170, 170, 170);
     opacity: .5;
-    box-shadow: 4px 4px 10px #444;
-    filter: blur(2px);
+    box-shadow: 8px 8px 20px #444;
+   //  filter: blur(2px);
   }
   .voteYes {
     justify-self: right;
@@ -248,13 +248,13 @@ page-event {
   .selYes {
     background: #74ce74;
     opacity: 1;
-    filter: blur(0px);
+   //  filter: blur(0px);
     box-shadow: 1px 1px 2px #444;
   }
   .selNo {
     background: #f74d4d;
     opacity: 1;
-    filter: blur(0px);
+   //  filter: blur(0px);
     box-shadow: 1px 1px 2px #444;
   }
   .voteNo {

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common'
 import { Ionic2RatingModule } from 'ionic2-rating'
 
 import { EventPage } from './event'
-import { EventService } from './event.service'
 import { SharedModule } from '../../shared/shared.module'
 
 
@@ -19,7 +18,7 @@ import { SharedModule } from '../../shared/shared.module'
       Ionic2RatingModule
    ],
    exports: [EventPage],
-   providers: [EventService]
+   providers: []
 })
 
 export class EventPageModule {

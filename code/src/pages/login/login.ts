@@ -49,11 +49,8 @@ export class LoginPage implements OnInit, OnDestroy {
          this.appSrv.hideLoading()
          if (data) {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
-               if (usr != null) {
-                  this.navCtrl.insert(0, 'HomePage', { usr: usr });
-                  this.navCtrl.popToRoot();
-                  //this.navCtrl.setRoot('HomePage', { usr: usr })
-               }
+               if (usr != null) 
+                  this.redirectHome(usr)
                else { // New User
                   const u = {
                      contacts:{},
@@ -91,16 +88,16 @@ export class LoginPage implements OnInit, OnDestroy {
    signin() {
       this.appSrv.showLoading()
       this.authSrv.signInUser(this.email, this.password).then(data => {
-         if (data === undefined)
+         if (data === undefined){
+            this.appSrv.hideLoading()
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
-         else {
-            const uid = this.getUid(data.email)
-            this.subUsr = this.fs.getUserById(uid).subscribe(usr => {
-               this.navCtrl.insert(0, 'HomePage', { usr: usr });
-               this.navCtrl.popToRoot();
-            })
          }
-         this.appSrv.hideLoading()
+         // else {
+         //    const uid = this.getUid(data.email)
+         //    this.subUsr = this.fs.getUserById(uid).subscribe(usr => {
+         //       this.redirectHome(usr)
+         //    })
+         //}
       }).catch(err => {
          this.appSrv.message('Error', 'Falla en la autenticacion!')
       });
@@ -112,9 +109,9 @@ export class LoginPage implements OnInit, OnDestroy {
          const usr = {
             uid: this.getUid(data.user.email),
             displayName: data.user.displayName,
-            email: data.user.email,
             photoURL: data.user.photoURL
          }
+         this.fs.updateUser(usr)
          console.log(token, data.user)
          this.appSrv.hideLoading()
          this.redirectHome(usr)
@@ -145,7 +142,6 @@ export class LoginPage implements OnInit, OnDestroy {
 
    private redirectHome(usr) {
       console.log('login provider: ' + usr)
-      this.fs.updateUser(usr)
       this.navCtrl.insert(0, 'HomePage', { usr: usr });
       this.navCtrl.popToRoot();
    }

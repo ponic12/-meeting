@@ -52,8 +52,10 @@ export class EventPage implements OnInit, OnDestroy {
             this.startWeek = moment(this.evt.estimationDate.date, 'YYMMDD').day(0)
          }
          else{
-            this.evt.estimationDate = {}
-            this.startWeek = moment(this.evt.creationDate).day(0)   
+            this.evt.estimationDate = {
+               date:moment().format('YYMMDD')
+            }
+            this.startWeek = moment().day(0)   
          }
          this.initAllMemberStatus(true)
          this.processDays()
