@@ -67,7 +67,7 @@ export class EditEventPage implements OnInit, OnDestroy {
       })
    }
    share() {
-      if (this.platform.is('cordova')) {         
+      if (this.platform.is('cordova')) {
          //const url = 'https://events-12be3.firebaseapp.com?idevt=' + this.evt.id
          const url = 'https://events-12be3.firebaseapp.com/#' + this.evt.id
 
@@ -97,7 +97,7 @@ export class EditEventPage implements OnInit, OnDestroy {
    }
    removeItem(item) {
       let alert: any
-      if (Object.keys(this.evt.selectionItems[item]).length > 0){
+      if (Object.keys(this.evt.selectionItems[item]).length > 0) {
          alert = this.alertCtrl.create({
             title: 'Aviso',
             message: 'Esta seguro de eliminar este item?',
@@ -106,7 +106,7 @@ export class EditEventPage implements OnInit, OnDestroy {
                   text: 'No',
                   role: 'cancel',
                   handler: () => {
-                     
+
                   }
                },
                {
@@ -119,7 +119,7 @@ export class EditEventPage implements OnInit, OnDestroy {
             ]
          });
       }
-      else{
+      else {
          alert = this.alertCtrl.create({
             title: 'Aviso',
             message: 'No es posible eliminar este item, ya hay informacion cargada',
@@ -157,13 +157,19 @@ export class EditEventPage implements OnInit, OnDestroy {
             this.evt.selectionItems = this.selectionItems
             this.evt.answerType = this.answerType
             break;
+         case 'votacion':
+            if (!this.evt.selectionItems) {
+               this.evt.selectionItems['yes'] = {}
+               this.evt.selectionItems['no'] = {}
+            }
+            break;
       }
       this.fs.saveEvent(this.evt)
       this.view.dismiss()
    }
    closeModal() {
       this.view.dismiss(null)
-   }   
+   }
 
    private updateSelectionKeys() {
       this.selectionItemsKeys = Object.keys(this.selectionItems)

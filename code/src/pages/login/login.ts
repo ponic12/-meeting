@@ -49,20 +49,19 @@ export class LoginPage implements OnInit, OnDestroy {
          this.appSrv.hideLoading()
          if (data) {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
-               const u = {
-                  uid: this.getUid(data.email),
-                  displayName: data.displayName,
-                  email: data.email,
-                  photoURL: data.photoURL
-               }
                if (usr != null) {
-                  this.fs.updateUser(u).then(x=>{
-                     this.navCtrl.insert(0, 'HomePage', { usr: usr });
-                     this.navCtrl.popToRoot();
-                     //this.navCtrl.setRoot('HomePage', { usr: usr })
-                  })
+                  this.navCtrl.insert(0, 'HomePage', { usr: usr });
+                  this.navCtrl.popToRoot();
+                  //this.navCtrl.setRoot('HomePage', { usr: usr })
                }
                else { // New User
+                  const u = {
+                     contacts:{},
+                     uid: this.getUid(data.email),
+                     displayName: data.displayName,
+                     email: data.email,
+                     photoURL: data.photoURL
+                  }
                   this.fs.addUser(u).then(x => {
                      this.appSrv.message('Atencion', 'Usuario registrado OK!')
                   })

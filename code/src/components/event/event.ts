@@ -183,10 +183,11 @@ export class EventPage implements OnInit, OnDestroy {
       return (res == true)
    }
    calcPercent(vote) {
-      const opYes = this.calcCounter(vote) * 100 / (this.calcCounter('yes') + this.calcCounter('no'))
+      const opYes = (this.calcCounter(vote) * 100 / (this.calcCounter('yes') + this.calcCounter('no'))).toFixed(0)
       return opYes
    }
    vote(vote) {
+      this.dirtyFlag = true
       if (vote == 'yes')
          delete this.evt.selectionItems['no'][this.user.uid]
       else
@@ -194,6 +195,7 @@ export class EventPage implements OnInit, OnDestroy {
 
       this.evt.selectionItems[vote][this.user.uid] = true
    }
+
    ////////////////////////////////////////////////////
 
 
@@ -271,17 +273,6 @@ export class EventPage implements OnInit, OnDestroy {
    }
 
 
-   private checkEditMode() {
-      let res = false
-      const membersON = []
-      this.membersFull.forEach(item => {
-         if (item.onoff === true)
-            membersON.push(item)
-      });
-      res = ((membersON.length == 1) && (membersON.filter(m => (m.uid === this.user.uid)).length > 0))
-      if (res == true) this.dirtyFlag = true
-      return res
-   }
    private turnOnUser(){
       const u = this.membersFull.find(u=>u.uid == this.user.uid)
       u.onoff = true

@@ -198,16 +198,15 @@ page-event {
     align-items: center;
   }
   .grdSelMulti {
-   display: grid;
-   grid-template-columns: 40px 1fr 50px;
-   align-items: center;
- }
- .grdSelRating {
-   display: grid;
-   grid-template-columns: 1fr 50px;
-   align-items: center;
- }
-
+    display: grid;
+    grid-template-columns: 40px 1fr 50px;
+    align-items: center;
+  }
+  .grdSelRating {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    align-items: center;
+  }
   .btnMembersInfo {
     border-radius: 50%;
     width: 40px;
@@ -266,6 +265,7 @@ page-event {
     height: 78%;
   }
   .grdVoteResult {
+    text-align: center;
     display: grid;
     grid-template-columns: 70px 1fr 70px;
     align-content: center;
@@ -280,15 +280,13 @@ page-event {
   .yesBar {
     width: 30px;
     height: 40px;
-    border-radius: 10px 0px 0px 10px;
     border-right: 1px solid black;
-    background: rgb(15, 156, 15);
+    background: linear-gradient(darkgreen 0%, lightgreen 15%, green 75%, darkgreen 95%);
   }
   .resultBar {
     margin: 10px;
-    border-radius: 10px;
     height: 40px;
-    background: red;
+    background: linear-gradient(darkred 0%, pink 15%, red 75%, darkred 95%);
     box-shadow: 2px 2px 5px gray;
   }
   .resNo {
