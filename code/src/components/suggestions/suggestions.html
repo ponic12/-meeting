@@ -1,5 +1,5 @@
 <ion-header class="grdToolbar">
-  <img class="logoTipo" src="assets/imgs/suggestion.png">
+  <img class="logoTipo" src="assets/imgs/suggestion.png" (click)="admin()">
   <div class="title">{{title}}</div>
   <ion-icon class="btnClose" (click)="closeModal()" name="close-circle"></ion-icon>
 </ion-header>
@@ -19,6 +19,7 @@
       </ion-avatar>
       <div class="cmtBody">{{sg.suggestion}}</div>
       <div class="cmtFooter">{{sg.creationDate | date:'dd/MM/yyyy HH:mm'}}</div>
+      <ion-icon class="btnDelete" (click)="removeItem(sg, i)" name="close-circle" *ngIf="adminMode === true"></ion-icon>
     </div>
   </ion-content >
   <ion-item>

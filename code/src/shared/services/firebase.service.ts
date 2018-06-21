@@ -89,7 +89,15 @@ export class FirebaseService {
    ///////////////////////////////////////////////
    getCommentsByEvtId(eid){
       const ref = this.afs.collection('events').doc(eid).collection('comments', ref => ref.orderBy('creationDate', 'asc') )
-      return ref.valueChanges()
+      const obs = ref.snapshotChanges().map(actions =>{
+         return actions.map(item => {
+            const data = item.payload.doc.data()
+            const id = item.payload.doc.id
+            const  o = { id, ...data }
+            return o
+         })
+      })
+      return obs
    }
    saveComment(eid, comment) {
       if (!comment.id){
@@ -98,6 +106,9 @@ export class FirebaseService {
       else
          this.afs.collection('events').doc(eid).collection('comments').doc(comment.id).set(comment)
    }
+   deleteComment(eid, comment){
+      this.afs.collection('events').doc(eid).collection('comments').doc(comment.id).delete()
+   }
 
 
    ///////////////////////////////////////////////
@@ -105,7 +116,15 @@ export class FirebaseService {
    ///////////////////////////////////////////////
    getSuggestions(){
       const ref = this.afs.collection('suggestions', ref => ref.orderBy('creationDate', 'asc') )
-      return ref.valueChanges()
+      const obs = ref.snapshotChanges().map(actions =>{
+         return actions.map(item => {
+            const data = item.payload.doc.data()
+            const id = item.payload.doc.id
+            const  o = { id, ...data }
+            return o
+         })
+      })
+      return obs
    }
    saveSuggestion(sug) {
       if (!sug.id){
@@ -113,6 +132,9 @@ export class FirebaseService {
       }
       else
          this.afs.collection('suggestions').doc(sug.id).set(sug)
+   }
+   deleteSuggestion(sug){
+      this.afs.collection('suggestions').doc(sug.id).delete()
    }
 
 

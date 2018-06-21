@@ -47,19 +47,22 @@ export class HomePage implements OnInit, OnDestroy {
 
    ngOnInit() {
       console.log('HomePage init')
+      //this.appSrv.showLoading()
       this.notifyMemberInEvent(this.user.uid)
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
          if (this.platform.is('cordova')) {   
             this.initFCM()
          }
+         //this.appSrv.hideLoading()
       })
-      console.log('subEvt: ', this.subEvt.closed)
-
+      //this.appSrv.showLoading()
       this.subCom = this.fs.getCommunity().subscribe(data => {
          this.community = data
          this.contactsFull = this.getContactsFull()
+         //this.appSrv.hideLoading()
       })
+      console.log('subEvt: ', this.subEvt.closed)
       console.log('subCom: ', this.subCom.closed)
    }
    ngOnDestroy() {

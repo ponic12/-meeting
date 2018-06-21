@@ -44,11 +44,16 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    ngOnInit() {
       console.log('LoginPage init');
+      this.appSrv.showLoading()
       this.subAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
+         this.appSrv.hideLoading()
          if (data) {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
-               if (usr != null)
-                  this.navCtrl.setRoot('HomePage', { usr: usr })
+               if (usr != null) {
+                  this.navCtrl.insert(0, 'HomePage', { usr: usr });
+                  this.navCtrl.popToRoot();
+                  //this.navCtrl.setRoot('HomePage', { usr: usr })
+               }
                else { // New User
                   this.fs.addUser(usr).then(x => {
                      this.appSrv.message('Atencion', 'Usuario registrado OK!')
@@ -77,20 +82,24 @@ export class LoginPage implements OnInit, OnDestroy {
       })
    }
    signin() {
+      this.appSrv.showLoading()
       this.authSrv.signInUser(this.email, this.password).then(data => {
          if (data === undefined)
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
          else {
             const uid = this.getUid(data.email)
             this.subUsr = this.fs.getUserById(uid).subscribe(usr => {
-               this.navCtrl.setRoot('HomePage', { usr: usr })
+               this.navCtrl.insert(0, 'HomePage', { usr: usr });
+               this.navCtrl.popToRoot();
             })
          }
+         this.appSrv.hideLoading()
       }).catch(err => {
          this.appSrv.message('Error', 'Falla en la autenticacion!')
       });
    }
    loginGoogle() {
+      this.appSrv.showLoading()
       this.authSrv.loginGoogle().then((data) => {
          var token = data.credential.accessToken
          const usr = {
@@ -100,12 +109,14 @@ export class LoginPage implements OnInit, OnDestroy {
             photoURL: data.user.photoURL
          }
          console.log(token, data.user)
+         this.appSrv.hideLoading()
          this.redirectHome(usr)
       }).catch((err) => {
          console.log('Error: ', err.message)
       })
    }
    loginFacebook() {
+      this.appSrv.showLoading()
       this.authSrv.loginFacebook().then((data) => {
          const info = data.additionalUserInfo.profile
          const usr = {
@@ -114,6 +125,7 @@ export class LoginPage implements OnInit, OnDestroy {
             email: info.email,
             photoURL: info.picture.data.url
          }
+         this.appSrv.hideLoading()
          this.redirectHome(usr)
       })
    }
@@ -127,7 +139,8 @@ export class LoginPage implements OnInit, OnDestroy {
    private redirectHome(usr) {
       console.log('login provider: ' + usr)
       this.fs.updateUser(usr)
-      this.navCtrl.setRoot('HomePage', { usr: usr })
+      this.navCtrl.insert(0, 'HomePage', { usr: usr });
+      this.navCtrl.popToRoot();
    }
    private getUid(str) {
       const res = str.replace(/\./gi, '')

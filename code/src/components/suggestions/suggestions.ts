@@ -16,6 +16,7 @@ export class SuggestionsPage implements OnInit, OnDestroy {
    searchText: string
    suggestions: any = []
    newSuggestion: string = ""
+   adminMode:boolean = false
    subSug: Subscription
 
    constructor(
@@ -40,6 +41,9 @@ export class SuggestionsPage implements OnInit, OnDestroy {
    ionViewDidEnter() {
       this.scrollDown()
    }
+   admin(){
+      this.adminMode = true
+   }
    add() {
       if (this.newSuggestion != "") {
          const sg = {
@@ -53,6 +57,9 @@ export class SuggestionsPage implements OnInit, OnDestroy {
          this.newSuggestion = ""
       }
       this.scrollDown()
+   }
+   removeItem(item){
+      this.fs.deleteSuggestion(item)
    }
    closeModal() {
       this.view.dismiss(null)

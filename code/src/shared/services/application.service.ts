@@ -50,7 +50,7 @@ export class ApplicationService {
         this.loader = this.loadingCtrl.create({
             //content: "cargando...",
             content: `
-                <img class="logo3D" style="background-color:pink" width=108 height=100 src="assets/spinner.svg">
+            <img src="assets/imgs/spinner.svg" />
             `,
             cssClass: 'my-loading-class',
             spinner: 'hide',
