@@ -48,9 +48,14 @@ export class EventPage implements OnInit, OnDestroy {
       this.totalMembers = this.membersFull.length
 
       if (this.evt.type == 'calendario') {
-         this.startWeek = moment(this.evt.creationDate).day(0)
-         this.evt.estimationDate = {}
-         this.selectAllMembers()
+         if (this.evt.estimationDate){
+            this.startWeek = moment(this.evt.estimationDate.date, 'YYMMDD').day(0)
+         }
+         else{
+            this.evt.estimationDate = {}
+            this.startWeek = moment(this.evt.creationDate).day(0)   
+         }
+         this.initAllMemberStatus()
          this.processDays()
       }
       else {
@@ -252,17 +257,13 @@ export class EventPage implements OnInit, OnDestroy {
    save() {
       this.fs.saveEvent(this.evt)
       this.dirtyFlag = false
+      this.closeModal()
    }
    toggleEditMode(){
       this.editMode = !this.editMode
    }
 
 
-   private selectAllMembers() {
-      this.membersFull.forEach(m => {
-         m.selected = true
-      });
-   }
    private checkEditMode() {
       let res = false
       const membersON = []
@@ -273,6 +274,11 @@ export class EventPage implements OnInit, OnDestroy {
       res = ((membersON.length == 1) && (membersON.filter(m => (m.uid === this.user.uid)).length > 0))
       if (res == true) this.dirtyFlag = true
       return res
+   }
+   private initAllMemberStatus(){
+      this.membersFull.forEach(m => {
+         m.onoff = true
+      });
    }
    private processDays() {
       this.weekData = this.resetDays(this.startWeek)
@@ -290,6 +296,7 @@ export class EventPage implements OnInit, OnDestroy {
                      if (wd.info[hour].value > this.maxValue) {
                         this.maxValue = wd.info[hour].value
                         this.evt.estimationDate = {
+                           date: day,
                            day: wd.dayNum,
                            month: wd.month,
                            maxValue: this.maxValue

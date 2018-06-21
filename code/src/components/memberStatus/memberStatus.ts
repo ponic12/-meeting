@@ -33,6 +33,7 @@ export class MemberStatusPage implements OnInit, OnDestroy {
       this.title = this.navParams.get('title')
       this.evt = this.navParams.get('evt')
       this.members = this.navParams.get('members');
+      this.selectAll()
    }
    statusChanged(m) {
       m.onoff = !m.onoff
