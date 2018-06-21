@@ -55,7 +55,7 @@ export class EventPage implements OnInit, OnDestroy {
             this.evt.estimationDate = {}
             this.startWeek = moment(this.evt.creationDate).day(0)   
          }
-         this.initAllMemberStatus()
+         this.initAllMemberStatus(true)
          this.processDays()
       }
       else {
@@ -149,7 +149,11 @@ export class EventPage implements OnInit, OnDestroy {
    // Seleccion
    /////////////////////
    onSelChange(ev, item) {
-      this.evt.selectionItems[item][this.user.uid] = ev.checked
+      this.dirtyFlag = true
+      if (ev.checked == true)
+         this.evt.selectionItems[item][this.user.uid] = ev.checked
+      else
+         delete this.evt.selectionItems[item][this.user.uid]
    }
    onRatingChange(ev) {
       console.log('rating... ')
@@ -233,7 +237,8 @@ export class EventPage implements OnInit, OnDestroy {
       mod.present()
       mod.onDidDismiss(data => {
          this.membersFull = data
-         this.processDays()
+         if (this.evt.type == 'calendario')
+            this.processDays()
       })
    }
    showComments() {
@@ -261,6 +266,8 @@ export class EventPage implements OnInit, OnDestroy {
    }
    toggleEditMode(){
       this.editMode = !this.editMode
+      this.initAllMemberStatus(!this.editMode)
+      this.turnOnUser()
    }
 
 
@@ -275,9 +282,13 @@ export class EventPage implements OnInit, OnDestroy {
       if (res == true) this.dirtyFlag = true
       return res
    }
-   private initAllMemberStatus(){
+   private turnOnUser(){
+      const u = this.membersFull.find(u=>u.uid == this.user.uid)
+      u.onoff = true
+   }
+   private initAllMemberStatus(flag){
       this.membersFull.forEach(m => {
-         m.onoff = true
+         m.onoff = flag
       });
    }
    private processDays() {

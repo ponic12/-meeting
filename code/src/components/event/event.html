@@ -89,7 +89,7 @@
             </button>
           </div>
           <div class="grdSel grdSelMulti" *ngIf="evt.answerType =='multiple'">
-            <ion-checkbox checked="evt.selectionItems[item][user.uid]" (ionChange)="onSelChange($event, item)"></ion-checkbox>
+            <ion-checkbox [(ngModel)]="evt.selectionItems[item][user.uid]" (ionChange)="onSelChange($event, item)"></ion-checkbox>
             <ion-label style="z-index: 10">{{item}}</ion-label>
             <button ion-button (click)="showSelMembers(item)" class="btnMembersInfo">
               <div>{{calcCounter(item)}}</div>

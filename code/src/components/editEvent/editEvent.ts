@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events, ModalController, Modal, Platform } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, Events, ModalController, Modal, Platform, AlertController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { ApplicationService } from '../../shared/services/application.service';
 
@@ -23,6 +23,7 @@ export class EditEventPage implements OnInit, OnDestroy {
    newItem: string
 
    constructor(
+      private alertCtrl: AlertController,
       private platform: Platform,
       private navParams: NavParams,
       private view: ViewController,
@@ -95,19 +96,54 @@ export class EditEventPage implements OnInit, OnDestroy {
       this.newItem = ""
    }
    removeItem(item) {
-      delete this.selectionItems[item]
-      this.updateSelectionKeys()
+      let alert: any
+      if (Object.keys(this.evt.selectionItems[item]).length > 0){
+         alert = this.alertCtrl.create({
+            title: 'Aviso',
+            message: 'Esta seguro de eliminar este item?',
+            buttons: [
+               {
+                  text: 'No',
+                  role: 'cancel',
+                  handler: () => {
+                     
+                  }
+               },
+               {
+                  text: 'Si',
+                  handler: () => {
+                     delete this.selectionItems[item]
+                     this.updateSelectionKeys()
+                  }
+               }
+            ]
+         });
+      }
+      else{
+         alert = this.alertCtrl.create({
+            title: 'Aviso',
+            message: 'No es posible eliminar este item, ya hay informacion cargada',
+            buttons: [
+               {
+                  text: 'Aceptar',
+                  handler: () => {
+                  }
+               }
+            ]
+         });
+      }
+      alert.present();
    }
    evalDisable() {
-      let res = (this.evt.name === '') && (!this.evt.type)
-      switch (this.evt.type) {
-         case 'calendario':
-            res = (this.evt.availability != undefined)
-            break;
-         case 'seleccion':
-            res = (this.evt.selectionItems != undefined)
-            break;
-      }
+      let res = (this.evt.name === '') || (!this.evt.type)
+      // switch (this.evt.type) {
+      //    case 'calendario':
+      //       res = (Object.keys(this.evt.availability).length > 0)
+      //       break;
+      //    case 'seleccion':
+      //       res = (Object.keys(this.evt.selectionItems).length > 0)
+      //       break;
+      // }
       return res
    }
    save() {
