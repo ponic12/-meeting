@@ -52,29 +52,37 @@ export const notifyMember = functions.https.onRequest((request, response) => {
                evt.members[usr.uid] = true
                admin.firestore().collection('events').doc(idEvt).set(evt)
                   .then(dssm => {
+                     console.log('User: '+usr.uid + ' member of event: ' + evt.name)
                      admin.firestore().collection("users").doc(evt.owner).get()
                      .then(dsso =>{
-                        const owner = dssu.data()
-                        owner.contacts[usr.uid] = true
-
-                        const payload = {
-                           notification: {
-                              title: usr.displayName + ', se ha agregado al evento:',
-                              body: evt.name
-                           },
-                           data: {
-                           }
-                        };
-                        console.log('Push: ', payload)
-                        admin.messaging().sendToTopic(idEvt, payload)
-                           .then(m => {
-                              console.log('Pushing OK')
-                              response.send(true)
-                           })
-                           .catch(err => {
-                              console.log('Error Pushing: ', err)
-                              response.status(500).send(err)
-                           })
+                        const ownerInfo = dsso.data()
+                        ownerInfo.contacts[usr.uid] = true
+                        admin.firestore().collection('users').doc(evt.owner).set(ownerInfo)
+                        .then(dsmc =>{
+                           console.log('User: '+usr.uid + ' contact of owner: ' + evt.owner)
+                           const payload = {
+                              notification: {
+                                 title: usr.displayName + ', se ha agregado al evento:',
+                                 body: evt.name
+                              },
+                              data: {
+                              }
+                           };
+                           console.log('Push: ', payload)
+                           admin.messaging().sendToTopic(idEvt, payload)
+                              .then(m => {
+                                 console.log('Pushing OK')
+                                 response.send(true)
+                              })
+                              .catch(err => {
+                                 console.log('Error Pushing: ', err)
+                                 response.status(500).send(err)
+                              })
+                        })
+                        .catch(err => {
+                           console.log('Error Contacts: ', err)
+                           response.status(500).send(err)
+                        })
                      })
                      .catch(err => {
                         console.log('Error Owner: ', err)
@@ -96,3 +104,4 @@ export const notifyMember = functions.https.onRequest((request, response) => {
          response.status(500).send(err)
       })
 })
+
