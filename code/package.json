@@ -1,7 +1,7 @@
 {
-  "name": "code",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "name": "Meeting Master",
+  "version": "1.0.0",
+  "author": "P&P",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {

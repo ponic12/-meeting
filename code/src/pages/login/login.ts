@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage } from 'ionic-angular'
+import { NavController, IonicPage, ModalController, Modal } from 'ionic-angular'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
 
 import { AuthService } from '../../shared/core/auth.service'
@@ -27,6 +27,7 @@ export class LoginPage implements OnInit, OnDestroy {
    constructor(
       private appSrv: ApplicationService,
       private navCtrl: NavController,
+      private modal: ModalController,
       private authSrv: AuthService,
       private formBuilder: FormBuilder,
       private fs: FirebaseService
@@ -67,41 +68,23 @@ export class LoginPage implements OnInit, OnDestroy {
          }
       })
    }
-   register(): void {
-      this.authSrv.registerUser(this.email, this.password).then((res) => {
-         if (!res) {
-            this.appSrv.message('Error', 'Usuario ya registrado!')
-            return
-         }
-         const usr = {
-            email: this.email,
-            displayName: this.username,
-            photoURL: 'assets/imgs/person.png',
-            uid: this.getUid(this.email)
-         }
-         this.fs.addUser(usr).then(x => {
-            this.loginMode = 'signIn'
-            this.appSrv.message('Atencion', 'Usuario registrado OK!')
-         })
+   signIn() {
+      const mod: Modal = this.modal.create('SignPage', {
+         signMode:'signIn'
+      }, {})
+      mod.present()
+      mod.onDidDismiss(data => {
+
       })
    }
-   signin() {
-      this.appSrv.showLoading()
-      this.authSrv.signInUser(this.email, this.password).then(data => {
-         if (data === undefined){
-            this.appSrv.hideLoading()
-            this.appSrv.message('Error', 'Usuario o contraseña no valida!')
-         }
-         // else {
-         //    const uid = this.getUid(data.email)
-         //    this.subUsr = this.fs.getUserById(uid).subscribe(usr => {
-         //       this.redirectHome(usr)
-         //    })
-         //}
-      }).catch(err => {
-         this.appSrv.message('Error', 'Falla en la autenticacion!')
-      });
-   }
+   signUp(): void {
+      const mod: Modal = this.modal.create('SignPage', {
+         signMode:'signUp'
+      }, {})
+      mod.present()
+      mod.onDidDismiss(data => {      
+      })
+   }   
    loginGoogle() {
       this.appSrv.showLoading()
       this.authSrv.loginGoogle().then((data) => {

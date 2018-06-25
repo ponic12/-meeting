@@ -2,92 +2,46 @@
   <div class="grdLogin">
     <div></div>
     <div style="justify-self: center">
-      <img src="assets/imgs/calendarIcon.png" style="max-width:120px;">
+      <img src="assets/imgs/calendarIcon.png" style="max-width:100px;margin-left:30%">
+      <div class="logoTitle">Meeting Master</div>
     </div>
     <div></div>
   </div>
-  <ng-template #content>content here...</ng-template>
-  <!-- <user-profile></user-profile> -->
-  <div *ngIf="loginMode === 'signIn'">
-    <form [formGroup]="todo">
-      <ion-row class="backForm">
-        <ion-col>
-          <ion-item floating style="background:transparent">
-            <ion-label floating>Email</ion-label>
-            <ion-input type="email" formControlName="fcn_email" [(ngModel)]="email" telnum></ion-input>
-          </ion-item>
-          <ion-item floating style="background:transparent">
-            <ion-label floating>Contraseña</ion-label>
-            <ion-input type="password" formControlName="fcn_password" [(ngModel)]="password"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row style="margin-top: 10px">
-        <ion-col>
-          <button ion-button (click)="signin()" class="loginBtn" full type="submit" [disabled]="!todo.valid" round color="primary">
-            Ingresar
-          </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button (click)="loginMode='signUp'" class="loginBtn" full type="submit" round color="primary">
-            Registrarse
-          </button>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-        </ion-col>
-        <ion-col style="text-align: center">
-          <button (click)="loginGoogle()" class="btnGoogle" *ngIf="!isLogged">
-            <img src="assets/imgs/google.png">
-          </button>
-        </ion-col>
-        <ion-col style="text-align: center">
-        </ion-col>
-        <ion-col style="text-align: center">
-          <button (click)="loginFacebook()" class="btnFacebook" type="submit" disabled="true">
-            <img src="assets/imgs/facebook.png">
-          </button>
-        </ion-col>
-        <ion-col>
+  <div *ngIf="!idEvtParam;then invitation else normal"></div>
 
-        </ion-col>
-      </ion-row>
-    </form>
-    <div class="frameDownload">
-      <button (click)="download()" class="btnDownload" type="submit">
-        <img src="assets/imgs/playstore.png">
-      </button>
-      <p class="txtDownload">Descargar aplicación</p>
+  <ng-template #invitation>
+    <!-- <div #login><figure class="ball"><span class="shadow"></span></div> -->
+    <div class="grdInvitation">
+      <div class="pushButton green" (click)="signIn()">
+        <ion-icon name="unlock" style="font-size:35px"></ion-icon>
+        <div>
+          Ingresar
+        </div>
+      </div>
+      <div class="pushButton red" (click)="signUp()">
+        <ion-icon name="person" style="font-size:35px"></ion-icon>
+        <div>
+          Regitrarse
+        </div>
+      </div>
+      <div class="pushButton blue" (click)="loginGoogle()">
+        <ion-icon name="logo-google" style="font-size:35px"></ion-icon>
+        <div>
+          Google
+        </div>
+      </div>
+      <div class="pushButton magenta" (click)="loginFacebook()">
+        <ion-icon name="logo-facebook" style="font-size:35px"></ion-icon>
+        <div>
+          Facebook
+        </div>
+      </div>
+      <div class="pushButton yellow" (click)="download()" style="grid-column:1/3">
+            <ion-icon name="appstore" style="font-size:35px"></ion-icon>
+            <div>
+              Descargar
+            </div>
+          </div>      
     </div>
-  </div>
-
-  <div *ngIf="loginMode === 'signUp'">
-
-    <ion-row class="backForm">
-      <ion-col>
-        <ion-item floating style="background:transparent">
-          <ion-label floating>Nombre de usuario</ion-label>
-          <ion-input type="text" [(ngModel)]="username"></ion-input>
-        </ion-item>
-        <ion-item floating style="background:transparent">
-          <ion-label floating>Email</ion-label>
-          <ion-input type="email" [(ngModel)]="email"></ion-input>
-        </ion-item>
-        <ion-item floating style="background:transparent">
-          <ion-label floating>Contraseña</ion-label>
-          <ion-input type="password" [(ngModel)]="password"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row style="margin-top: 10px">
-      <ion-col>
-        <button ion-button (click)="register()" class="loginBtn" full type="submit" round color="primary">
-          Registrarse
-        </button>
-      </ion-col>
-    </ion-row>
-
-  </div>
-
+  </ng-template>
 </ion-content>

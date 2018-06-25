@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage, NavParams, ActionSheetController, ModalController, Modal, Platform } from 'ionic-angular'
+import { NavController, IonicPage, NavParams, ActionSheetController, ModalController, Modal, Platform, AlertController } from 'ionic-angular'
 import { ApplicationService } from '../../shared/services/application.service'
 import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
@@ -30,8 +30,9 @@ export class HomePage implements OnInit, OnDestroy {
    private subCom: Subscription
 
    constructor(
-      public navCtrl: NavController,
-      public navParams: NavParams,
+      private alertCtrl: AlertController,
+      private navCtrl: NavController,
+      private navParams: NavParams,
       private actionCtrl: ActionSheetController,
       private appSrv: ApplicationService,
       private globalSrv: GlobalService,
@@ -97,7 +98,30 @@ export class HomePage implements OnInit, OnDestroy {
       })
    }
    removeEvent(ev, i) {
-      this.fs.deleteEvent(ev)
+      let alert = this.alertCtrl.create({
+         title: 'Aviso',
+         message: 'Esta seguro de eliminar este evento?',
+         buttons: [
+            {
+               text: 'No',
+               role: 'cancel',
+               handler: () => {
+               }
+            },
+            {
+               text: 'Si',
+               handler: () => {
+                  if (ev.owner === this.user.uid)
+                     this.fs.deleteEvent(ev)
+                  else{
+                     ev.members[this.user.uid] = false
+                     this.fs.updateUser(ev)
+                  }
+               }
+            }
+         ]
+      })
+      alert.present()
    }
    openMenuSheet() {
       let actionSheet = this.actionCtrl.create({
