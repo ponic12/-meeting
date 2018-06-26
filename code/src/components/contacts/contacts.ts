@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Platform } from 'ionic-angular'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts'
+import { Contacts } from '@ionic-native/contacts'
 import { Observable } from 'rxjs/Observable'
 
 import { FirebaseService } from '../../shared/services/firebase.service';

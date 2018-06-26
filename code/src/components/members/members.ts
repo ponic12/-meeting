@@ -21,8 +21,7 @@ export class MembersPage implements OnInit, OnDestroy {
 
    constructor(
       private navParams: NavParams,
-      private view: ViewController,
-      private appSrv: ApplicationService
+      private view: ViewController
    ) {
       console.log('MembersPage constructor');
    }

@@ -1,13 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage, NavParams, ModalController, Modal, AlertController } from 'ionic-angular'
+import { IonicPage, ViewController, NavParams } from 'ionic-angular'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
 import { ApplicationService } from '../../shared/services/application.service'
-import { GlobalService } from '../../shared/services/global.service';
 import { AuthService } from '../../shared/core/auth.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
-import { HttpClient } from '@angular/common/http'
-
-import { Subscription } from 'rxjs';
 
 @IonicPage()
 @Component({
@@ -22,12 +18,10 @@ export class SignPage implements OnInit, OnDestroy {
    todo: FormGroup
 
    constructor(
-      private alertCtrl: AlertController,
+      private view: ViewController,
       private navParams: NavParams,
       private appSrv: ApplicationService,
-      private globalSrv: GlobalService,
       private authSrv: AuthService,
-      private modal: ModalController,
       private formBuilder: FormBuilder,
       private fs: FirebaseService
    ) {
@@ -75,7 +69,9 @@ export class SignPage implements OnInit, OnDestroy {
          })
       })   
    }
-
+   closeModal() {
+      this.view.dismiss(null)
+   }
    private getUid(str) {
       const res = str.replace(/\./gi, '')
       return res

@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { ApplicationService } from '../../shared/services/application.service';
 
-import * as moment from 'moment'
 
 @IonicPage()
 @Component({
@@ -20,8 +19,7 @@ export class MemberStatusPage implements OnInit, OnDestroy {
 
    constructor(
       private navParams: NavParams,
-      private view: ViewController,
-      private appSrv: ApplicationService
+      private view: ViewController
    ) {
       console.log('MemberStatusPage constructor');
    }
