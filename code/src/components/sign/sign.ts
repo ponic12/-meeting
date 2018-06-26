@@ -45,10 +45,11 @@ export class SignPage implements OnInit, OnDestroy {
       this.appSrv.showLoading()
       this.authSrv.signInUser(this.email, this.password).then(data => {
          if (data === undefined){
-            this.appSrv.hideLoading()
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
-            this.view.dismiss(true)
          }
+         else
+            this.view.dismiss(true)
+         this.appSrv.hideLoading()
       }).catch(err => {
          this.appSrv.hideLoading()
          this.appSrv.message('Error', 'Falla en la autenticacion!')
