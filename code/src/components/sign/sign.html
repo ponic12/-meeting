@@ -17,6 +17,11 @@
       </ion-row>
       <ion-row style="margin-top: 10px">
         <ion-col>
+          <button ion-button (click)="close()" class="loginBtn" type="submit" round color="danger">
+            Cancelar
+          </button>
+        </ion-col>
+        <ion-col>
           <button ion-button (click)="signIn()" class="loginBtn" full type="submit" [disabled]="!todo.valid" round color="primary">
             Ingresar
           </button>
@@ -43,13 +48,13 @@
     </ion-row>
     <ion-row style="margin-top: 10px">
       <ion-col>
-        <button ion-button (click)="signUp()" class="loginBtn" type="submit" round color="primary">
-          Registrar
+        <button ion-button (click)="close()" class="loginBtn" type="submit" round color="danger">
+          Cancelar
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button (click)="cancel()" class="loginBtn" type="submit" round color="secondary">
-          Cancelar
+        <button ion-button (click)="signUp()" class="loginBtn" type="submit" round color="primary">
+          Registrar
         </button>
       </ion-col>
     </ion-row>

@@ -12,6 +12,18 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
-
 /*************************************************************/
+
+.modal-wrapper {
+  margin: auto;
+  position: absolute;
+  top: 80px;
+  left: 3%;
+  right: 3%;
+  height: 50%;
+}
+
+ion-modal {
+   background: rgba(0, 0, 0, 0.6)
+ }
+ 

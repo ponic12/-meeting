@@ -69,7 +69,7 @@ export class SignPage implements OnInit, OnDestroy {
          })
       })   
    }
-   closeModal() {
+   close() {
       this.view.dismiss(null)
    }
    private getUid(str) {
