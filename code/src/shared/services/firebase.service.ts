@@ -1,21 +1,13 @@
 import { Injectable } from '@angular/core'
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore'
-import { AngularFirestoreDocument } from 'angularfire2/firestore'
-import { storage, initializeApp } from 'firebase'
-import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/map'
-import * as firebase from 'firebase/app'; // for typings
-import { FirebaseApp } from 'angularfire2';
-import * as firebaseStorge from 'firebase/storage';
+import * as firebase from 'firebase/app'
 
 
 @Injectable()
 export class FirebaseService {
 
    usersRef: AngularFirestoreCollection<any>
-   // userRef: AngularFirestoreDocument<any>
-   // user$: Observable<any[]>
-
 
    constructor(
       private afs: AngularFirestore
