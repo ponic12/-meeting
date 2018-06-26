@@ -29,14 +29,9 @@ export class LoginPage implements OnInit, OnDestroy {
       private navCtrl: NavController,
       private modal: ModalController,
       private authSrv: AuthService,
-      private formBuilder: FormBuilder,
       private fs: FirebaseService
    ) {
       console.log('LoginPage constructor');
-      this.todo = this.formBuilder.group({
-         fcn_email: ['', [Validators.required]],
-         fcn_password: ['', [Validators.required]]
-      });
    }
    ngOnDestroy() {
       console.warn('LoginPage destroy')

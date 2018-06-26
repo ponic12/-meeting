@@ -41,20 +41,24 @@ export class SignPage implements OnInit, OnDestroy {
       console.log('SignPage destroy')
    }
 
-   signIn(){
+   login(){
       this.appSrv.showLoading()
       this.authSrv.signInUser(this.email, this.password).then(data => {
          if (data === undefined){
             this.appSrv.hideLoading()
             this.appSrv.message('Error', 'Usuario o contraseña no valida!')
+            this.view.dismiss(true)
          }
       }).catch(err => {
+         this.appSrv.hideLoading()
          this.appSrv.message('Error', 'Falla en la autenticacion!')
       })
    }
-   signUp(){
+   register(){
+      this.appSrv.showLoading()
       this.authSrv.registerUser(this.email, this.password).then((res) => {
          if (!res) {
+            this.appSrv.hideLoading()
             this.appSrv.message('Error', 'Usuario ya registrado!')
             return
          }
@@ -65,8 +69,10 @@ export class SignPage implements OnInit, OnDestroy {
             uid: this.getUid(this.email)
          }
          this.fs.addUser(usr).then(x => {
+            this.appSrv.hideLoading()
             this.appSrv.message('Atencion', 'Usuario registrado OK!')
          })
+         this.view.dismiss(true)
       })   
    }
    close() {

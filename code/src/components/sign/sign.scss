@@ -15,6 +15,7 @@
 /*************************************************************/
 
 .modal-wrapper {
+  text-align: center;
   margin: auto;
   position: absolute;
   top: 80px;
@@ -24,6 +25,5 @@
 }
 
 ion-modal {
-   background: rgba(0, 0, 0, 0.6)
- }
- 
+  background: rgba(0, 0, 0, 0.6)
+}
