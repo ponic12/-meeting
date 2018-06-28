@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { IonicPage, ViewController, NavParams } from 'ionic-angular'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
-import { ApplicationService } from '../../shared/services/application.service'
+import { ApplicationService } from 'fwk-services'
 import { AuthService } from '../../shared/core/auth.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
 

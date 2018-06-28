@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Events, ModalController, Modal, Platform, AlertController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing'
-import { ApplicationService } from '../../shared/services/application.service';
+import { ApplicationService } from 'fwk-services';
 
 import * as moment from 'moment'
 import { FirebaseService } from '../../shared/services/firebase.service';

@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { NavController, IonicPage, NavParams, ActionSheetController, ModalController, Modal, Platform, AlertController } from 'ionic-angular'
-import { ApplicationService } from '../../shared/services/application.service'
-import { GlobalService } from '../../shared/services/global.service';
+import { ApplicationService, GlobalService } from 'fwk-services'
 import { AuthService } from '../../shared/core/auth.service';
 import { FirebaseService } from '../../shared/services/firebase.service';
 import { HttpClient } from '@angular/common/http'

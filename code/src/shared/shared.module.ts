@@ -3,13 +3,12 @@ import { IonicModule } from 'ionic-angular'
 import { IonicStorageModule } from '@ionic/storage'
 import { CommonModule } from '@angular/common'
 import { CoreModule } from '../shared/core/core.module'
+import { FwkServicesModule, ApplicationService, GlobalService } from 'fwk-services';
 
 
 import { HoursComponent } from './components/hours/hours.component'
 import { ToolsBarComponent } from './components/tools-bar/tools-bar.component'
 
-import { ApplicationService } from './services/application.service'
-import { GlobalService } from './services/global.service'
 import { FirebaseService } from './services/firebase.service'
 import 'firebase/storage'; 
 import { AngularFireModule } from 'angularfire2'
@@ -18,6 +17,7 @@ import { FIREBASE_CONFIG } from './services/firebase.config'
 
 @NgModule({
    imports: [
+      FwkServicesModule,
       CommonModule,
       IonicModule,
       IonicStorageModule.forRoot(),
@@ -39,9 +39,9 @@ export class SharedModule {
       return {
          ngModule: SharedModule,
          providers: [
-            GlobalService,
+            FirebaseService,
             ApplicationService,
-            FirebaseService
+            GlobalService
             //   AngularFireAuth,
             //   AngularFireDatabase
          ]

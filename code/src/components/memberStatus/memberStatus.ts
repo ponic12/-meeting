@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
-import { ApplicationService } from '../../shared/services/application.service';
+import { ApplicationService } from 'fwk-services';
 
 
 @IonicPage()

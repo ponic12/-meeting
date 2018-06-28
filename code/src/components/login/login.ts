@@ -3,7 +3,7 @@ import { NavController, IonicPage, ModalController, Modal } from 'ionic-angular'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
 
 import { AuthService } from '../../shared/core/auth.service'
-import { ApplicationService } from '../../shared/services/application.service'
+import { ApplicationService } from 'fwk-services'
 import { FirebaseService } from '../../shared/services/firebase.service'
 import { Subscription } from 'rxjs'
 
