@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { NavController, IonicPage, ModalController, Modal } from 'ionic-angular'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
 
-import { AuthService } from '../../shared/core/auth.service'
+import { AuthService } from 'fwk-auth';
 import { ApplicationService } from 'fwk-services'
 import { FirebaseService } from '../../shared/services/firebase.service'
 import { Subscription } from 'rxjs'
@@ -36,12 +36,12 @@ export class LoginPage implements OnInit, OnDestroy {
    ngOnDestroy() {
       console.warn('LoginPage destroy')
       this.subUsr.unsubscribe()
-      this.subAuth.unsubscribe()
+      //this.subAuth.unsubscribe()
    }
    ngOnInit() {
       console.log('LoginPage init');
       this.appSrv.showLoading()
-      this.subAuth = this.authSrv.verifyLoggedIn().subscribe(data => {
+      this.authSrv.verifyLoggedIn().subscribe(data => {
          this.appSrv.hideLoading()
          if (data) {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
@@ -98,18 +98,18 @@ export class LoginPage implements OnInit, OnDestroy {
       })
    }
    loginFacebook() {
-      this.appSrv.showLoading()
-      this.authSrv.loginFacebook().then((data) => {
-         const info = data.additionalUserInfo.profile
-         const usr = {
-            uid: this.getUid(info.email),
-            displayName: info.name,
-            email: info.email,
-            photoURL: info.picture.data.url
-         }
-         this.appSrv.hideLoading()
-         this.redirectHome(usr)
-      })
+      // this.appSrv.showLoading()
+      // this.authSrv.loginFacebook().then((data) => {
+      //    const info = data.additionalUserInfo.profile
+      //    const usr = {
+      //       uid: this.getUid(info.email),
+      //       displayName: info.name,
+      //       email: info.email,
+      //       photoURL: info.picture.data.url
+      //    }
+      //    this.appSrv.hideLoading()
+      //    this.redirectHome(usr)
+      // })
    }
    logout() {
       this.authSrv.signOutUser()
