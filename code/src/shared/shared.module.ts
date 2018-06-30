@@ -12,6 +12,7 @@ import { ToolsBarComponent } from './components/tools-bar/tools-bar.component'
 import { FwkAuthModule, AuthService } from 'fwk-auth'
 import 'firebase/storage'; 
 import { AngularFireModule } from 'angularfire2'
+import { AngularFireAuth } from 'angularfire2/auth'
 import { AngularFirestoreModule } from 'angularfire2/firestore'
 import { FirebaseService } from './services/firebase.service'
 import { FIREBASE_CONFIG } from './services/firebase.config'
@@ -41,6 +42,7 @@ export class SharedModule {
          ngModule: SharedModule,
          providers: [
             AuthService,
+            AngularFireAuth,
             FirebaseService,
             ApplicationService,
             GlobalService

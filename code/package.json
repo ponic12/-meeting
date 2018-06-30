@@ -50,7 +50,7 @@
     "cordova-universal-links-plugin": "1.2.1",
     "es6-promise-plugin": "4.2.2",
     "firebase": "4.13.1",
-    "fwk-auth": "0.0.1",
+    "fwk-auth": "0.0.2",
     "fwk-services": "0.0.13",
     "ionic-angular": "3.9.2",
     "ionic2-rating": "^1.2.2",
