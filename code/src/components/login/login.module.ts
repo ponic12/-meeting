@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 
-import { SharedModule } from '../../shared/shared.module'
 import { LoginPage } from './login';
+import { FwkServicesModule, GlobalService, ApplicationService } from 'fwk-services'
+import { SharedModule } from '../../shared/shared.module'
+
 
 
 @NgModule({

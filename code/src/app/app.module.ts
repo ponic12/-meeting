@@ -1,15 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { NgModule, ErrorHandler } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { SplashScreen } from '@ionic-native/splash-screen'
+import { StatusBar } from '@ionic-native/status-bar'
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular'
 import { Contacts } from '@ionic-native/contacts'
 import { Facebook } from '@ionic-native/facebook'
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
 
-import { SharedModule } from '../shared/shared.module';
-import { MeetingApp } from './app.component';
+import { MeetingApp } from './app.component'
+import { SharedModule } from '../shared/shared.module'
 
 
 @NgModule({
