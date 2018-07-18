@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage, ModalController, Modal } from 'ionic-angular'
+import { NavController, IonicPage, ModalController, Modal, Platform } from 'ionic-angular'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
+import { CodePush, SyncStatus } from '@ionic-native/code-push'
 
 import { AuthService } from 'fwk-auth';
 import { ApplicationService } from 'fwk-services'
@@ -14,6 +15,8 @@ import { Subscription } from 'rxjs'
    templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit, OnDestroy {
+   progressStatus: string = ""
+
    subUsr: Subscription
    subAuth: Subscription
 
@@ -25,6 +28,8 @@ export class LoginPage implements OnInit, OnDestroy {
    todo: FormGroup
 
    constructor(
+      private codePush: CodePush,
+      private platform: Platform,
       private appSrv: ApplicationService,
       private navCtrl: NavController,
       private modal: ModalController,
@@ -41,15 +46,53 @@ export class LoginPage implements OnInit, OnDestroy {
    ngOnInit() {
       console.log('LoginPage init');
       this.appSrv.showLoading()
+      this.platform.ready().then(() => {
+         this.codePush.sync({}, (progress) => {
+            this.progressStatus = JSON.stringify(progress)
+         }).subscribe(status => {
+            switch (status) {
+               case SyncStatus.CHECKING_FOR_UPDATE:
+                  this.appSrv.showAlert('cheking for update')
+                  break;
+               case SyncStatus.AWAITING_USER_ACTION:
+                  this.appSrv.showAlert('waiting for user input')
+                  break;
+               case SyncStatus.IN_PROGRESS:
+                  this.appSrv.showAlert('update in progress')
+                  break;
+               case SyncStatus.DOWNLOADING_PACKAGE:
+                  this.appSrv.showAlert('downloading package')
+                  break;
+               case SyncStatus.UP_TO_DATE:
+                  this.appSrv.showAlert('app up to date')
+                  break;
+               case SyncStatus.INSTALLING_UPDATE:
+                  this.appSrv.showAlert('installing update')
+                  break;
+               case SyncStatus.UPDATE_IGNORED:
+                  this.appSrv.showAlert('update ignored')
+                  break;
+               case SyncStatus.UPDATE_INSTALLED:
+                  this.appSrv.showAlert('update installed')
+                  break;
+               case SyncStatus.ERROR:
+                  this.appSrv.showAlert('an error occurred')
+                  break;
+            }
+         })
+      }).catch(err => {
+         this.appSrv.message('Error', err.message)
+      })
+
       this.authSrv.verifyLoggedIn().subscribe(data => {
          this.appSrv.hideLoading()
          if (data) {
             this.subUsr = this.fs.getUserById(this.getUid(data.email)).subscribe(usr => {
-               if (usr != null) 
+               if (usr != null)
                   this.redirectHome(usr)
                else { // New User
                   const u = {
-                     contacts:{},
+                     contacts: {},
                      uid: this.getUid(data.email),
                      displayName: data.displayName,
                      email: data.email,
@@ -65,7 +108,7 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    signIn() {
       const mod: Modal = this.modal.create('SignPage', {
-         signMode:'signIn'
+         signMode: 'signIn'
       }, {})
       mod.present()
       mod.onDidDismiss(data => {
@@ -74,12 +117,12 @@ export class LoginPage implements OnInit, OnDestroy {
    }
    signUp(): void {
       const mod: Modal = this.modal.create('SignPage', {
-         signMode:'signUp'
+         signMode: 'signUp'
       }, {})
       mod.present()
-      mod.onDidDismiss(data => {      
+      mod.onDidDismiss(data => {
       })
-   }   
+   }
    loginGoogle() {
       this.appSrv.showLoading()
       this.authSrv.loginGoogle().then((data) => {

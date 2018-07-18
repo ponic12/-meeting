@@ -14,9 +14,9 @@ export class FirebaseService {
       private afs: AngularFirestore
    ) {
       console.log('FirebaseService constructor');
-      afs.firestore.settings({timestampsInSnapshots:true})
+      // afs.firestore.settings({timestampsInSnapshots:true})
       this.usersRef = this.afs.collection('users')
-      //this.afs.firestore.enablePersistence();
+      // this.afs.firestore.enablePersistence();
    }
 
    

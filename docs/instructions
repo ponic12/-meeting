@@ -1,2 +1,19 @@
 First
 Close Repository
+
+
+
+
+////////////////////////////////////////////////////////////////////////
+code-push
+////////////////////////////////////////////////////////////////////////
+ionic cordova plugin add cordova-plugin-appcenter-crashes
+ionic cordova plugin add cordova-plugin-appcenter-analytics
+ionic cordova plugin add cordova-plugin-appcenter-push
+sudo npm install -g appcenter-cli
+
+ionic cordova plugin ls     => (Verifica los plugins instalados)
+ionic cordova plugin add cordova-plugin-whitelist    => (Asegura que este este plugin)
+appcenter codepush release-cordova -a ponic12/meeting-master -d Staging  => (Deploya la app en la nube desde wwww)
+
+npm install --save @ionic-native/code-push

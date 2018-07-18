@@ -4,7 +4,6 @@ import { ApplicationService, GlobalService } from 'fwk-services'
 import { AuthService } from 'fwk-auth';
 import { FirebaseService } from '../../shared/services/firebase.service';
 import { HttpClient } from '@angular/common/http'
-
 import { Subscription } from 'rxjs';
 
 @IonicPage()
@@ -29,6 +28,7 @@ export class HomePage implements OnInit, OnDestroy {
    private subCom: Subscription
 
    constructor(
+      private platform:Platform,
       private alertCtrl: AlertController,
       private navCtrl: NavController,
       private navParams: NavParams,
@@ -37,7 +37,6 @@ export class HomePage implements OnInit, OnDestroy {
       private globalSrv: GlobalService,
       private authSrv: AuthService,
       private modal: ModalController,
-      private platform: Platform,
       private http: HttpClient,
       private fs: FirebaseService
    ) {
@@ -51,7 +50,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.notifyMemberInEvent(this.user.uid)
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
-         if (this.platform.is('cordova')) {   
+         if (this.platform.is('cordova')) {
             this.initFCM()
          }
          //this.appSrv.hideLoading()
@@ -71,15 +70,15 @@ export class HomePage implements OnInit, OnDestroy {
       if (this.subEvt) this.subEvt.unsubscribe()
       if (this.subNotify) this.subNotify.unsubscribe()
    }
-   showUserInfo(){
-      this.appSrv.message('Usuario logueado: ', this.user.displayName )
+   showUserInfo() {
+      this.appSrv.message('Usuario logueado: ', this.user.displayName)
    }
-   doRefresh(refresher){
+   doRefresh(refresher) {
       console.log('Begin async operation', refresher);
-      
+
       setTimeout(() => {
-        console.log('Async operation has ended');
-        refresher.complete();
+         console.log('Async operation has ended');
+         refresher.complete();
       }, 2000);
    }
    addEvent() {
@@ -112,7 +111,7 @@ export class HomePage implements OnInit, OnDestroy {
                handler: () => {
                   if (ev.owner === this.user.uid)
                      this.fs.deleteEvent(ev)
-                  else{
+                  else {
                      ev.members[this.user.uid] = false
                      this.fs.updateUser(ev)
                   }
@@ -211,9 +210,9 @@ export class HomePage implements OnInit, OnDestroy {
       try {
          if (!idEvtParam) return
          this.subNotify = this.http.get<any>('https://us-central1-events-12be3.cloudfunctions.net/notifyMember/' + idEvtParam + '/' + uid)
-         .subscribe(o => {
-            console.log('Notify ok: ', o)
-         })
+            .subscribe(o => {
+               console.log('Notify ok: ', o)
+            })
       } catch (error) {
          console.log(error)
       }
@@ -264,7 +263,7 @@ export class HomePage implements OnInit, OnDestroy {
    private getMembersFull(ev) {
       const lst: any = []
       if (ev.members) {
-         Object.keys(ev.members).forEach(m =>{
+         Object.keys(ev.members).forEach(m => {
             const mem = this.community.find(c => c.uid == m)
             if (mem)
                lst.push(mem)
@@ -279,7 +278,7 @@ export class HomePage implements OnInit, OnDestroy {
       return lst
    }
    private logout() {
-      if (this.platform.is('cordova')) {   
+      if (this.platform.is('cordova')) {
          this.events.forEach(ev => {
             if (ev.owner == this.user.uid)
                FCMPlugin.unsubscribeFromTopic(ev.id)
