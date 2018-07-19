@@ -45,7 +45,7 @@ $colors: (
 $loading-md-background: transparent;
 $loading-md-box-shadow: none;
 
-ion-loading.my-loading-class {
+ion-loading.spinnerCss{
   .loading-wrapper {
     //color: white;
     //background:palevioletred;
@@ -53,8 +53,6 @@ ion-loading.my-loading-class {
     //width: 50px;
     //height: 50px;
   }
-
-  
 }
 
 // App iOS Variables
