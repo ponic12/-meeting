@@ -81,7 +81,8 @@ export class LoginPage implements OnInit, OnDestroy {
             }
          })
       }).catch(err => {
-         this.appSrv.message('Error', err.message)
+         console.error(err)
+         //this.appSrv.message('Error', err.message)
       })
 
       this.authSrv.verifyLoggedIn().subscribe(data => {
