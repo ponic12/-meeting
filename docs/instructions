@@ -17,3 +17,10 @@ ionic cordova plugin add cordova-plugin-whitelist    => (Asegura que este este p
 appcenter codepush release-cordova -a ponic12/meeting-master -d Staging  => (Deploya la app en la nube desde wwww)
 
 npm install --save @ionic-native/code-push
+
+appcenter apps list  => (Muestra apps en AppCenter)
+appcenter codepush deployment list -a <ownerName>/<appName>
+
+Modificar index.html para poder acceder a AppCenter
+<meta http-equiv="Content-Security-Policy" content="default-src https://codepush.azurewebsites.net 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *" />
+

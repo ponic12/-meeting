@@ -44,7 +44,7 @@ export class LoginPage implements OnInit, OnDestroy {
       //this.subAuth.unsubscribe()
    }
    ngOnInit() {
-      console.log('LoginPage init');
+      console.log('LoginPage init')
       this.appSrv.showLoading()
       this.platform.ready().then(() => {
          this.codePush.sync({}, (progress) => {
@@ -52,37 +52,37 @@ export class LoginPage implements OnInit, OnDestroy {
          }).subscribe(status => {
             switch (status) {
                case SyncStatus.CHECKING_FOR_UPDATE:
-                  this.appSrv.showAlert('cheking for update')
+                  this.appSrv.basicAlert('checking for update','')
                   break;
                case SyncStatus.AWAITING_USER_ACTION:
-                  this.appSrv.showAlert('waiting for user input')
+                  this.appSrv.basicAlert('waiting for user input')
                   break;
                case SyncStatus.IN_PROGRESS:
-                  this.appSrv.showAlert('update in progress')
+                  this.appSrv.basicAlert('update in progress')
                   break;
                case SyncStatus.DOWNLOADING_PACKAGE:
-                  this.appSrv.showAlert('downloading package')
+                  this.appSrv.basicAlert('downloading package')
                   break;
                case SyncStatus.UP_TO_DATE:
-                  this.appSrv.showAlert('app up to date')
+                  this.appSrv.basicAlert('app up to date')
                   break;
                case SyncStatus.INSTALLING_UPDATE:
-                  this.appSrv.showAlert('installing update')
+                  this.appSrv.basicAlert('installing update')
                   break;
                case SyncStatus.UPDATE_IGNORED:
-                  this.appSrv.showAlert('update ignored')
+                  this.appSrv.basicAlert('update ignored')
                   break;
                case SyncStatus.UPDATE_INSTALLED:
-                  this.appSrv.showAlert('update installed')
+                  this.appSrv.basicAlert('update installed')
                   break;
                case SyncStatus.ERROR:
-                  this.appSrv.showAlert('an error occurred')
+                  this.appSrv.basicAlert('an error occurred')
                   break;
             }
          })
       }).catch(err => {
          console.error(err)
-         this.appSrv.message(err.message)
+         this.appSrv.basicAlert(err.message, 'Error!')
       })
 
       this.authSrv.verifyLoggedIn().subscribe(data => {
