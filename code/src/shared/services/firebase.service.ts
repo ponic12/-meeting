@@ -143,19 +143,19 @@ export class FirebaseService {
       }).catch(function (error) {
          switch (error.code) {
             case 'storage/object_not_found':
-               this.appSrv.message('Error', 'No se ha encontrado el archivo!')
+               this.appSrv.message('No se ha encontrado el archivo!')
                break;
 
             case 'storage/unauthorized':
-               this.appSrv.message('Error', 'No tiene permiso para bajar el archivo!')
+               this.appSrv.message('No tiene permiso para bajar el archivo!')
                break;
 
             case 'storage/canceled':
-               this.appSrv.message('Error', 'Se ha cancelado la descarga!')
+               this.appSrv.message('Se ha cancelado la descarga!')
                break;
 
             case 'storage/unknown':
-               this.appSrv.message('Error', 'Ha ocurrido un error desconocido!')
+               this.appSrv.message('Ha ocurrido un error desconocido!')
                break;
          }
       });

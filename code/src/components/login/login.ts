@@ -82,7 +82,7 @@ export class LoginPage implements OnInit, OnDestroy {
          })
       }).catch(err => {
          console.error(err)
-         //this.appSrv.message('Error', err.message)
+         this.appSrv.message(err.message)
       })
 
       this.authSrv.verifyLoggedIn().subscribe(data => {
@@ -100,7 +100,7 @@ export class LoginPage implements OnInit, OnDestroy {
                      photoURL: data.photoURL
                   }
                   this.fs.addUser(u).then(x => {
-                     this.appSrv.message('Atencion', 'Usuario registrado OK!')
+                     this.appSrv.message('Usuario registrado OK!')
                   })
                }
             })

@@ -72,9 +72,9 @@ export class EditEventPage implements OnInit, OnDestroy {
          const url = 'https://events-12be3.firebaseapp.com/#' + this.evt.id
 
          this.socialSharing.shareViaWhatsApp('Invitacion a evento: ', '', url).then(() => {
-            this.appSrv.message('Aviso', 'Se ha enviado notificacion a evento!')
+            this.appSrv.message('Se ha enviado notificacion a evento!')
          }).catch(() => {
-            this.appSrv.message('Error', 'No posee Whatsapp')
+            this.appSrv.message('No posee Whatsapp')
          })
       }
       // this.socialSharing.canShareViaEmail().then(() => {

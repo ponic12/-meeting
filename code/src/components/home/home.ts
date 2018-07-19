@@ -286,7 +286,7 @@ export class HomePage implements OnInit, OnDestroy {
          FCMPlugin.unsubscribeFromTopic('config')
          FCMPlugin.unsubscribeFromTopic(this.user.uid)
       }
-      this.appSrv.message('Aviso', 'Saliendo...');
+      this.appSrv.message('Saliendo...');
       this.authSrv.signOutUser();
       this.navCtrl.setRoot('LoginPage');
    }

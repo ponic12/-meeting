@@ -18,9 +18,10 @@ export class MeetingApp implements OnInit, OnDestroy {
       splashScreen: SplashScreen
    ) {
       console.log('MeetingApp constructor');
+      this.afs.firestore.settings({ timestampsInSnapshots: true })
+      this.afs.firestore.enablePersistence()
+
       platform.ready().then(() => {
-         this.afs.firestore.settings({ timestampsInSnapshots: true });
-         this.afs.firestore.enablePersistence();
          // Okay, so the platform is ready and our plugins are available.
          // Here you can do any higher level native things you might need.
          statusBar.styleDefault()
