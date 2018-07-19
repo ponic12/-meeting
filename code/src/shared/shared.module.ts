@@ -8,13 +8,7 @@ import { ToolsBarComponent } from './components/tools-bar/tools-bar.component'
 
 import { FwkServicesModule, ApplicationService, GlobalService } from 'fwk-services';
 import { FwkAuthModule, AuthService } from 'fwk-auth'
-
-import 'firebase/storage'; 
-import { AngularFireModule } from 'angularfire2'
 import { AngularFireAuth } from 'angularfire2/auth'
-import { AngularFirestoreModule } from 'angularfire2/firestore'
-import { FirebaseService } from './services/firebase.service'
-import { FIREBASE_CONFIG } from './services/firebase.config'
 
 @NgModule({
    imports: [
@@ -22,9 +16,7 @@ import { FIREBASE_CONFIG } from './services/firebase.config'
       FwkServicesModule,
       CommonModule,
       IonicModule,
-      IonicStorageModule.forRoot(),
-      AngularFirestoreModule,
-      AngularFireModule.initializeApp(FIREBASE_CONFIG)
+      IonicStorageModule.forRoot()
    ],
    declarations: [
       HoursComponent,
@@ -42,7 +34,6 @@ export class SharedModule {
          providers: [
             AuthService,
             AngularFireAuth,
-            FirebaseService,
             ApplicationService,
             GlobalService
          ]
