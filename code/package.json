@@ -22,7 +22,7 @@
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
     "@firebase/app": "0.1.10",
-    "@ionic-native/code-push": "^4.10.0",
+    "@ionic-native/code-push": "4.10.0",
     "@ionic-native/contacts": "4.7.0",
     "@ionic-native/core": "4.7.0",
     "@ionic-native/facebook": "4.7.0",

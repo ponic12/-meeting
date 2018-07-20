@@ -52,8 +52,10 @@ export class MeetingApp implements OnInit, OnDestroy {
                   this.appSrv.message('update ignored')
                   break;
                case SyncStatus.UPDATE_INSTALLED:
-                  this.appSrv.basicAlert('update installed')
-                  break;
+                  this.appSrv.message('update installed')
+                  setTimeout(() => {
+                     window.location.reload();
+                  }, 1000);
                case SyncStatus.ERROR:
                   this.appSrv.basicAlert('an error occurred')
                   break;
