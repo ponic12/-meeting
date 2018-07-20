@@ -14,8 +14,7 @@ sudo npm install -g appcenter-cli
 
 ionic cordova plugin ls     => (Verifica los plugins instalados)
 ionic cordova plugin add cordova-plugin-whitelist    => (Asegura que este este plugin)
-appcenter codepush release-cordova -a ponic12/meeting-master -d Staging  => (Deploya la app en la nube desde wwww)
-
+appcenter codepush release-cordova -a P-PSoft/com.pp.meetingmaster -d Staging  => (Deploya la app en la nube desde wwww)
 npm install --save @ionic-native/code-push
 
 appcenter apps list  => (Muestra apps en AppCenter)

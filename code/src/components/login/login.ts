@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { NavController, IonicPage, ModalController, Modal, Platform } from 'ionic-angular'
+import { NavController, IonicPage, ModalController, Modal } from 'ionic-angular'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
-import { CodePush, SyncStatus } from '@ionic-native/code-push'
+
 
 import { AuthService } from 'fwk-auth';
 import { ApplicationService } from 'fwk-services'
@@ -15,8 +15,6 @@ import { Subscription } from 'rxjs'
    templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit, OnDestroy {
-   progressStatus: string = ""
-
    subUsr: Subscription
    subAuth: Subscription
 
@@ -28,8 +26,6 @@ export class LoginPage implements OnInit, OnDestroy {
    todo: FormGroup
 
    constructor(
-      private codePush: CodePush,
-      private platform: Platform,
       private appSrv: ApplicationService,
       private navCtrl: NavController,
       private modal: ModalController,
@@ -46,45 +42,6 @@ export class LoginPage implements OnInit, OnDestroy {
    ngOnInit() {
       console.log('LoginPage init')
       this.appSrv.showLoading()
-      this.platform.ready().then(() => {
-         this.codePush.sync({}, (progress) => {
-            this.progressStatus = JSON.stringify(progress)
-         }).subscribe(status => {
-            switch (status) {
-               case SyncStatus.CHECKING_FOR_UPDATE:
-                  this.appSrv.message('checking for update','')
-                  break;
-               case SyncStatus.AWAITING_USER_ACTION:
-                  this.appSrv.basicAlert('waiting for user input')
-                  break;
-               case SyncStatus.IN_PROGRESS:
-                  this.appSrv.message('update in progress')
-                  break;
-               case SyncStatus.DOWNLOADING_PACKAGE:
-                  this.appSrv.message('downloading package')
-                  break;
-               case SyncStatus.UP_TO_DATE:
-                  this.appSrv.message('app up to date')
-                  break;
-               case SyncStatus.INSTALLING_UPDATE:
-                  this.appSrv.message('installing update')
-                  break;
-               case SyncStatus.UPDATE_IGNORED:
-                  this.appSrv.message('update ignored')
-                  break;
-               case SyncStatus.UPDATE_INSTALLED:
-                  this.appSrv.basicAlert('update installed')
-                  break;
-               case SyncStatus.ERROR:
-                  this.appSrv.basicAlert('an error occurred')
-                  break;
-            }
-         })
-      }).catch(err => {
-         console.error(err)
-         this.appSrv.basicAlert(err.message, 'Error!')
-      })
-
       this.authSrv.verifyLoggedIn().subscribe(data => {
          this.appSrv.hideLoading()
          if (data) {
