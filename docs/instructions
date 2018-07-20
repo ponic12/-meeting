@@ -1,25 +1,20 @@
-First
-Close Repository
-
-
-
-
 ////////////////////////////////////////////////////////////////////////
 code-push
 ////////////////////////////////////////////////////////////////////////
 ionic cordova plugin add cordova-plugin-appcenter-crashes
 ionic cordova plugin add cordova-plugin-appcenter-analytics
 ionic cordova plugin add cordova-plugin-appcenter-push
-sudo npm install -g appcenter-cli
-
-ionic cordova plugin ls     => (Verifica los plugins instalados)
 ionic cordova plugin add cordova-plugin-whitelist    => (Asegura que este este plugin)
-appcenter codepush release-cordova -a P-PSoft/com.pp.meetingmaster -d Staging  => (Deploya la app en la nube desde wwww)
+ionic cordova plugin ls     => (Verifica los plugins instalados)
+
+sudo npm install -g appcenter-cli
 npm install --save @ionic-native/code-push
 
 appcenter apps list  => (Muestra apps en AppCenter)
 appcenter codepush deployment list -a <ownerName>/<appName>
+appcenter codepush release-cordova -a P-PSoft/com.pp.meetingmaster -d Staging  => (Deploya la app en la nube desde wwww)
 
 Modificar index.html para poder acceder a AppCenter
 <meta http-equiv="Content-Security-Policy" content="default-src https://codepush.azurewebsites.net 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *" />
+
 
