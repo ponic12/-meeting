@@ -22,7 +22,7 @@
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
     "@firebase/app": "0.1.10",
-    "@ionic-native/code-push": "4.10.0",
+    "@ionic-native/code-push": "^4.10.0",
     "@ionic-native/contacts": "4.7.0",
     "@ionic-native/core": "4.7.0",
     "@ionic-native/facebook": "4.7.0",
@@ -33,13 +33,8 @@
     "@ionic-native/status-bar": "4.7.0",
     "@ionic/storage": "2.1.3",
     "angularfire2": "5.0.0-rc.6",
-    "code-push": "^2.0.5",
     "cordova-android": "6.4.0",
     "cordova-ios": "4.5.4",
-    "cordova-plugin-appcenter-analytics": "^0.1.7",
-    "cordova-plugin-appcenter-crashes": "^0.1.7",
-    "cordova-plugin-appcenter-push": "^0.1.7",
-    "cordova-plugin-appcenter-shared": "^0.1.7",
     "cordova-plugin-browsertab": "0.2.0",
     "cordova-plugin-buildinfo": "2.0.1",
     "cordova-plugin-code-push": "^1.11.11",
@@ -104,10 +99,10 @@
       },
       "cordova-plugin-contacts": {},
       "cordova-plugin-fcm": {},
-      "cordova-plugin-code-push": {},
       "cordova-plugin-file": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-zip": {}
+      "cordova-plugin-zip": {},
+      "cordova-plugin-code-push": {}
     },
     "platforms": [
       "android"
