@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.pp.meetingmaster" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <platform name="android">
-        <preference name="APP_SECRET" value="0NFwSHsGoHQ9K1r7HNzK6xLpgzBeSkrDRuC7m" />
+        <preference name="CodePushDeploymentKey" value="0NFwSHsGoHQ9K1r7HNzK6xLpgzBeSkrDRuC7m" />
     </platform>
     <name>Meeting Master</name>
     <description>Meeting Master App</description>

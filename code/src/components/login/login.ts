@@ -52,25 +52,25 @@ export class LoginPage implements OnInit, OnDestroy {
          }).subscribe(status => {
             switch (status) {
                case SyncStatus.CHECKING_FOR_UPDATE:
-                  this.appSrv.basicAlert('checking for update','')
+                  this.appSrv.message('checking for update','')
                   break;
                case SyncStatus.AWAITING_USER_ACTION:
                   this.appSrv.basicAlert('waiting for user input')
                   break;
                case SyncStatus.IN_PROGRESS:
-                  this.appSrv.basicAlert('update in progress')
+                  this.appSrv.message('update in progress')
                   break;
                case SyncStatus.DOWNLOADING_PACKAGE:
-                  this.appSrv.basicAlert('downloading package')
+                  this.appSrv.message('downloading package')
                   break;
                case SyncStatus.UP_TO_DATE:
-                  this.appSrv.basicAlert('app up to date')
+                  this.appSrv.message('app up to date')
                   break;
                case SyncStatus.INSTALLING_UPDATE:
-                  this.appSrv.basicAlert('installing update')
+                  this.appSrv.message('installing update')
                   break;
                case SyncStatus.UPDATE_IGNORED:
-                  this.appSrv.basicAlert('update ignored')
+                  this.appSrv.message('update ignored')
                   break;
                case SyncStatus.UPDATE_INSTALLED:
                   this.appSrv.basicAlert('update installed')
