@@ -18,6 +18,11 @@
   top: 10px;
   z-index: 1;
 }
+.progBar{
+   position: absolute;
+   width: 100%;
+   z-index: 100;
+}
 
 .backPage {
   // margin-top: 80px;
