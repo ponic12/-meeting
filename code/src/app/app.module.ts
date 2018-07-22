@@ -42,9 +42,9 @@ import { FIREBASE_CONFIG } from '../shared/services/firebase.config'
       FirebaseService,
       CodePush,
       Contacts,
+      Facebook,      
       StatusBar,
       SplashScreen,
-      Facebook,
       { provide: ErrorHandler, useClass: IonicErrorHandler }
    ]
 })

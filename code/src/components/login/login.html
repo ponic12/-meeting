@@ -10,7 +10,6 @@
   <div *ngIf="!idEvtParam;then invitation else invitation"></div>
 
   <ng-template #invitation>
-    <!-- <div #login><figure class="ball"><span class="shadow"></span></div> -->
     <div class="grdInvitation">
       <div class="pushButton green" (click)="signIn()">
         <ion-icon name="unlock" style="font-size:35px"></ion-icon>

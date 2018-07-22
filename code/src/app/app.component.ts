@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, NgZone, ViewChild } from '@angular/core'
 import { Platform, NavController } from 'ionic-angular'
+import { AngularFirestore } from 'angularfire2/firestore'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
-import { AngularFirestore } from 'angularfire2/firestore'
 import { CodePush, SyncStatus } from '@ionic-native/code-push'
 import { ApplicationService } from 'fwk-services'
 
@@ -87,7 +87,7 @@ export class MeetingApp implements OnInit, OnDestroy {
          this.splashScreen.hide()
       }).catch(err => {
          console.error(err)
-         this.appSrv.basicAlert(err, 'Error!')
+         this.appSrv.message(err)
       })
    }
 
