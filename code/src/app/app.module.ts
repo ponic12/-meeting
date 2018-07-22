@@ -11,6 +11,7 @@ import { CodePush } from '@ionic-native/code-push'
 
 import { MeetingApp } from './app.component'
 import { SharedModule } from '../shared/shared.module'
+import { ProgressBarComponent } from '../shared/components/progress-bar/progress-bar'
 
 import 'firebase/storage'; 
 import { AngularFireModule } from 'angularfire2'
@@ -21,7 +22,8 @@ import { FIREBASE_CONFIG } from '../shared/services/firebase.config'
 
 @NgModule({
    declarations: [
-      MeetingApp
+      MeetingApp,
+      ProgressBarComponent
    ],
    imports: [
       BrowserModule,
@@ -33,7 +35,8 @@ import { FIREBASE_CONFIG } from '../shared/services/firebase.config'
    ],
    bootstrap: [IonicApp],
    entryComponents: [
-      MeetingApp
+      MeetingApp,
+      ProgressBarComponent
    ],
    providers: [
       FirebaseService,
