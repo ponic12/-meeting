@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore'
+
 import 'rxjs/add/operator/map'
 import * as firebase from 'firebase/app'
 import {Observable} from 'rxjs/Rx'
@@ -13,8 +14,7 @@ export class FirebaseService {
    constructor(
       private afs: AngularFirestore
    ) {
-      console.log('FirebaseService constructor');
-      // afs.firestore.settings({timestampsInSnapshots:true})
+      console.log('FirebaseService constructor')
       this.usersRef = this.afs.collection('users')
    }
 
@@ -73,7 +73,6 @@ export class FirebaseService {
       const ref = this.afs.collection('events').doc(evt.id).delete()
       return ref
    }
-
 
 
    ///////////////////////////////////////////////

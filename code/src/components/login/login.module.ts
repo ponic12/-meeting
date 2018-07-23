@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 
-import { LoginPage } from './login';
-import { FwkServicesModule, GlobalService, ApplicationService } from 'fwk-services'
+import { LoginPage } from './login'
 import { SharedModule } from '../../shared/shared.module'
-
 
 
 @NgModule({
@@ -23,5 +21,3 @@ export class LoginModule {
       console.log('LoginModule constructor')
    }
 }
-
-/*https://events-12be3.firebaseapp.com/__/auth/handler */

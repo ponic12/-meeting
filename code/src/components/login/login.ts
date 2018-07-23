@@ -18,7 +18,7 @@ export class LoginPage implements OnInit, OnDestroy {
    subAuth: Subscription
 
    loginMode: string = "signIn"
-   username: string
+   
    displayName: string
    email: string
    password: string
