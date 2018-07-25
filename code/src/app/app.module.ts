@@ -5,9 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { StatusBar } from '@ionic-native/status-bar'
 
-import { Contacts } from '@ionic-native/contacts'
-import { Facebook } from '@ionic-native/facebook'
 import { CodePush } from '@ionic-native/code-push'
+
+import { OneSignal } from '@ionic-native/onesignal';
 
 import { MeetingApp } from './app.component'
 import { SharedModule } from '../shared/shared.module'
@@ -44,14 +44,13 @@ import { FwkAuthModule, AuthService } from 'fwk-auth'
       ProgressBarComponent
    ],
    providers: [
+      OneSignal,
       AuthService,
       ApplicationService, 
       GlobalService,
       FirebaseService,
       AngularFireAuth,
-      CodePush,
-      Contacts,
-      Facebook,      
+      CodePush,   
       StatusBar,
       SplashScreen,
       { provide: ErrorHandler, useClass: IonicErrorHandler }

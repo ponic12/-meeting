@@ -1,2 +1,2 @@
-declare var FCMPlugin:any;
+// declare var FCMPlugin:any;
 declare var idEvtParam: any;

@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Platform } from 'ionic-angular'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Contacts } from '@ionic-native/contacts'
 import { Observable } from 'rxjs/Observable'
 
 import { FirebaseService } from '../../shared/services/firebase.service';
@@ -29,16 +28,9 @@ export class ContactsPage implements OnInit, OnDestroy {
       private navParams: NavParams,
       private view: ViewController,
       private fs: FirebaseService,
-      private contacts: Contacts,
       private sanitizer: DomSanitizer
    ) {
       console.log('ContactsPage constructor')
-      if (this.platform.is('cordova')) {   
-         this.contacts.find(["*"],{multiple: true, hasPhoneNumber: true}).then(cts=>{
-            this.phoneContacts = cts
-         })
-      }
-
       this.title = this.navParams.get('title')
       this.uid = this.navParams.get('uid')
    }

@@ -1,6 +1,4 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core'
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms'
-import { NgStyle } from '@angular/common'
 
 import { GlobalService, ApplicationService } from 'fwk-services'
 
@@ -14,8 +12,6 @@ export class HoursComponent implements OnInit, OnDestroy {
    @Output() selectedCell = new EventEmitter()
 
    constructor(
-      private globalSrv: GlobalService,
-      private appSrv: ApplicationService
    ) {
       console.log('HoursComponent constructor')
    }

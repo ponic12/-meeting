@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
+import { OneSignal } from '@ionic-native/onesignal'
 import { NavController, IonicPage, NavParams, ActionSheetController, ModalController, Modal, Platform, AlertController } from 'ionic-angular'
 import { ApplicationService, GlobalService } from 'fwk-services'
 import { AuthService } from 'fwk-auth';
@@ -28,6 +29,7 @@ export class HomePage implements OnInit, OnDestroy {
    private subCom: Subscription
 
    constructor(
+      private oneSignal: OneSignal,
       private platform:Platform,
       private alertCtrl: AlertController,
       private navCtrl: NavController,
@@ -51,7 +53,26 @@ export class HomePage implements OnInit, OnDestroy {
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
          if (this.platform.is('cordova')) {
-            this.initFCM()
+            // this.initFCM()
+
+            this.oneSignal.setLogLevel({logLevel:6,visualLevel:6})
+
+            this.oneSignal.startInit('4b1fa9a4-5183-4f73-a036-adf58680cda8', '342119302614')
+            
+            this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None)
+            //this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert)
+
+            this.oneSignal.handleNotificationReceived().subscribe((x) => {
+               this.appSrv.basicAlert(JSON.stringify(x))
+            })
+            this.oneSignal.handleNotificationOpened().subscribe((x) => {
+               this.appSrv.basicAlert(JSON.stringify(x))
+            })
+            this.oneSignal.endInit();   
+            this.oneSignal.sendTag('legajo', this.user.legajo)
+            this.oneSignal.getIds().then(x=>{ //x.userId: id de app cliente  -  x.pushToken: random chars
+               this.appSrv.basicAlert(JSON.stringify(x))
+            })
          }
          //this.appSrv.hideLoading()
       })
@@ -218,12 +239,15 @@ export class HomePage implements OnInit, OnDestroy {
       }
    }
    private initFCM() {
-      this.events.forEach(ev => {
-         if (ev.owner == this.user.uid)
-            FCMPlugin.subscribeToTopic(ev.id)
-      });
-      FCMPlugin.subscribeToTopic('config')
-      FCMPlugin.subscribeToTopic(this.user.uid)
+      // this.events.forEach(ev => {
+      //    if (ev.owner == this.user.uid)
+      //       FCMPlugin.subscribeToTopic(ev.id)
+      // });
+      // FCMPlugin.subscribeToTopic('config')
+      // FCMPlugin.subscribeToTopic(this.user.uid)
+
+
+
       //var self = this;
       // FCMPlugin.onNotification(
       //    function (data) {
@@ -278,14 +302,14 @@ export class HomePage implements OnInit, OnDestroy {
       return lst
    }
    private logout() {
-      if (this.platform.is('cordova')) {
-         this.events.forEach(ev => {
-            if (ev.owner == this.user.uid)
-               FCMPlugin.unsubscribeFromTopic(ev.id)
-         })
-         FCMPlugin.unsubscribeFromTopic('config')
-         FCMPlugin.unsubscribeFromTopic(this.user.uid)
-      }
+      // if (this.platform.is('cordova')) {
+      //    this.events.forEach(ev => {
+      //       if (ev.owner == this.user.uid)
+      //          FCMPlugin.unsubscribeFromTopic(ev.id)
+      //    })
+      //    FCMPlugin.unsubscribeFromTopic('config')
+      //    FCMPlugin.unsubscribeFromTopic(this.user.uid)
+      // }
       this.appSrv.message('Saliendo...');
       this.authSrv.signOutUser();
       this.navCtrl.setRoot('LoginPage');
