@@ -53,25 +53,23 @@ export class HomePage implements OnInit, OnDestroy {
       this.subEvt = this.fs.getEventsByUid(this.user.uid).subscribe(data => {
          this.events = data
          if (this.platform.is('cordova')) {
-            // this.initFCM()
+            this.oneSignal.setLogLevel({logLevel:1,visualLevel:1})
 
-            this.oneSignal.setLogLevel({logLevel:6,visualLevel:6})
-
-            this.oneSignal.startInit('4b1fa9a4-5183-4f73-a036-adf58680cda8', '342119302614')
+            this.oneSignal.startInit('f978595e-dda6-44c1-bca3-5f8b75135d12', '342119302614')
             
             this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None)
             //this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert)
 
             this.oneSignal.handleNotificationReceived().subscribe((x) => {
-               this.appSrv.basicAlert(JSON.stringify(x))
+               this.appSrv.basicAlert('Notificacion recivida!')
             })
             this.oneSignal.handleNotificationOpened().subscribe((x) => {
-               this.appSrv.basicAlert(JSON.stringify(x))
+               this.appSrv.basicAlert('Se ha abierto la notificacion...')
             })
             this.oneSignal.endInit();   
             this.oneSignal.sendTag('legajo', this.user.legajo)
             this.oneSignal.getIds().then(x=>{ //x.userId: id de app cliente  -  x.pushToken: random chars
-               this.appSrv.basicAlert(JSON.stringify(x))
+               console.log(JSON.stringify(x))
             })
          }
          //this.appSrv.hideLoading()

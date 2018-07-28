@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Platform } from 'ionic-angular'
+import { IonicPage, ViewController, NavParams } from 'ionic-angular'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable'
 
@@ -24,7 +24,6 @@ export class ContactsPage implements OnInit, OnDestroy {
    private uid:string
 
    constructor(
-      private platform: Platform,
       private navParams: NavParams,
       private view: ViewController,
       private fs: FirebaseService,
